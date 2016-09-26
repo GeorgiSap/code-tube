@@ -1,5 +1,5 @@
 
-package models;
+package model;
 
 public class TagException extends Exception {
 

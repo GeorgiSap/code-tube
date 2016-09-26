@@ -1,7 +1,10 @@
-package user;
+package model.user;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import model.Playlist;
+import model.VideoClip;
 
 public class Channel {
 	private int id;

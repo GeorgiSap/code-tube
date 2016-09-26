@@ -1,4 +1,4 @@
-package user;
+package model.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,18 +12,18 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.codetube.controller.User;
-
-public class UserJDBCTemplate {
+public class UserJDBCTemplate implements UserDAO {
 	
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
+	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
-	
+
+	@Override
 	public int register(final User user) {
 		final String SQL = "insert into users (first_name, last_name, user_name, email, password) values (?, ?, ?, ?, md5(?))";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -38,10 +38,11 @@ public class UserJDBCTemplate {
 				return pst;
 			}
 		}, keyHolder);
-		System.out.println("User with Email " + user.getEmail() +" registered successfully with ID " + (Integer) keyHolder.getKey());
-		return (Integer) keyHolder.getKey();
+		System.out.println("User with Email " + user.getEmail() +" registered successfully with ID " + keyHolder.getKey().intValue());
+		return keyHolder.getKey().intValue();
 	}
-	
+
+	@Override
 	public User login(String email, String password) throws UserException {
 		String SQL = "select * from users where email = ? AND password = md5(?)";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email, password }, new UserMapper());
@@ -52,31 +53,36 @@ public class UserJDBCTemplate {
 			throw new UserException("Wrong Email/Password");
 		}
 	}
-	
+
+	@Override
 	public User get(int id) {
 		String SQL = "select * from users where user_id = ?";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { id }, new UserMapper());
 		return user;
 	}
-	
+
+	@Override
 	public List<User> listUsers() {
 		String SQL = "select * from users";
 		List<User> users = jdbcTemplateObject.query(SQL, new UserMapper());
 		return users;
 	}
-	
+
+	@Override
 	public void update(User user) {
 		String SQL = "update users set first_name = ?, last_name = ?, user_name = ?, email = ?, password = md5(?) where user_id = ?";
-		jdbcTemplateObject.update(SQL, user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail(), user.getPassword());
+		jdbcTemplateObject.update(SQL, user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail(), user.getPassword(), user.getId());
 		System.out.println("Updated User Record with ID = " + user.getId());
 	}
-	
+
+	@Override
 	public void delete(int id) {
 		String SQL = "delete from users where user_id = ?";
 		jdbcTemplateObject.update(SQL, id);
 		System.out.println("Deleted User Record with ID = " + id );
 	}
 	
+	@Override
 	public void deleteAll() {
 		String SQL = "delete from users";
 		jdbcTemplateObject.update(SQL);

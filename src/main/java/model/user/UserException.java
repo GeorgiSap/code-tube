@@ -1,4 +1,4 @@
-package user;
+package model.user;
 
 public class UserException extends Exception {
 	private static final long serialVersionUID = -4078625941482959956L;

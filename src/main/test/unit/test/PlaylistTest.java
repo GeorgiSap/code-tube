@@ -3,14 +3,14 @@ package unit.test;
 import java.time.LocalDateTime;
 
 import junit.framework.TestCase;
-import models.Comment;
-import models.CommentException;
-import models.Playlist;
-import models.PlaylistException;
-import models.Tag;
-import models.TagException;
-import models.VideoClip;
-import models.VideoClipException;
+import model.Comment;
+import model.CommentException;
+import model.Playlist;
+import model.PlaylistException;
+import model.Tag;
+import model.TagException;
+import model.VideoClip;
+import model.VideoClipException;
 
 public class PlaylistTest extends TestCase {
 	public void test() throws VideoClipException, PlaylistException, TagException, CommentException {

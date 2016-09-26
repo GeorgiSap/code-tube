@@ -1,10 +1,7 @@
-package models;
+package model;
 
 public class VideoClipException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public VideoClipException() {
