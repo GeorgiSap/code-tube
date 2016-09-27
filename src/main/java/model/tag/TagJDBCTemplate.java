@@ -29,12 +29,12 @@ public class TagJDBCTemplate implements TagDAO {
 	 */
 	@Override
 	public int addTag(Tag tag) {
-		final String SQL = "insert into tags (key_word) values (?)";
+		final String SQL = "insert into tags (keyword) values (?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		this.jdbcTemplateObject.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement pst = con.prepareStatement(SQL, new String[] { "id_tag" });
+				PreparedStatement pst = con.prepareStatement(SQL, new String[] { "tag_id" });
 				pst.setString(1, tag.getKeyword());
 				return pst;
 			}
@@ -49,7 +49,7 @@ public class TagJDBCTemplate implements TagDAO {
 	 */
 	@Override
 	public int deleteTag(int id) {
-		final String SQL = "delete from tags where id_tag = ?";
+		final String SQL = "delete from tags where tag_id = ?";
 		int number = this.jdbcTemplateObject.update(SQL, id);
 		System.out.println("Deletion succesfull for row with id " + number);
 		return number;

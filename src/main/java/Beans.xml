@@ -12,6 +12,7 @@
       <property name="username" value="root"/>
       <property name="password" value="parolata"/>
    </bean>
+   
     <!-- Definition for UserJDBCTemplate bean -->
    <bean id="UserJDBCTemplate" 
       class="model.user.UserJDBCTemplate">
@@ -20,6 +21,11 @@
    
     <bean id="TagJDBCTemplate" 
       class="model.tag.TagJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="VideoClipJDBCTemplate" 
+      class="model.videoclip.VideoClipJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
    

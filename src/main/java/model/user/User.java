@@ -27,7 +27,7 @@ public class User {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
-		//TODO validate, throw UserException
+		//to doo validation adn channel
 	}
 	
 	public String getFirstName() {
@@ -70,12 +70,20 @@ public class User {
 		this.password = password;
 	}
 
+	public Channel getChannel() {
+		return channel;
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 }

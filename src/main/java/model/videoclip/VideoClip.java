@@ -34,6 +34,30 @@ public class VideoClip {
 
 	}
 
+	public void setViewCount(long viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getPerformer() {
+		return performer;
+	}
+
+	public long getViewCount() {
+		return viewCount;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
 	public void addComment(Comment comment) throws VideoClipException {
 		if (comment != null) {
 			comments.put(comment.getDateOfComment(), comment);
