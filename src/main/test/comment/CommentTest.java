@@ -9,8 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import model.comment.Comment;
+import model.comment.CommentDAO;
 import model.comment.CommentException;
-import model.comment.CommentJDBCTemplate;
 import model.user.User;
 import model.user.UserDAO;
 import model.videoclip.VideoClip;
@@ -20,7 +20,7 @@ import model.videoclip.VideoClipException;
 public class CommentTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
-	CommentJDBCTemplate commentJDBCTemplate = (CommentJDBCTemplate) context.getBean("CommentJDBCTemplate");
+	CommentDAO commentJDBCTemplate = (CommentDAO) context.getBean("CommentJDBCTemplate");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 
 	@Test
