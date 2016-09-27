@@ -11,11 +11,12 @@ public class Playlist {
 	private List<VideoClip> videoClips = new LinkedList<VideoClip>();
 	private String title;
 
-	public Playlist(String title) throws PlaylistException {
+	public Playlist(int id, String title) throws PlaylistException {
 		if (title == null || title.trim().equals("")) {
 			throw new PlaylistException("Bad data!");
 		}
 		this.title = title;
+		this.id = id;
 	}
 
 	public void addVideoClip(VideoClip videoClip) throws PlaylistException {

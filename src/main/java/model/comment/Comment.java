@@ -10,13 +10,14 @@ public class Comment {
 	private LocalDateTime dateOfComment;
 	private int rating;
 
-	public Comment(String message, LocalDateTime dateOfComment, int rating) throws CommentException {
+	public Comment(int id, String message, LocalDateTime dateOfComment, int rating) throws CommentException {
 		if ((message == null) || (message.trim().equals("")) || (rating > 5) || (rating < 1)) {
 			throw new CommentException("Bad data in comment");
 		}
 		this.message = message;
 		this.dateOfComment = dateOfComment;
 		this.rating = rating;
+		this.id = id;
 	}
 
 	public int getId() {

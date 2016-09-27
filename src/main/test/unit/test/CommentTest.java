@@ -9,7 +9,7 @@ import model.comment.CommentException;
 public class CommentTest extends TestCase {
 	
 	public void test() throws CommentException{
-		Comment comment = new Comment("Mladen", LocalDateTime.now(), 2);
+		Comment comment = new Comment(0, "Mladen", LocalDateTime.now(), 2);
 		System.out.println(comment);
 		assertNotNull(comment);
 	}

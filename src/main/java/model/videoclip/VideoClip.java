@@ -20,12 +20,13 @@ public class VideoClip {
 	private long viewCount;
 	private String path;
 
-	public VideoClip(String name, String performer, String path) throws VideoClipException {
+	public VideoClip(int id, String name, String performer, String path) throws VideoClipException {
 		if (name == null || name.trim().equals("") || performer == null || performer.trim().equals("") || path == null
 				|| path.trim().equals("")) {
 			throw new VideoClipException("Bad Data - constructor");
 		}
-
+		
+		this. id = id;
 		this.name = name;
 		this.performer = performer;
 		this.path = path;

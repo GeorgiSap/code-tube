@@ -14,12 +14,12 @@ import model.videoclip.VideoClipException;
 
 public class PlaylistTest extends TestCase {
 	public void test() throws VideoClipException, PlaylistException, TagException, CommentException {
-		VideoClip videoClip =new VideoClip("Gosho","Pesho", "asd.mp4");
+		VideoClip videoClip =new VideoClip(0, "Gosho","Pesho", "asd.mp4");
 		System.out.println(videoClip);
-		videoClip.addTag(new Tag("javaScript"));
-		videoClip.addComment(new Comment("Kvo stava tuka be ", LocalDateTime.now(), 1));
+		videoClip.addTag(new Tag(0, "javaScript"));
+		videoClip.addComment(new Comment(0, "Kvo stava tuka be ", LocalDateTime.now(), 1));
 		
-		Playlist playlist = new Playlist("NA gosho listata");
+		Playlist playlist = new Playlist(0, "NA gosho listata");
 		playlist.addVideoClip(videoClip);
 		
 		System.out.println(playlist);

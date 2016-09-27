@@ -4,11 +4,12 @@ public class Tag {
 	private int id;
 	private String keyword;
 
-	public Tag(String keyword) throws TagException {
+	public Tag(int id, String keyword) throws TagException {
 		if (keyword == null || keyword.trim().equals("")) {
 			throw new TagException("Bad Data - tag construcyor");
 		}
 		this.keyword = keyword;
+		this.id = id;
 	}
 
 	public int getId() {

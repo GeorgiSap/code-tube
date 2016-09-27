@@ -6,8 +6,10 @@ public class UserTag extends Tag {
 	private int counterOfClicks;
 	private LocalDateTime lastViewdOn;
 
-	public UserTag(String keyword) throws TagException {
-		super(keyword);
+	
+
+	public UserTag(int id, String keyword) throws TagException {
+		super(id, keyword);
 	}
 
 	public void upVoteTag(LocalDateTime time) {
