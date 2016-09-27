@@ -1,4 +1,4 @@
-package model;
+package model.videoclip;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import model.comment.Comment;
+import model.tag.Tag;
 
 public class VideoClip {
 	private Set<Tag> tagsOfClip = new TreeSet<Tag>((o1, o2) -> o1.getKeyword().compareTo(o2.getKeyword()));

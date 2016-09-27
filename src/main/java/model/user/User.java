@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import model.UserTag;
-import model.VideoClip;
+import model.tag.UserTag;
+import model.videoclip.VideoClip;
 
 public class User {
 	private int id;

@@ -3,8 +3,8 @@ package model.user;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Playlist;
-import model.VideoClip;
+import model.playlist.Playlist;
+import model.videoclip.VideoClip;
 
 public class Channel {
 	private int id;

@@ -3,8 +3,8 @@ package unit.test;
 import java.time.LocalDateTime;
 
 import junit.framework.TestCase;
-import model.Comment;
-import model.CommentException;
+import model.comment.Comment;
+import model.comment.CommentException;
 
 public class CommentTest extends TestCase {
 	

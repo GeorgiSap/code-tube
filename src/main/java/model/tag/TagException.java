@@ -1,33 +1,34 @@
-package model;
 
-public class CommentException extends Exception {
+package model.tag;
+
+public class TagException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CommentException() {
+	public TagException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public TagException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommentException(String message, Throwable cause) {
+	public TagException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommentException(String message) {
+	public TagException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommentException(Throwable cause) {
+	public TagException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}

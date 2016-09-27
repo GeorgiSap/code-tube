@@ -1,4 +1,4 @@
-package model;
+package model.tag;
 
 public class Tag {
 	private int id;

@@ -1,8 +1,10 @@
-package model;
+package model.playlist;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import model.videoclip.VideoClip;
 
 public class Playlist {
 	private int id;
