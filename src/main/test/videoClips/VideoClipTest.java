@@ -12,12 +12,12 @@ import model.tag.TagDAO;
 import model.user.Channel;
 import model.user.User;
 import model.videoclip.VideoClip;
+import model.videoclip.VideoClipDAO;
 import model.videoclip.VideoClipException;
-import model.videoclip.VideoClipJDBCTemplate;
 
 public class VideoClipTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
+	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 
 	@Test
 	public void test() {

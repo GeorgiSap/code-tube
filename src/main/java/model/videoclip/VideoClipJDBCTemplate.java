@@ -15,15 +15,23 @@ import org.springframework.jdbc.support.KeyHolder;
 import model.user.User;
 import model.user.UserMapper;
 
-public class VideoClipJDBCTemplate {
+public class VideoClipJDBCTemplate implements VideoClipDAO {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
+	/* (non-Javadoc)
+	 * @see model.videoclip.VideoClipDAO#setDataSource(javax.sql.DataSource)
+	 */
+	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
+	/* (non-Javadoc)
+	 * @see model.videoclip.VideoClipDAO#addVideoClip(model.videoclip.VideoClip)
+	 */
+	@Override
 	public int addVideoClip(VideoClip videoClip) {
 		final String SQL = "insert into video_clips (name, path, performer, view_count) values (?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -43,6 +51,10 @@ public class VideoClipJDBCTemplate {
 		return keyHolder.getKey().intValue();
 	}
 
+	/* (non-Javadoc)
+	 * @see model.videoclip.VideoClipDAO#increaseViewCount(model.videoclip.VideoClip, int)
+	 */
+	@Override
 	public int increaseViewCount(VideoClip videoClip, int numberOfViews) {
 		String SQL = "update video_clips set view_count = view_count + ? where video_clip_id = ?";
 
@@ -61,6 +73,10 @@ public class VideoClipJDBCTemplate {
 		return keyHolder.getKey().intValue();
 	}
 
+	/* (non-Javadoc)
+	 * @see model.videoclip.VideoClipDAO#getClips()
+	 */
+	@Override
 	public List<VideoClip> getClips() {
 		String SQL = "select * from video_clips";
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new VideoClipMapper());

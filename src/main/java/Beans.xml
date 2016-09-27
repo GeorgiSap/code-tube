@@ -29,5 +29,16 @@
       <property name="dataSource"  ref="dataSource" />    
    </bean>
    
+   <bean id="PlaylistJDBCTemplate" 
+      class="model.playlist.PlaylistJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="CommentJDBCTemplate" 
+      class="model.comment.CommentJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   
       
 </beans>

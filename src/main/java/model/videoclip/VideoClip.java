@@ -11,6 +11,7 @@ import model.comment.Comment;
 import model.tag.Tag;
 
 public class VideoClip {
+
 	private Set<Tag> tagsOfClip = new TreeSet<Tag>((o1, o2) -> o1.getKeyword().compareTo(o2.getKeyword()));
 	private Map<LocalDateTime, Comment> comments = new TreeMap<LocalDateTime, Comment>();
 
@@ -25,8 +26,8 @@ public class VideoClip {
 				|| path.trim().equals("")) {
 			throw new VideoClipException("Bad Data - constructor");
 		}
-		
-		this. id = id;
+
+		this.id = id;
 		this.name = name;
 		this.performer = performer;
 		this.path = path;
@@ -56,6 +57,10 @@ public class VideoClip {
 
 	public String getPath() {
 		return path;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void addComment(Comment comment) throws VideoClipException {
