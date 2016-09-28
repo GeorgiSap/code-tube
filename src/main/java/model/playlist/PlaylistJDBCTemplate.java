@@ -11,11 +11,17 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import model.user.User;
+import model.user.UserMapper;
+import model.videoclip.VideoClip;
+
 public class PlaylistJDBCTemplate implements PlaylistDAO {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.playlist.PlaylistDAO#setDataSource(javax.sql.DataSource)
 	 */
 	@Override
@@ -24,18 +30,21 @@ public class PlaylistJDBCTemplate implements PlaylistDAO {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.playlist.PlaylistDAO#addPlayList(model.playlist.Playlist)
 	 */
 	@Override
-	public int addPlayList(Playlist list) {
-		final String SQL = "insert into playlists (title) values (?)";
+	public int addPlayList(Playlist list, User user) {
+		final String SQL = "insert into playlists (title, user_id) values (?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		this.jdbcTemplateObject.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement pst = con.prepareStatement(SQL, new String[] { "playlist_id" });
 				pst.setString(1, list.getTitle());
+				pst.setInt(2, user.getId());
 				return pst;
 			}
 		}, keyHolder);
@@ -43,4 +52,11 @@ public class PlaylistJDBCTemplate implements PlaylistDAO {
 		System.out.println(list + " was created");
 		return keyHolder.getKey().intValue();
 	}
+
+	public Playlist getPlaylist(int id ){
+		String SQL = "select * from playlists where playlist_id = ?";
+		Playlist playlist = jdbcTemplateObject.queryForObject(SQL, new Object[] { id }, new PlaylistMapper());
+		return playlist;
+	}
+
 }
