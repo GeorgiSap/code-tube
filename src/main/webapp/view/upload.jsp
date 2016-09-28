@@ -13,13 +13,11 @@
 <body>
 	<div class="container">
 		<div class="row">
-<h2><% response.getWriter().println("Logged in as " + request.getSession().getAttribute("user_name")); %></h2>
- <h3 class="text-left">Logged in as <c:out value='${session.user_name}'/></h3> 
 			<div class="col-md-8 col-md-offset-2">
-				<form role="form" method="POST" action="./Logout">
+				<form role="form" method="POST" action="./Upload">
 					<div class="form-group">
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-primary">Logout</button>
+							<button type="submit" class="btn btn-primary">Upload</button>
 						</div>
 					</div>
 				</form>
