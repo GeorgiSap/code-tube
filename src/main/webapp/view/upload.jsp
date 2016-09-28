@@ -4,14 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="../stylesheets/register.css">
 <title>Insert title here</title>
 </head>
 <body>
-	<FORM ENCTYPE="multipart/form-data" method="POST"
+	<FORM ENCTYPE="multipart/form-data" method="POST" action="../Upload"
 		action="http://localhost:8080/Library_API_Test/uploadvideo">
-		Video name: <INPUT TYPE="text" NAME="name" value="video name" /><br />
-		Description: <INPUT TYPE="text" NAME="desc" value="description" /><br />
-		File: <INPUT TYPE="file" NAME="file" accept="video/mp4" /> <INPUT TYPE="submit"
+		Video name: <INPUT TYPE="text" name="name" value="video name" /><br />
+		Description: <INPUT TYPE="text" name="desc" value="description" /><br />
+		File: <INPUT TYPE="file" name="file" accept="video/mp4" /> <INPUT TYPE="submit"
 			VALUE="Upload" />
 	</FORM>
 </body>

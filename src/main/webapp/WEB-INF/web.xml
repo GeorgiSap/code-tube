@@ -3,55 +3,78 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>LoginServlet</servlet-name>
-  	<display-name>LoginServlet</display-name>
-  	<description></description>
-  	<servlet-class>controller.LoginServlet</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>RegisterServlet</servlet-name>
-  	<display-name>RegisterServlet</display-name>
-  	<description></description>
-  	<servlet-class>controller.RegisterServlet</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>HomeServlet</servlet-name>
-  	<display-name>HomeServlet</display-name>
-  	<description></description>
-  	<servlet-class>controller.HomeServlet</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>ServletManager</servlet-name>
-  	<display-name>ServletManager</display-name>
-  	<description></description>
-  	<servlet-class>controller.ServletManager</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>LogoutServlet</servlet-name>
-  	<display-name>LogoutServlet</display-name>
-  	<description></description>
-  	<servlet-class>controller.LogoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>LoginServlet</servlet-name>
-  	<url-pattern>/Login</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>RegisterServlet</servlet-name>
-  	<url-pattern>/Register</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>HomeServlet</servlet-name>
-  	<url-pattern>/Home</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>ServletManager</servlet-name>
-  	<url-pattern>/Manager</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>LogoutServlet</servlet-name>
-  	<url-pattern>/Logout</url-pattern>
-  </servlet-mapping>
+
+
+	<display-name>Archetype Created Web Application</display-name>
+
+	<context-param>
+		<param-name>file-upload</param-name>
+		<param-value>
+			/Users/user-06/git/code-tube/video
+		</param-value>
+		<description>Location to store uploaded file</description>
+	</context-param>
+
+
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<display-name>LoginServlet</display-name>
+		<description></description>
+		<servlet-class>controller.LoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RegisterServlet</servlet-name>
+		<display-name>RegisterServlet</display-name>
+		<description></description>
+		<servlet-class>controller.RegisterServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>HomeServlet</servlet-name>
+		<display-name>HomeServlet</display-name>
+		<description></description>
+		<servlet-class>controller.HomeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ServletManager</servlet-name>
+		<display-name>ServletManager</display-name>
+		<description></description>
+		<servlet-class>controller.ServletManager</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<display-name>LogoutServlet</display-name>
+		<description></description>
+		<servlet-class>controller.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UploadServlet</servlet-name>
+		<display-name>UploadServlet</display-name>
+		<description></description>
+		<servlet-class>controller.UploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HomeServlet</servlet-name>
+		<url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletManager</servlet-name>
+		<url-pattern>/Manager</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/Logout</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UploadServlet</servlet-name>
+		<url-pattern>/Upload</url-pattern>
+	</servlet-mapping>
+
 </web-app>
