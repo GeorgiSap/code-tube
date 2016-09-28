@@ -11,12 +11,10 @@
 <script src="javascript/register.js"></script>
 </head>
 <body>
-
 	<div class="container">
 		<div class="row">
-
 <h2><% response.getWriter().println("Logged in as " + request.getSession().getAttribute("user_name")); %></h2>
-<%-- <h2 class="text-left">Logged in as <c:out value='${session.user_name}'/></h2>   --%>
+ <h3 class="text-left">Logged in as <c:out value='${session.user_name}'/></h3> 
 			<div class="col-md-8 col-md-offset-2">
 				<form role="form" method="POST" action="./Logout">
 					<div class="form-group">
@@ -26,10 +24,8 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 	</div>
-
 	<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
