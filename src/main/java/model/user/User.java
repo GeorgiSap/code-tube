@@ -17,8 +17,7 @@ public class User {
 	private String password;
 	private Set<VideoClip> history = new TreeSet<VideoClip>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
-	private List<Channel> subscribtions = new LinkedList<Channel>();
-	private Channel channel;
+	private List<User> subscribtions = new LinkedList<User>();
 
 	public User(int id, String firstName, String lastName, String userName, String email, String password) {
 		this.id = id;
@@ -70,9 +69,6 @@ public class User {
 		this.password = password;
 	}
 
-	public Channel getChannel() {
-		return channel;
-	}
 
 	public int getId() {
 		return id;
@@ -82,8 +78,5 @@ public class User {
 		this.id = id;
 	}
 
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
 
 }
