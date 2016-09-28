@@ -22,4 +22,10 @@ public interface UserDAO {
 
 	void deleteAll();
 
+	User get(String email);
+
+	boolean userNameExists(String userName);
+
+	boolean emailExists(String email);
+
 }

@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -27,11 +28,12 @@ public class LoginServlet extends HttpServlet {
 			// wrong password/email
 			e.printStackTrace();
 		}
-		if (user != null)
-			response.getWriter().println(
-					"You have successfully logged in, " + user.getFirstName() + " " + user.getLastName() + "!");
-		// TODO create session
-		// TODO redirect to home.jsp
+		
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(20);
+		session.setAttribute("user_name", user.getUserName());
+
+		response.sendRedirect("./Home");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
