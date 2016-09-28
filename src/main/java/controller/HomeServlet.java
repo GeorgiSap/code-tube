@@ -19,7 +19,6 @@ public class HomeServlet extends ServletManager {
 			response.sendRedirect("./view/login.html");
 			return;
 		} else {
-			System.out.println("stignah");
 			response.sendRedirect("./view/home.jsp");
 		//	response.getWriter().println("Logged in as " + request.getSession().getAttribute("user_name"));
 		}

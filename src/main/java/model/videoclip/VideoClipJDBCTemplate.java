@@ -82,4 +82,11 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new VideoClipMapper());
 		return videoClips;
 	}
+
+	@Override
+	public VideoClip getClip(int id) {
+		String SQL = "select * from video_clips where video_clip_id = ?";
+		VideoClip videoClip = jdbcTemplateObject.queryForObject(SQL, new Object[] { id }, new VideoClipMapper());
+		return videoClip;
+	}
 }

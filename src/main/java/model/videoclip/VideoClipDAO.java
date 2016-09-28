@@ -13,5 +13,7 @@ public interface VideoClipDAO {
 	int increaseViewCount(VideoClip videoClip, int numberOfViews);
 
 	List<VideoClip> getClips();
+	
+	VideoClip getClip(int id);
 
 }

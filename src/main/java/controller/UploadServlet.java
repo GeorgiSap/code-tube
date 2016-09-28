@@ -14,14 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import model.videoclip.VideoClip;
+import model.videoclip.VideoClipDAO;
+import model.videoclip.VideoClipException;
 
 public class UploadServlet extends HttpServlet {
 	private static final int MAX_FILE_SIZE_UPLOADED = 500_000 * 1024;
+	private static final String CONSTANT_PATH = "C:\\temp\\";
 	private boolean isMultipart;
 	private String filePath;
 	private int maxFileSize = 500_000 * 1024;
 	private int maxMemSize = 40 * 1024;
 	private File file;
+	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+	private VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 
 	public void init() {
 		// Get the file location where it would be stored.
@@ -34,48 +43,38 @@ public class UploadServlet extends HttpServlet {
 	}
 
 	private void uploadFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// Check that we have a file upload request
-		isMultipart = ServletFileUpload.isMultipartContent(request);
-		response.setContentType("text/html");
-		java.io.PrintWriter out = response.getWriter();
-		if (!isMultipart) {
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<p>No file uploaded</p>");
-			out.println("</body>");
-			out.println("</html>");
-			return;
-			//TODO
-		}
-
-		File afFile = new File("C:\\temp\\video");
-
-		DiskFileItemFactory factory = new DiskFileItemFactory(MAX_FILE_SIZE_UPLOADED, afFile);
-		// maximum size that will be stored in memory
-		factory.setSizeThreshold(maxMemSize);
-		// Location to save data that is larger than maxMemSize.
-		factory.setRepository(new File("c:\\temp"));
-
-		// Create a new file upload handler
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		// maximum file size to be uploaded.
-		upload.setSizeMax(maxFileSize);
-
+		int clipId = 0;
+		String message = null;
 		try {
+//			if ((performer == null) || (performer.trim().equals(""))) {
+//				System.out.println("Format is bad");
+//				message = "Need a performer!";
+//				sendToUploadResultPage(request, response, message);
+//				return;
+//			}
+
+			// Check that we have a file upload request
+			checksForUploadRequest(request, response, clipId);
+
+			File afFile = new File("C:\\temp\\video");
+			DiskFileItemFactory factory = new DiskFileItemFactory(MAX_FILE_SIZE_UPLOADED, afFile);
+
+			// maximum size that will be stored in memory
+			factory.setSizeThreshold(maxMemSize);
+			// Location to save data that is larger than maxMemSize.
+			factory.setRepository(new File("c:\\temp\\video"));
+
+			// Create a new file upload handler
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			// maximum file size to be uploaded.
+			upload.setSizeMax(maxFileSize);
+
 			// Parse the request to get file items.
-			List fileItems = upload.parseRequest(request);
+			List<FileItem> fileItems = upload.parseRequest(request);
 
 			// Process the uploaded file items
-			Iterator i = fileItems.iterator();
+			Iterator<FileItem> i = fileItems.iterator();
 
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("</head>");
-			out.println("<body>");
 			while (i.hasNext()) {
 				FileItem fi = (FileItem) i.next();
 				if (!fi.isFormField()) {
@@ -85,27 +84,78 @@ public class UploadServlet extends HttpServlet {
 					String contentType = fi.getContentType();
 					boolean isInMemory = fi.isInMemory();
 					long sizeInBytes = fi.getSize();
-					// Write the file
-					if (fileName.lastIndexOf("\\") >= 0) {
-						file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\")));
-					} else {
-						file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\") + 1));
+
+					// only mp4
+					if (!contentType.equals("video/mp4")) {
+						System.out.println("Format is bad");
+						message = "Invalid data! Only vide/mp4 format";
+						sendToUploadResultPage(request, response, message);
+						return;
 					}
-					fi.write(file);
-					out.println("Uploaded Filename: " + fileName + "<br>");
+
+					// Write the file
+					clipId = writingTheFile(fi, fileName);
 				}
 			}
-			out.println("</body>");
-			out.println("</html>");
+
+			System.out.println(videoClipJDBCTemplate.getClip(clipId));
+			message = "Upload successfully";
+			sendToUploadResultPage(request, response, message);
+
 		} catch (Exception ex) {
 			System.out.println(ex);
+			message = "Invalid data! Only vide/mp4 format";
+			try {
+				sendToUploadResultPage(request, response, message);
+			} catch (ServletException e) {
+				System.out.println(e);
+				response.sendRedirect("./Home");
+			}
 		}
+	}
+
+	private void checksForUploadRequest(HttpServletRequest request, HttpServletResponse response, int clipId)
+			throws IOException {
+		String message;
+		isMultipart = ServletFileUpload.isMultipartContent(request);
+		response.setContentType("text/html");
+
+		if (!isMultipart) {
+			System.out.println(videoClipJDBCTemplate.getClip(clipId));
+			message = "Upload successfully";
+			try {
+				sendToUploadResultPage(request, response, message);
+			} catch (ServletException e) {
+				System.out.println(e);
+				response.sendRedirect("./Home");
+			}
+		}
+	}
+
+	private int writingTheFile(FileItem fi, String fileName) throws VideoClipException, Exception {
+		int clipId;
+		if (fileName.lastIndexOf("\\") >= 0) {
+			file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\")));
+		} else {
+			file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\") + 1));
+		}
+		clipId = (int) videoClipJDBCTemplate
+				.addVideoClip(new VideoClip(0, fileName, "mladen", CONSTANT_PATH + fileName));
+		System.out.println("FIle with id " + clipId + "was successfully added");
+		fi.write(file);
+		return clipId;
+	}
+
+	private void sendToUploadResultPage(HttpServletRequest request, HttpServletResponse response, String message)
+			throws ServletException, IOException {
+		request.setAttribute("message", message);
+		System.out.println(request.getAttribute("message"));
+		request.getRequestDispatcher("./view/uploadedResult.jsp").forward(request, response);
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
-
-		throw new ServletException("GET method used with " + getClass().getName() + ": POST method required.");
+		response.sendRedirect("./Home");
 	}
 
 }
