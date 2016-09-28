@@ -8,14 +8,14 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-
-		<!-- <property name="url" value="jdbc:mysql://localhost/codetube"/> -->
-		<!-- <property name="username" value="root"/> -->
-		<!-- <property name="password" value="password"/> -->
-		<property name="url" value="jdbc:mysql://192.168.8.22:3306/hr" />
-		<property name="username" value="ittstudent" />
-		<property name="password" value="ittstudent-123" />
+		<property name="url" value="jdbc:mysql://localhost/codetube" />
+		<property name="username" value="root" />
+		<property name="password" value="password" />
 	</bean>
+	
+	<!-- <property name="url" value="jdbc:mysql://192.168.8.22:3306/hr" /> -->
+	<!-- <property name="username" value="ittstudent" /> -->
+	<!-- <property name="password" value="ittstudent-123" /> -->
 
 	<!-- Definition for UserJDBCTemplate bean -->
 	<bean id="UserJDBCTemplate" class="model.user.UserJDBCTemplate">

@@ -15,10 +15,12 @@ public class HomeServlet extends ServletManager {
 		
 		if (request.getSession(false) == null) {
 			//TODO redirect to non-logged home page
-			response.sendRedirect("./login.html");
+			
+			response.sendRedirect("./view/login.html");
 			return;
 		} else {
-			response.sendRedirect("./home.jsp");
+			System.out.println("stignah");
+			response.sendRedirect("./view/home.jsp");
 		//	response.getWriter().println("Logged in as " + request.getSession().getAttribute("user_name"));
 		}
 		

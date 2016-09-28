@@ -12,7 +12,8 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
 		//TODO redirect to non-logged home page
-		response.sendRedirect("./login.html");
+		System.out.println("stignah do logout");
+		response.sendRedirect("./view/login.html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
