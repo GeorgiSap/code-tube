@@ -10,7 +10,7 @@
       <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
       <property name="url" value="jdbc:mysql://localhost/codetube"/>
       <property name="username" value="root"/>
-      <property name="password" value="parolata"/>
+      <property name="password" value="password"/>
    </bean>
    
     <!-- Definition for UserJDBCTemplate bean -->

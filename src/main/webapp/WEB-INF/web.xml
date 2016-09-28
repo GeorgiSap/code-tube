@@ -16,6 +16,24 @@
   	<description></description>
   	<servlet-class>controller.RegisterServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<display-name>HomeServlet</display-name>
+  	<description></description>
+  	<servlet-class>controller.HomeServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletManager</servlet-name>
+  	<display-name>ServletManager</display-name>
+  	<description></description>
+  	<servlet-class>controller.ServletManager</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<display-name>LogoutServlet</display-name>
+  	<description></description>
+  	<servlet-class>controller.LogoutServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
   	<url-pattern>/Login</url-pattern>
@@ -23,5 +41,17 @@
   <servlet-mapping>
   	<servlet-name>RegisterServlet</servlet-name>
   	<url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<url-pattern>/Home</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletManager</servlet-name>
+  	<url-pattern>/Manager</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
   </servlet-mapping>
 </web-app>

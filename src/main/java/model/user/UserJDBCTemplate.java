@@ -13,7 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 public class UserJDBCTemplate implements UserDAO {
-	
+
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -38,7 +38,8 @@ public class UserJDBCTemplate implements UserDAO {
 				return pst;
 			}
 		}, keyHolder);
-		System.out.println("User with Email " + user.getEmail() +" registered successfully with ID " + keyHolder.getKey().intValue());
+		System.out.println("User with Email " + user.getEmail() + " registered successfully with ID "
+				+ keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
 	}
 
@@ -47,7 +48,7 @@ public class UserJDBCTemplate implements UserDAO {
 		String SQL = "select * from users where email = ? AND password = md5(?)";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email, password }, new UserMapper());
 		if (user != null) {
-			System.out.println("User with Email " + email +" logged in successfully");
+			System.out.println("User with Email " + email + " logged in successfully");
 			return user;
 		} else {
 			throw new UserException("Wrong Email/Password");
@@ -62,6 +63,27 @@ public class UserJDBCTemplate implements UserDAO {
 	}
 
 	@Override
+	public User get(String email) {
+		String SQL = "select * from users where email = ?";
+		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email }, new UserMapper());
+		return user;
+	}
+	
+	@Override
+	public boolean userNameExists(String userName) {
+		String SQL = "SELECT count(*) FROM users WHERE user_name = ?";
+		Integer cnt = jdbcTemplateObject.queryForObject(SQL, Integer.class, userName);
+		return cnt != null && cnt > 0;
+	}
+	
+	@Override
+	public boolean emailExists(String email) {
+		String SQL = "SELECT count(*) FROM users WHERE email = ?";
+		Integer cnt = jdbcTemplateObject.queryForObject(SQL, Integer.class, email);
+		return cnt != null && cnt > 0;
+	}
+
+	@Override
 	public List<User> listUsers() {
 		String SQL = "select * from users";
 		List<User> users = jdbcTemplateObject.query(SQL, new UserMapper());
@@ -71,7 +93,8 @@ public class UserJDBCTemplate implements UserDAO {
 	@Override
 	public void update(User user) {
 		String SQL = "update users set first_name = ?, last_name = ?, user_name = ?, email = ?, password = md5(?) where user_id = ?";
-		jdbcTemplateObject.update(SQL, user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail(), user.getPassword(), user.getId());
+		jdbcTemplateObject.update(SQL, user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail(),
+				user.getPassword(), user.getId());
 		System.out.println("Updated User Record with ID = " + user.getId());
 	}
 
@@ -79,9 +102,9 @@ public class UserJDBCTemplate implements UserDAO {
 	public void delete(int id) {
 		String SQL = "delete from users where user_id = ?";
 		jdbcTemplateObject.update(SQL, id);
-		System.out.println("Deleted User Record with ID = " + id );
+		System.out.println("Deleted User Record with ID = " + id);
 	}
-	
+
 	@Override
 	public void deleteAll() {
 		String SQL = "delete from users";
