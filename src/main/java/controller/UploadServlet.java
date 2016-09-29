@@ -56,13 +56,13 @@ public class UploadServlet extends HttpServlet {
 			// Check that we have a file upload request
 			checksForUploadRequest(request, response, clipId);
 
-			File afFile = new File("C:\\temp\\video");
+			File afFile = new File(CONSTANT_PATH);
 			DiskFileItemFactory factory = new DiskFileItemFactory(MAX_FILE_SIZE_UPLOADED, afFile);
 
 			// maximum size that will be stored in memory
 			factory.setSizeThreshold(maxMemSize);
 			// Location to save data that is larger than maxMemSize.
-			factory.setRepository(new File("c:\\temp\\video"));
+			factory.setRepository(new File(CONSTANT_PATH));
 
 			// Create a new file upload handler
 			ServletFileUpload upload = new ServletFileUpload(factory);
