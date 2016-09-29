@@ -52,11 +52,12 @@
 							</div>
 							<div class="signup">
 								<form role="form" method="POST" action="./Register">
-									<input name="email" type="text" class="email"
+									<input name="email" type="email" class="email"
 										placeholder="Email" maxlength="30" required="required"
 										pattern=".{<%=iUser.MIN_EMAIL_LENGTH%>,<%=iUser.MAX_FIELD_LENGTH%>}"
 										required
-										title="<%=iUser.MIN_EMAIL_LENGTH%> to <%=iUser.MAX_FIELD_LENGTH%> characters" />
+										<%-- title="<%=iUser.MIN_EMAIL_LENGTH%> to <%=iUser.MAX_FIELD_LENGTH%> characters" /> --%>
+										title="Enter a valid email"/>
 									<input name="password" type="password" placeholder="Password"
 										maxlength="30" required="required"
 										pattern=".{<%=iUser.MIN_PASSWORD_LENGTH%>,<%=iUser.MAX_FIELD_LENGTH%>}"
@@ -221,7 +222,7 @@
 							In</a>
 						<div id="small-dialog" class="mfp-hide">
 							<h3>Login</h3>
-							<div class="social-sits">
+ 							<div class="social-sits">
 								<div class="facebook-button">
 									<a href="#">Connect with Facebook</a>
 								</div>
@@ -234,10 +235,10 @@
 											class="play-icon popup-with-zoom-anim">Signup</a>
 									</p>
 								</div>
-							</div>
+							</div> 
 							<div class="signup">
 								<form action="./Login">
-									<input name="email" type="text" class="email"
+									<input name="email" type="email" class="email"
 										placeholder="Enter email" required="required"
 										pattern=".{<%=iUser.MIN_EMAIL_LENGTH%>,<%=iUser.MAX_FIELD_LENGTH%>}"
 										required
