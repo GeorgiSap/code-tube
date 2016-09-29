@@ -20,12 +20,19 @@ public class UserTest {
 		userJDBCTemplate.deleteAll();
 
 		System.out.println("------Records Creation--------");
-		int userId = (int) userJDBCTemplate.register(
-				new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234"));
-		userJDBCTemplate.register(
-				new User(0, "Petar", "Petrov", "Petar94", "petar@gmail.com", "pass5678"));
-		userJDBCTemplate.register(
-				new User(0, "Georgi", "Ivanov", "Georgi92", "georgi@gmail.com", "password"));
+		int userId = 0;
+		try {
+			userJDBCTemplate.register(
+					new User(0, "Petar", "Petrov", "Petar94", "petar@gmail.com", "pass5678"));
+			userJDBCTemplate.register(
+					new User(0, "Georgi", "Ivanov", "Georgi92", "georgi@gmail.com", "password"));
+			userId = (int) userJDBCTemplate.register(
+					new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234"));
+		} catch (UserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 
 		System.out.println("------Listing Multiple Records--------");
 		List<User> users = userJDBCTemplate.listUsers();
@@ -38,8 +45,13 @@ public class UserTest {
 		}
 
 		System.out.println("----Updating Record with ID = " + userId + " -----");
-		userJDBCTemplate.update(
-				new User(userId, "Ivan", "Ivanov", "Ivan1988", "ivan@gmail.com", "pass1234"));
+		try {
+			userJDBCTemplate.update(
+					new User(userId, "Ivan", "Ivanov", "Ivan1988", "ivan@gmail.com", "pass1234"));
+		} catch (UserException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		System.out.println("----Listing Record with ID = " + userId + " -----");
 		User user = userJDBCTemplate.get(userId);

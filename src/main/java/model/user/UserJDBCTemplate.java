@@ -45,6 +45,7 @@ public class UserJDBCTemplate implements UserDAO {
 
 	@Override
 	public User login(String email, String password) throws UserException {
+		//TODO Validate email and password
 		String SQL = "select * from users where email = ? AND password = md5(?)";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email, password }, new UserMapper());
 		if (user != null) {

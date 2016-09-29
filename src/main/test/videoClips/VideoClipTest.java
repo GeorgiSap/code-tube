@@ -1,16 +1,11 @@
 package videoClips;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.tag.TagDAO;
-import model.user.Channel;
-import model.user.User;
 import model.videoclip.VideoClip;
 import model.videoclip.VideoClipDAO;
 import model.videoclip.VideoClipException;

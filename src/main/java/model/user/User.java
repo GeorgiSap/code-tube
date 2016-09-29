@@ -8,7 +8,8 @@ import java.util.TreeSet;
 import model.tag.UserTag;
 import model.videoclip.VideoClip;
 
-public class User {
+public class User implements iUser{
+
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -17,17 +18,36 @@ public class User {
 	private String password;
 	private Set<VideoClip> history = new TreeSet<VideoClip>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
-	private List<Channel> subscribtions = new LinkedList<Channel>();
-	private Channel channel;
+	private List<User> subscribtions = new LinkedList<User>();
 
-	public User(int id, String firstName, String lastName, String userName, String email, String password) {
+	public User(int id, String firstName, String lastName, String userName, String email, String password) throws UserException {
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-		//to doo validation adn channel
+		//if (firstName != null && firstName.trim().length() >= MIN_NAME_LENGTH && firstName.length() <= MAX_FIELD_LENGTH) {
+			this.firstName = firstName;
+		//} else {
+		//	throw new UserException("First name not valid");
+		//}
+		//if (lastName != null && lastName.trim().length() >=MIN_NAME_LENGTH && lastName.length() <= MAX_FIELD_LENGTH) {
+			this.lastName = lastName;
+		//} else {
+		//	throw new UserException("Last name not valid");
+		//}
+		//if (userName != null && userName.trim().length() >= MIN_NAME_LENGTH && userName.length() <= MAX_FIELD_LENGTH) {
+			this.userName = userName;
+		//} else {
+		//	throw new UserException("User name not valid");
+		//}
+		//if (email != null && email.trim().length() >= MIN_EMAIL_LENGTH && email.length() <= MAX_FIELD_LENGTH) {
+			this.email = email;
+		//} else {
+		//	throw new UserException("Email not valid");
+		//}
+		//TODO fix
+//		if (password != null && password.length() >= MIN_PASSWORD_LENGTH && password.length() <= MAX_FIELD_LENGTH) {
+			this.password = password;
+//		} else {
+//			throw new UserException("Password not valid");
+//		}
 	}
 	
 	public String getFirstName() {
@@ -70,9 +90,6 @@ public class User {
 		this.password = password;
 	}
 
-	public Channel getChannel() {
-		return channel;
-	}
 
 	public int getId() {
 		return id;
@@ -82,8 +99,5 @@ public class User {
 		this.id = id;
 	}
 
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
 
 }

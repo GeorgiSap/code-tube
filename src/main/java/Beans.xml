@@ -37,6 +37,8 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-
+	<bean id="SubscriptionJDBCTemplate" class="model.user.subscription.SubscriptionJDBCTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 </beans>

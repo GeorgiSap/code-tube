@@ -10,20 +10,12 @@ public class HomeServlet extends ServletManager {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//disableCache(response);
-		
-		if (request.getSession(false) == null) {
-			//TODO redirect to non-logged home page
-			
-			response.sendRedirect("./view/login.html");
-			return;
+		if (request.getSession(false) == null) {	
+			response.sendRedirect("./view/login.jsp");
 		} else {
 			response.sendRedirect("./view/home.jsp");
-		//	response.getWriter().println("Logged in as " + request.getSession().getAttribute("user_name"));
 		}
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

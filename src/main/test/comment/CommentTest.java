@@ -13,6 +13,7 @@ import model.comment.CommentDAO;
 import model.comment.CommentException;
 import model.user.User;
 import model.user.UserDAO;
+import model.user.UserException;
 import model.videoclip.VideoClip;
 import model.videoclip.VideoClipDAO;
 import model.videoclip.VideoClipException;
@@ -28,7 +29,13 @@ public class CommentTest {
 		try {
 			
 			VideoClip videoClip = new VideoClip(0, "mladen.mp4", "mladen", "mladen.mp4");
-			User user = new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234");
+			User user = null;
+			try {
+				user = new User(0, "Ivan", "Ivanov", "Ivan883", "ivan3@gmail.com", "pass1234");
+			} catch (UserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip);
 			int userId = (int) userJDBCTemplate.register(user);
 			user.setId(userId);
