@@ -22,26 +22,26 @@ public class User implements iUser{
 
 	public User(int id, String firstName, String lastName, String userName, String email, String password) throws UserException {
 		this.id = id;
-		if (firstName != null && firstName.trim().length() >= MIN_NAME_LENGTH && firstName.length() <= MAX_FIELD_LENGTH) {
+		//if (firstName != null && firstName.trim().length() >= MIN_NAME_LENGTH && firstName.length() <= MAX_FIELD_LENGTH) {
 			this.firstName = firstName;
-		} else {
-			throw new UserException("First name not valid");
-		}
-		if (lastName != null && lastName.trim().length() >=MIN_NAME_LENGTH && lastName.length() <= MAX_FIELD_LENGTH) {
+		//} else {
+		//	throw new UserException("First name not valid");
+		//}
+		//if (lastName != null && lastName.trim().length() >=MIN_NAME_LENGTH && lastName.length() <= MAX_FIELD_LENGTH) {
 			this.lastName = lastName;
-		} else {
-			throw new UserException("Last name not valid");
-		}
-		if (userName != null && userName.trim().length() >= MIN_NAME_LENGTH && userName.length() <= MAX_FIELD_LENGTH) {
+		//} else {
+		//	throw new UserException("Last name not valid");
+		//}
+		//if (userName != null && userName.trim().length() >= MIN_NAME_LENGTH && userName.length() <= MAX_FIELD_LENGTH) {
 			this.userName = userName;
-		} else {
-			throw new UserException("User name not valid");
-		}
-		if (email != null && email.trim().length() >= MIN_EMAIL_LENGTH && email.length() <= MAX_FIELD_LENGTH) {
+		//} else {
+		//	throw new UserException("User name not valid");
+		//}
+		//if (email != null && email.trim().length() >= MIN_EMAIL_LENGTH && email.length() <= MAX_FIELD_LENGTH) {
 			this.email = email;
-		} else {
-			throw new UserException("Email not valid");
-		}
+		//} else {
+		//	throw new UserException("Email not valid");
+		//}
 		//TODO fix
 //		if (password != null && password.length() >= MIN_PASSWORD_LENGTH && password.length() <= MAX_FIELD_LENGTH) {
 			this.password = password;
