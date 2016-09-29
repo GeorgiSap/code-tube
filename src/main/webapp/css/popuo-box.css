@@ -3,7 +3,7 @@
 	background: #FFF;
     padding: 20px;
     text-align: left;
-    max-width: 64%;
+    max-width: 32%;
     margin: 40px auto;
     position: relative;
     text-align: center;
@@ -466,8 +466,7 @@ button::-moz-focus-inner {
     position: relative;
     padding: 2em 0 0 6em;
     float: right !important;
-    width: 50%;
-    border-left: solid 1px #E4E4E4;
+    width: 100%;
     text-align: left;
 }
 .login h3,.signup h3{
@@ -712,7 +711,7 @@ button::-moz-focus-inner {
 	.social-sits ul li a {
 	  font-size: 13px !important;
 	}
-	.signup input.email[type="text"], .signup input[type="password"], .signup input[type="password"] {
+	.signup input.email[type="text"], .signup input[type="password"], .signup input[type="email"] {
 		width: 100% !important;
 	}
 	.mfp-content h3 {
@@ -742,7 +741,7 @@ button::-moz-focus-inner {
 	#small-dialog4 {
 		max-width: 92% !important;
 	}
-	.signup input.email[type="text"], .signup input[type="password"] {
+	.signup input.email[type="text"], .signup input[type="password"], .signup input[type="email"] {
 		padding: 6px;
 		font-size:13px;
 	}
