@@ -1,7 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+            <%@ page import="model.user.iUser" %>
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>My Play a Entertainment Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>CodeTube</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
@@ -67,11 +73,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 										<div class="signup">
 											<form role="form" method="POST" action="./Register">
-												<input name="email" type="text" class="email" placeholder="Email" required="required" pattern="{3, 30}" title="Enter a valid email"/>
-												<input name="password" type="password" placeholder="Password" required="required" pattern=".{5,30}" title="Minimum 5 characters required" autocomplete="off" />
-												<input name="user_name" type="text" class="email" placeholder="Username" maxlength="30" pattern="{2, 30}" title="Minimum 2 characters required" />
-												<input name="first_name" type="text" class="email" placeholder="First name" maxlength="30" pattern="{2, 30}" title="Minimum 2 characters required" />
-												<input name="last_name" type="text" class="email" placeholder="Last name" maxlength="30" pattern="{2, 30}" title="Minimum 2 characters required" />
+												<input name="email" type="text" class="email" placeholder="Email" maxlength="30" required="required" 
+												pattern=".{<%= iUser.MIN_EMAIL_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_EMAIL_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters"/>
+												<input name="password" type="password" placeholder="Password" maxlength="30" required="required" 
+												pattern=".{<%= iUser.MIN_PASSWORD_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_PASSWORD_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters" autocomplete="off" />
+												<input name="user_name" type="text" class="email" placeholder="Username" maxlength="30" required="required" 
+												pattern=".{<%= iUser.MIN_NAME_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_NAME_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters" />
+												<input name="first_name" type="text" class="email" placeholder="First name" maxlength="30" required="required" 
+												pattern=".{<%= iUser.MIN_NAME_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_NAME_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters" />
+												<input name="last_name" type="text" class="email" placeholder="Last name" maxlength="30" required="required" 
+												pattern=".{<%= iUser.MIN_NAME_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_NAME_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters" />
 												<input type="submit"  value="Sign Up"/>
 											</form>
 										</div>
@@ -183,8 +194,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="signup">
 							<form action="./Login">
-								<input name="email" type="text" class="email" placeholder="Enter email" required="required" pattern="{3, 30}" title="Enter a valid email"/>
-								<input name="password" type="password" placeholder="Password" required="required" pattern=".{5,30}" title="Minimum 5 characters required" autocomplete="off" />
+								<input name="email" type="text" class="email" placeholder="Enter email" required="required" 
+								pattern=".{<%= iUser.MIN_EMAIL_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_EMAIL_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters"/>
+								<input name="password" type="password" placeholder="Password" required="required" 
+								pattern=".{<%= iUser.MIN_PASSWORD_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_PASSWORD_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters" autocomplete="off" />
 								<input type="submit"  value="LOGIN"/>
 							</form>
 							<div class="forgot">
@@ -264,7 +277,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</ul>
 						</div>
 						<div class="copyright">
-							<p>Copyright Â© 2015 My Play. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+							<p>Copyright © 2015 My Play. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
 						</div>
 					</div>
 				</div>
@@ -1147,7 +1160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<select class="form-control bfh-countries">
 									<option value="">Select Country</option>
 									<option value="AFG">Afghanistan</option>
-									<option value="ALA">Ã…land Islands</option>
+									<option value="ALA">Åland Islands</option>
 									<option value="ALB">Albania</option>
 									<option value="DZA">Algeria</option>
 									<option value="ASM">American Samoa</option>
@@ -1200,10 +1213,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<option value="COD">Congo, the Democratic Republic of the</option>
 									<option value="COK">Cook Islands</option>
 									<option value="CRI">Costa Rica</option>
-									<option value="CIV">CÃ´te d'Ivoire</option>
+									<option value="CIV">Côte d'Ivoire</option>
 									<option value="HRV">Croatia</option>
 									<option value="CUB">Cuba</option>
-									<option value="CUW">CuraÃ§ao</option>
+									<option value="CUW">Curaçao</option>
 									<option value="CYP">Cyprus</option>
 									<option value="CZE">Czech Republic</option>
 									<option value="DNK">Denmark</option>
@@ -1326,11 +1339,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<option value="PRT">Portugal</option>
 									<option value="PRI">Puerto Rico</option>
 									<option value="QAT">Qatar</option>
-									<option value="REU">RÃ©union</option>
+									<option value="REU">Réunion</option>
 									<option value="ROU">Romania</option>
 									<option value="RUS">Russian Federation</option>
 									<option value="RWA">Rwanda</option>
-									<option value="BLM">Saint BarthÃ©lemy</option>
+									<option value="BLM">Saint Barthélemy</option>
 									<option value="SHN">Saint Helena, Ascension and Tristan da Cunha</option>
 									<option value="KNA">Saint Kitts and Nevis</option>
 									<option value="LCA">Saint Lucia</option>
