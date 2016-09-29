@@ -24,15 +24,16 @@ public class SubscriptionTest {
 //		userJDBCTemplate.deleteAll();
 
 		System.out.println("------User Records Creation--------");
-		int userId1 = userJDBCTemplate.register(
-				new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234"));
-		int userId2 = userJDBCTemplate.register(
-				new User(0, "Petar", "Petrov", "Petar94", "petar@gmail.com", "pass5678"));
-		int userId3 = userJDBCTemplate.register(
-				new User(0, "Georgi", "Ivanov", "Georgi92", "georgi@gmail.com", "password"));
-		int userId4 = userJDBCTemplate.register(
-				new User(0, "Maria", "Ivanova", "Maria90", "maria@gmail.com", "password"));
+
 		try {
+			int userId1 = userJDBCTemplate.register(
+					new User(0, "Ivan", "Ivanov", "Ivan188", "ivan1@gmail.com", "pass1234"));
+			int userId2 = userJDBCTemplate.register(
+					new User(0, "Petar", "Petrov", "Petar194", "petar1@gmail.com", "pass5678"));
+			int userId3 = userJDBCTemplate.register(
+					new User(0, "Georgi", "Ivanov", "Georgi192", "georgi1@gmail.com", "password"));
+			int userId4 = userJDBCTemplate.register(
+					new User(0, "Maria", "Ivanova", "Maria190", "maria1@gmail.com", "password"));
 			subscriptionJDBCTemplate.subscribe(userId1, userId2);
 			subscriptionJDBCTemplate.subscribe(userId1, userId3);
 			subscriptionJDBCTemplate.subscribe(userId1, userId4);

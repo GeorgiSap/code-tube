@@ -16,7 +16,7 @@ public class HomeServlet extends ServletManager {
 		if (request.getSession(false) == null) {
 			//TODO redirect to non-logged home page
 			
-			response.sendRedirect("./view/login.html");
+			response.sendRedirect("./view/login.jsp");
 			return;
 		} else {
 			response.sendRedirect("./view/home.jsp");

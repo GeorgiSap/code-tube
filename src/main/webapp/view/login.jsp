@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="model.user.iUser" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -21,14 +24,14 @@
 						<div class="form-group col-md-12">
 							<label for="">Email</label> <input type="email"
 								class="form-control" name="email" id="" placeholder="Email"
-								pattern=".{3,30}" required title="3 to 30 characters">
+								pattern=".{<%= iUser.MIN_EMAIL_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_EMAIL_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters">
 						</div>
 						
 						<div class="form-group col-md-12">
 							<label for="password">Password</label> <input type="password"
 								class="form-control" name="password" id="password"
 								placeholder="Password" 
-								pattern=".{5,30}" required title="5 to 30 characters">
+								pattern=".{<%= iUser.MIN_PASSWORD_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_PASSWORD_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters">
 						</div>
 
 					</fieldset>
@@ -43,7 +46,7 @@
 					<div class="form-group">
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-primary">Login</button>
-							<a href="register.html">Don't have an account?</a>
+							<a href="register.jsp">Don't have an account?</a>
 						</div>
 					</div>
 

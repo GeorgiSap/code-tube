@@ -11,6 +11,7 @@ import model.playlist.PlaylistDAO;
 import model.playlist.PlaylistException;
 import model.user.User;
 import model.user.UserDAO;
+import model.user.UserException;
 import model.videoclip.VideoClip;
 import model.videoclip.VideoClipDAO;
 
@@ -22,7 +23,13 @@ public class PlayListTest {
 	@Test
 	public void test() {
 		try {
-			User user = new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234");
+			User user = null;
+			try {
+				user = new User(0, "Ivan", "Ivanov", "Ivan882", "ivan2@gmail.com", "pass1234");
+			} catch (UserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Playlist list = new Playlist(0, "Javascript");
 
 			int userId = (int) userJDBCTemplate.register(user);

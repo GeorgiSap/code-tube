@@ -28,12 +28,15 @@ public class LoginServlet extends HttpServlet {
 			// wrong password/email
 			e.printStackTrace();
 		}
+		if (user != null) {
+			HttpSession session = request.getSession();
+			session.setMaxInactiveInterval(20);
+			session.setAttribute("user_name", user.getUserName());
+			response.sendRedirect("./Home");
+		}
 		
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(20);
-		session.setAttribute("user_name", user.getUserName());
 
-		response.sendRedirect("./Home");
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

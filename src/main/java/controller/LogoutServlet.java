@@ -12,7 +12,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
 		//TODO redirect to non-logged home page
-		response.sendRedirect("./view/login.html");
+		response.sendRedirect("./view/login.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
