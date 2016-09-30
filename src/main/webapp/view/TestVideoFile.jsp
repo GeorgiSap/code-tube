@@ -8,6 +8,6 @@
 </head>
 <body>
 	<video width="400" controls> 
-	<source src="C:/temp/SampleVideo_1280x720_1mb.mp4" type="video/mp4"> </video>
+	<source src="./VideoServlet?id=5" type="video/mp4"> </video>
 </body>
 </html>

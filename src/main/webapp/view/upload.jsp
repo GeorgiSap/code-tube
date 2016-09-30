@@ -11,10 +11,10 @@
 <body>
 	<h3>File Upload:</h3>
 	<form action="../Upload" method="post" enctype="multipart/form-data">
-		<p>Performer of the video</p>
-		<input type="text" name="performer" size="50" /> <br />
 		<p>Select a file to upload:</p>
-		<input type="file" name="file" size="50" /> <br /> <input
+		<input type="file" name="file" size="50" /> 
+		<br /> 
+		<input
 			type="submit" value="Upload File" />
 	</form>
 	
