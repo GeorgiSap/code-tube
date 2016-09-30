@@ -11,9 +11,7 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		//TODO redirect to non-logged home page
-		//response.sendRedirect("./view/login.jsp");
-		response.sendRedirect("./index.jsp");
+		response.sendRedirect("index.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

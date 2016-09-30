@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import model.tag.UserTag;
 import model.videoclip.VideoClip;
 
-public class User implements iUser{
+public class User implements IUser{
 
 	private int id;
 	private String firstName;

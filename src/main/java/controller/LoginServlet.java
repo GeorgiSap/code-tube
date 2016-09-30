@@ -14,7 +14,7 @@ import model.user.User;
 import model.user.UserDAO;
 import model.user.UserException;
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends ServletManager {
 	private static final long serialVersionUID = 1L;
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
@@ -29,14 +29,13 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (user != null) {
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(20);
-			session.setAttribute("user_name", user.getUserName());
-			response.sendRedirect("./Home");
+			createSession(request, user);
+			response.sendRedirect("index.jsp");
+		} else {
+		 //TODO redirect to error page
+		//	response.sendRedirect("error.jsp");
+			response.sendRedirect("index.jsp");
 		}
-		
-
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

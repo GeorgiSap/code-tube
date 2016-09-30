@@ -15,7 +15,7 @@ import model.user.User;
 import model.user.UserDAO;
 import model.user.UserException;
 
-public class RegisterServlet extends HttpServlet {
+public class RegisterServlet extends ServletManager {
 	private static final long serialVersionUID = 1L;
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
@@ -40,21 +40,14 @@ public class RegisterServlet extends HttpServlet {
 					request.getParameter("email"),
 					request.getParameter("password"));
 		} catch (UserException e) {
-			// TODO Auto-generated catch block
+			// TODO redirect to error page
 			e.printStackTrace();
 			return;
 		}
 		int userId = userJDBCTemplate.register(newUser);
 		newUser.setId(userId);
-		//response.getWriter().println("You have successfully registered, " + newUser.getFirstName() + " " + newUser.getLastName() + "!");
-		// TODO create session
-		//TODO redirect to home.jsp
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(20);
-		session.setAttribute("user_name", newUser.getUserName());
-
-		response.sendRedirect("./Home");
-		System.out.println(request.getParameter("password"));
+		createSession(request, newUser);
+		response.sendRedirect("index.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
