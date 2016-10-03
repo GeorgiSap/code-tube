@@ -22,6 +22,10 @@ import model.videoclip.VideoClipDAO;
 import model.videoclip.VideoClipException;
 
 public class UploadServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int MAX_FILE_SIZE_UPLOADED = 500_000 * 1024;
 	private static final String CONSTANT_PATH = "C:\\temp\\";
 	private boolean isMultipart;
