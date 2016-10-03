@@ -3,14 +3,7 @@ package com.example.model.videoclip;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-
-import com.example.model.project.ProjectException;
-import com.example.model.tag.TagException;
-import com.example.model.user.User;
 
 public class VideoClipMapper implements RowMapper<VideoClip> {
 

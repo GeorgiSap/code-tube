@@ -1,16 +1,12 @@
-package tag;
-
-import static org.junit.Assert.*;
+package com.example.test.tag;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.tag.Tag;
-import model.tag.TagDAO;
-import model.tag.TagException;
-import model.user.User;
-import model.user.UserDAO;
+import com.example.model.tag.Tag;
+import com.example.model.tag.TagDAO;
+import com.example.model.tag.TagException;
 
 public class TagTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");

@@ -1,4 +1,4 @@
-package user;
+package com.example.test.user;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.user.User;
-import model.user.UserDAO;
-import model.user.UserException;
+import com.example.model.user.User;
+import com.example.model.user.UserDAO;
+import com.example.model.user.UserException;
 
 public class UserTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");

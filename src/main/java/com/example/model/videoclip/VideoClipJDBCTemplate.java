@@ -14,10 +14,13 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.example.model.user.User;
 import com.example.model.user.UserMapper;
+
 @Component
+@Repository
 public class VideoClipJDBCTemplate implements VideoClipDAO {
 
 	public DataSource dataSource;
@@ -29,7 +32,7 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	 * 
 	 * @see model.videoclip.VideoClipDAO#setDataSource(javax.sql.DataSource)
 	 */
-
+	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -105,6 +108,7 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	@Override
 	public List<VideoClip> getClips() {
 		String SQL = "select * from video_clips";
+		System.out.println(jdbcTemplateObject);
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new VideoClipMapper());
 		return videoClips;
 	}

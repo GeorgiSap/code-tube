@@ -1,10 +1,11 @@
-package unit.test;
+package com.example.test.unit.test;
 
 import java.time.LocalDateTime;
 
+import com.example.model.comment.Comment;
+import com.example.model.comment.CommentException;
+
 import junit.framework.TestCase;
-import model.comment.Comment;
-import model.comment.CommentException;
 
 public class CommentTest extends TestCase {
 	

@@ -1,19 +1,15 @@
-package playlists;
-
-import static org.junit.Assert.*;
+package com.example.test.playlists;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.playlist.Playlist;
-import model.playlist.PlaylistDAO;
-import model.playlist.PlaylistException;
-import model.user.User;
-import model.user.UserDAO;
-import model.user.UserException;
-import model.videoclip.VideoClip;
-import model.videoclip.VideoClipDAO;
+import com.example.model.playlist.Playlist;
+import com.example.model.playlist.PlaylistDAO;
+import com.example.model.playlist.PlaylistException;
+import com.example.model.user.User;
+import com.example.model.user.UserDAO;
+import com.example.model.user.UserException;
 
 public class PlayListTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");

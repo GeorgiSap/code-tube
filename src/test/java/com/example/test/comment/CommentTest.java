@@ -1,6 +1,5 @@
-package comment;
+package com.example.test.comment;
 
-import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 
@@ -8,15 +7,15 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.comment.Comment;
-import model.comment.CommentDAO;
-import model.comment.CommentException;
-import model.user.User;
-import model.user.UserDAO;
-import model.user.UserException;
-import model.videoclip.VideoClip;
-import model.videoclip.VideoClipDAO;
-import model.videoclip.VideoClipException;
+import com.example.model.comment.Comment;
+import com.example.model.comment.CommentDAO;
+import com.example.model.comment.CommentException;
+import com.example.model.user.User;
+import com.example.model.user.UserDAO;
+import com.example.model.user.UserException;
+import com.example.model.videoclip.VideoClip;
+import com.example.model.videoclip.VideoClipDAO;
+import com.example.model.videoclip.VideoClipException;
 
 public class CommentTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");

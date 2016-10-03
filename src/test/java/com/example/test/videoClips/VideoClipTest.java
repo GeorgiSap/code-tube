@@ -1,4 +1,4 @@
-package videoClips;
+package com.example.test.videoClips;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import model.videoclip.VideoClip;
-import model.videoclip.VideoClipDAO;
-import model.videoclip.VideoClipException;
+import com.example.model.videoclip.VideoClip;
+import com.example.model.videoclip.VideoClipDAO;
+import com.example.model.videoclip.VideoClipException;
 
 public class VideoClipTest {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
