@@ -8,7 +8,7 @@
 		</div>
 		<div class="drop-navigation drop-navigation">
 			<ul class="nav nav-sidebar">
-				<li class="active"><a href="index.html" class="home-icon"><span
+				<li class="active"><a href="index.jsp" class="home-icon"><span
 						class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
 				<li><a href="shows.html" class="user-icon"><span
 						class="glyphicon glyphicon-home glyphicon-blackboard"

@@ -7,10 +7,19 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+
 import com.example.model.comment.Comment;
 import com.example.model.tag.Tag;
-
+@Component
 public class VideoClip {
+
+	public VideoClip() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	private Set<Tag> tagsOfClip = new TreeSet<Tag>((o1, o2) -> o1.getKeyword().compareTo(o2.getKeyword()));
 	private Map<LocalDateTime, Comment> comments = new TreeMap<LocalDateTime, Comment>();

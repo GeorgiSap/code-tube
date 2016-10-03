@@ -7,28 +7,48 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import com.example.model.user.User;
 import com.example.model.user.UserMapper;
-
+@Component
 public class VideoClipJDBCTemplate implements VideoClipDAO {
-	private DataSource dataSource;
-	private JdbcTemplate jdbcTemplateObject;
 
-	/* (non-Javadoc)
+	public DataSource dataSource;
+
+	public JdbcTemplate jdbcTemplateObject;
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.videoclip.VideoClipDAO#setDataSource(javax.sql.DataSource)
 	 */
+
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/* (non-Javadoc)
+	public VideoClipJDBCTemplate() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public VideoClipJDBCTemplate(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.videoclip.VideoClipDAO#addVideoClip(model.videoclip.VideoClip)
 	 */
 	@Override
@@ -51,8 +71,12 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	/* (non-Javadoc)
-	 * @see model.videoclip.VideoClipDAO#increaseViewCount(model.videoclip.VideoClip, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * model.videoclip.VideoClipDAO#increaseViewCount(model.videoclip.VideoClip,
+	 * int)
 	 */
 	@Override
 	public int increaseViewCount(VideoClip videoClip, int numberOfViews) {
@@ -73,7 +97,9 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.videoclip.VideoClipDAO#getClips()
 	 */
 	@Override

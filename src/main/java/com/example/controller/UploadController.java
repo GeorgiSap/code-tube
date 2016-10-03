@@ -6,26 +6,29 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.model.videoclip.VideoClip;
 import com.example.model.videoclip.VideoClipDAO;
 import com.example.model.videoclip.VideoClipException;
+import com.example.model.videoclip.VideoClipJDBCTemplate;
 
-public class UploadServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+@Controller
+@RequestMapping(value = "/upload")
+public class UploadController {
+
 	private static final long serialVersionUID = 1L;
 	private static final int MAX_FILE_SIZE_UPLOADED = 500_000 * 1024;
 	private static final String CONSTANT_PATH = "C:\\temp\\";
@@ -34,25 +37,22 @@ public class UploadServlet extends HttpServlet {
 	private int maxFileSize = 500_000 * 1024;
 	private int maxMemSize = 40 * 1024;
 	private File file;
+	
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	private VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
+	@Autowired
+	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
 
-	public void init() {
-		// Get the file location where it would be stored.
-		filePath = getServletContext().getInitParameter("file-upload");
+	@RequestMapping(method = RequestMethod.GET)
+	public String showUploadPage(){
+		return "upload";
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	private void uploadFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@RequestMapping(method = RequestMethod.POST)
+	public String uploadVideo(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		int clipId = 0;
 		String message = null;
 		try {
-//			if ((performer == null) || (performer.trim().equals(""))) {
-//				System.out.println("Format is bad");
-//				message = "Need a performer!";
-//				sendToUploadResultPage(request, response, message);
-//				return;
-//			}
 
 			// Check that we have a file upload request
 			checksForUploadRequest(request, response, clipId);
@@ -91,7 +91,7 @@ public class UploadServlet extends HttpServlet {
 						System.out.println("Format is bad");
 						message = "Invalid data! Only vide/mp4 format";
 						sendToUploadResultPage(request, response, message);
-						return;
+						return null;
 					}
 
 					// Write the file
@@ -113,6 +113,7 @@ public class UploadServlet extends HttpServlet {
 				response.sendRedirect("./Home");
 			}
 		}
+		return "index";
 	}
 
 	private void checksForUploadRequest(HttpServletRequest request, HttpServletResponse response, int clipId)
@@ -153,10 +154,4 @@ public class UploadServlet extends HttpServlet {
 		System.out.println(request.getAttribute("message"));
 		request.getRequestDispatcher("./view/uploadedResult.jsp").forward(request, response);
 	}
-
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, java.io.IOException {
-		response.sendRedirect("./Home");
-	}
-
 }

@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="upload-grids">
 				<div class="upload-right">
 					<div class="upload-file">
-						<form action="./Upload" method="post"
+						<form action="./upload" method="post"
 							enctype="multipart/form-data">
 							<div class="services-icon">
 								<span class="glyphicon glyphicon-open" aria-hidden="true"></span>

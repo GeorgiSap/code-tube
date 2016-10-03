@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="org.springframework.samples.petclinic.web"/>
 
 	<!-- Initialization for data source -->
 	<bean id="dataSource"
@@ -17,27 +24,27 @@
 		<!--<property name="password" value="ittstudent-123" /> -->
 	</bean>
 	<!-- Definition for UserJDBCTemplate bean -->
-	<bean id="UserJDBCTemplate" class="model.user.UserJDBCTemplate">
+	<bean id="UserJDBCTemplate" class="com.example.model.user.UserJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="TagJDBCTemplate" class="model.tag.TagJDBCTemplate">
+	<bean id="TagJDBCTemplate" class="com.example.model.tag.TagJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="VideoClipJDBCTemplate" class="model.videoclip.VideoClipJDBCTemplate">
+	<bean id="VideoClipJDBCTemplate" class="com.example.model.videoclip.VideoClipJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="PlaylistJDBCTemplate" class="model.playlist.PlaylistJDBCTemplate">
+	<bean id="PlaylistJDBCTemplate" class="com.example.model.playlist.PlaylistJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="CommentJDBCTemplate" class="model.comment.CommentJDBCTemplate">
+	<bean id="CommentJDBCTemplate" class="com.example.model.comment.CommentJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="SubscriptionJDBCTemplate" class="model.user.subscription.SubscriptionJDBCTemplate">
+	<bean id="SubscriptionJDBCTemplate" class="com.example.model.user.subscription.SubscriptionJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 

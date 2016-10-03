@@ -9,7 +9,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html"><h1>
+			<a class="navbar-brand" href="./index.jsp"><h1>
 					<img src="images/logo.png" alt="" />
 				</h1></a>
 		</div>
@@ -28,7 +28,7 @@
 				<%@ include file="./login.jsp"%>
 				<% } else { %>
 				<div class="file">
-					<a href="./UploadButton">Upload</a>
+					<a href="upload">Upload</a>
 				</div>
 				
 				<%@ include file="./logout.jsp"%>
