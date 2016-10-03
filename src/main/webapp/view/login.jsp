@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="model.user.iUser" %>
+    <%@ page import="model.user.IUser" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,14 +24,14 @@
 						<div class="form-group col-md-12">
 							<label for="">Email</label> <input type="email"
 								class="form-control" name="email" id="" placeholder="Email"
-								pattern=".{<%= iUser.MIN_EMAIL_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_EMAIL_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters">
+								pattern=".{<%= IUser.MIN_EMAIL_LENGTH %>,<%= IUser.MAX_FIELD_LENGTH %>}" required title="<%= IUser.MIN_EMAIL_LENGTH %> to <%= IUser.MAX_FIELD_LENGTH %> characters">
 						</div>
 						
 						<div class="form-group col-md-12">
 							<label for="password">Password</label> <input type="password"
 								class="form-control" name="password" id="password"
 								placeholder="Password" 
-								pattern=".{<%= iUser.MIN_PASSWORD_LENGTH %>,<%= iUser.MAX_FIELD_LENGTH %>}" required title="<%= iUser.MIN_PASSWORD_LENGTH %> to <%= iUser.MAX_FIELD_LENGTH %> characters">
+								pattern=".{<%= IUser.MIN_PASSWORD_LENGTH %>,<%= IUser.MAX_FIELD_LENGTH %>}" required title="<%= IUser.MIN_PASSWORD_LENGTH %> to <%= IUser.MAX_FIELD_LENGTH %> characters">
 						</div>
 
 					</fieldset>

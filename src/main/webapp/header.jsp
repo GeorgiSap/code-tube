@@ -28,7 +28,7 @@
 				<%@ include file="./login.jsp"%>
 				<% } else { %>
 				<div class="file">
-					<a href="upload.jsp">Upload</a>
+					<a href="./UploadButton">Upload</a>
 				</div>
 				
 				<%@ include file="./logout.jsp"%>

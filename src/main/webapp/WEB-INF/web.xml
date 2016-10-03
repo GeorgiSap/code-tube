@@ -29,12 +29,6 @@
 		<servlet-class>controller.RegisterServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>HomeServlet</servlet-name>
-		<display-name>HomeServlet</display-name>
-		<description></description>
-		<servlet-class>controller.HomeServlet</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>ServletManager</servlet-name>
 		<display-name>ServletManager</display-name>
 		<description></description>
@@ -46,12 +40,17 @@
 		<description></description>
 		<servlet-class>controller.LogoutServlet</servlet-class>
 	</servlet>
-	
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
 		<display-name>UploadServlet</display-name>
 		<description></description>
 		<servlet-class>controller.UploadServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UploadButtonServlet</servlet-name>
+		<display-name>UploadButtonServlet</display-name>
+		<description></description>
+		<servlet-class>controller.UploadButtonServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
@@ -60,10 +59,6 @@
 	<servlet-mapping>
 		<servlet-name>RegisterServlet</servlet-name>
 		<url-pattern>/Register</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HomeServlet</servlet-name>
-		<url-pattern>/Home</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ServletManager</servlet-name>
@@ -76,6 +71,10 @@
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
 		<url-pattern>/Upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UploadButtonServlet</servlet-name>
+		<url-pattern>/UploadButton</url-pattern>
 	</servlet-mapping>
 
 </web-app>

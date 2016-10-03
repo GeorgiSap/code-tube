@@ -39,6 +39,10 @@ public class UploadServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
+		if (request.getSession(false) == null) {
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		uploadFile(request, response);
 	}
 
