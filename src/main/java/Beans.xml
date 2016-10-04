@@ -24,27 +24,27 @@
 		<!--<property name="password" value="ittstudent-123" /> -->
 	</bean>
 	<!-- Definition for UserJDBCTemplate bean -->
-	<bean id="UserJDBCTemplate" class="com.example.model.user.UserJDBCTemplate">
+	<bean id="UserJDBCTemplate" class="com.codetube.model.user.UserJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="TagJDBCTemplate" class="com.example.model.tag.TagJDBCTemplate">
+	<bean id="TagJDBCTemplate" class="com.codetube.model.tag.TagJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="VideoClipJDBCTemplate" class="com.example.model.videoclip.VideoClipJDBCTemplate">
+	<bean id="VideoClipJDBCTemplate" class="com.codetube.model.videoclip.VideoClipJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="PlaylistJDBCTemplate" class="com.example.model.playlist.PlaylistJDBCTemplate">
+	<bean id="PlaylistJDBCTemplate" class="com.codetube.model.playlist.PlaylistJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="CommentJDBCTemplate" class="com.example.model.comment.CommentJDBCTemplate">
+	<bean id="CommentJDBCTemplate" class="com.codetube.model.comment.CommentJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="SubscriptionJDBCTemplate" class="com.example.model.user.subscription.SubscriptionJDBCTemplate">
+	<bean id="SubscriptionJDBCTemplate" class="com.codetube.model.user.subscription.SubscriptionJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
