@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.*"%>
-<%@page import="com.example.model.videoclip.*"%>
+<%@page import="com.codetube.model.videoclip.*"%>
 
 <!DOCTYPE>
 <html>
