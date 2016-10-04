@@ -1,6 +1,6 @@
 					<div class="col-md-3 resent-grid recommended-grid">
 						<div class="resent-grid-img recommended-grid-img">
-							<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
+							<a href="./videoclip"><img src="images/r1.jpg" alt="" /></a>
 							<div class="time small-time">
 								<p>2:34</p>
 							</div>
