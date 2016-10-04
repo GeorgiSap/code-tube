@@ -4,9 +4,11 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<%@page import="com.codetube.model.videoclip.*"%>
 <!DOCTYPE HTML>
 <html>
 <head>
+
 <title>My Play a Entertainment Category Flat Bootstrap
 	Responsive Website Template | single :: w3layouts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,16 +17,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
 </script>
 <!-- bootstrap -->
-<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'
+<link href="../css/bootstrap.min.css" rel='stylesheet' type='text/css'
 	media="all" />
 <!-- //bootstrap -->
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="../css/dashboard.css" rel="stylesheet">
 <!-- Custom Theme files -->
-<link href="css/style.css" rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js"></script>
+<link href="../css/style.css" rel='stylesheet' type='text/css'
+	media="all" />
+<script src="../js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -39,17 +50,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<%@ include file="./header.jsp"%>
 	<%@ include file="./sitebar.jsp"%>
-
+	<%
+		VideoClip clip = (VideoClip) request.getAttribute("video");
+	%>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<div class="show-top-grids">
 			<div class="col-sm-8 single-left">
 				<div class="song">
 					<div class="song-info">
-						<h3>Etiam molestie nisl eget consequat pharetra</h3>
+						<h3><%=clip.getName()%></h3>
 					</div>
 					<div class="video-grid">
-						<iframe src="https://www.youtube.com/embed/oYiT-vLjhC4"
-							allowfullscreen></iframe>
+						<video width="800" height="480" controls>
+							<source src="../videos/<%=clip.getPath()%>" type="video/mp4">
+						</video>
 					</div>
 				</div>
 
@@ -87,21 +101,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="all-comments">
 					<div class="media-grids">
-					
-					<c:forEach begin="0" end="6" varStatus="loop">
-					<div class="media">
-							<h5>Ivan Ivanov</h5>
-							<div class="media-left">
-								<a href="#"> </a>
+
+						<c:forEach begin="0" end="6" varStatus="loop">
+							<div class="media">
+								<h5>Ivan Ivanov</h5>
+								<div class="media-left">
+									<a href="#"> </a>
+								</div>
+								<div class="media-body">
+									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet
+										ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex
+										pretium hendrerit</p>
+									<span>View all posts by :<a href="#"> Admin </a></span>
+								</div>
 							</div>
-							<div class="media-body">
-								<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet
-									ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex
-									pretium hendrerit</p>
-								<span>View all posts by :<a href="#"> Admin </a></span>
-							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
 
 					</div>
 				</div>
@@ -114,19 +128,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:forEach begin="0" end="11" varStatus="loop">
 
-							<div class="single-right-grids">
-						<div class="col-md-4 single-right-grid-left">
-							<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
+						<div class="single-right-grids">
+							<div class="col-md-4 single-right-grid-left">
+								<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
+							</div>
+							<div class="col-md-8 single-right-grid-right">
+								<a href="single.html" class="title"> Nullam interdum metus</a>
+								<p class="author">
+									<a href="#" class="author">John Maniya</a>
+								</p>
+								<p class="views">2,114,200 views</p>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="col-md-8 single-right-grid-right">
-							<a href="single.html" class="title"> Nullam interdum metus</a>
-							<p class="author">
-								<a href="#" class="author">John Maniya</a>
-							</p>
-							<p class="views">2,114,200 views</p>
-						</div>
-						<div class="clearfix"></div>
-					</div>
 
 					</c:forEach>
 

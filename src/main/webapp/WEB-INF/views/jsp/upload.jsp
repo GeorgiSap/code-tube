@@ -15,8 +15,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
 
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 </script>
 <!-- bootstrap -->
@@ -51,9 +53,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="services-icon">
 								<span class="glyphicon glyphicon-open" aria-hidden="true"></span>
 							</div>
+							
+		
+							
 
-
-							<input type="file" name="file" size="50" />
+							<input type="file" id="file" name="file" size="50" />
 
 							<div class="submit-button">
 
@@ -67,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<h5>Select files to upload</h5>
 					</div>
 				</div>
-<!-- 				<div class="upload-right-bottom-grids">
+				<!-- 				<div class="upload-right-bottom-grids">
 					<div class="col-md-4 upload-right-bottom-left">
 						<h4>Help and Suggestions</h4>
 						<div class="upload-right-top-list">
@@ -121,7 +125,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	<!-- //upload -->
 	<!-- footer -->
-<%@ include file="./footer.jsp"%>
+	<%@ include file="./footer.jsp"%>
 	<!-- //footer -->
 	<div class="clearfix"></div>
 	<div class="drop-menu">

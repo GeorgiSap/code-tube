@@ -15,15 +15,15 @@
 </head>
 <body>
 	<%
-		List<VideoClip> blogs = (List<VideoClip>) request.getAttribute("videos");
+		VideoClip clip = (VideoClip) request.getAttribute("video");
 	%>
-	<p><%=blogs%>
-	</p>
+
 
 	<video width="320" height="240" controls>
-		<source src="../videos/1.mp4" type="video/mp4">
+		<source src="../videos/<%=clip.getPath()%>" type="video/mp4">
 	</video>
-
+	<p><%=clip.getPerformer()%>
+	</p>
 </body>
 
 

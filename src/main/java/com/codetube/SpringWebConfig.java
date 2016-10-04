@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,7 +38,12 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/images/**").addResourceLocations("/static/images/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/static/js/");
 		registry.addResourceHandler("/fonts/**").addResourceLocations("/static/fonts/");
-		registry.addResourceHandler("/videos/**").addResourceLocations(myExternalFilePath);
+		registry.addResourceHandler("/videos/**").addResourceLocations("file:///"+WebInitializer.LOCATION);
+	}
+
+	@Bean(name = "multipartResolver")
+	public StandardServletMultipartResolver resolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 	@Bean
@@ -50,7 +56,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
-	@Bean(name="dataSource")
+	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -65,7 +71,6 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	public VideoClipDAO getContactDAO() {
 		return new VideoClipJDBCTemplate(getDataSource());
 	}
-	
 
 	// localization configuration
 	@Bean
@@ -88,7 +93,5 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		changeInterceptor.setParamName("language");
 		registry.addInterceptor(changeInterceptor);
 	}
-
-
 
 }

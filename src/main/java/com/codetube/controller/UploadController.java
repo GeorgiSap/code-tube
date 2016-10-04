@@ -17,144 +17,47 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.codetube.WebInitializer;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipException;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 
 @Controller
-@RequestMapping(value = "/upload")
 public class UploadController {
-
-	private static final long serialVersionUID = 1L;
-	private static final int MAX_FILE_SIZE_UPLOADED = 500_000 * 1024;
-	private static final String CONSTANT_PATH = "C:\\temp\\";
-	private boolean isMultipart;
-	private String filePath;
-	private int maxFileSize = 500_000 * 1024;
-	private int maxMemSize = 40 * 1024;
-	private File file;
-	
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	@Autowired
-	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
+	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
+			.getBean("VideoClipJDBCTemplate");
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showUploadPage(HttpServletRequest request, HttpServletResponse response){
-		if (request.getSession(false) == null) {
-		return "index";
-		}
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
+	public String showUploadPage() {
 		return "upload";
 	}
-	
-	@RequestMapping(method = RequestMethod.POST)
-	public String uploadVideo(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-		int clipId = 0;
-		String message = null;
+
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile,
+			// @RequestParam("artist") String artist,
+			ModelMap model) throws IOException {
+		int clipId;
+		String[] path = multipartFile.getOriginalFilename().split("/");
+		String fileName = path[path.length - 1];
 		try {
-
-			// Check that we have a file upload request
-			checksForUploadRequest(request, response, clipId);
-
-			File afFile = new File(CONSTANT_PATH);
-			DiskFileItemFactory factory = new DiskFileItemFactory(MAX_FILE_SIZE_UPLOADED, afFile);
-
-			// maximum size that will be stored in memory
-			factory.setSizeThreshold(maxMemSize);
-			// Location to save data that is larger than maxMemSize.
-			factory.setRepository(new File(CONSTANT_PATH));
-
-			// Create a new file upload handler
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			// maximum file size to be uploaded.
-			upload.setSizeMax(maxFileSize);
-
-			// Parse the request to get file items.
-			List<FileItem> fileItems = upload.parseRequest(request);
-
-			// Process the uploaded file items
-			Iterator<FileItem> i = fileItems.iterator();
-
-			while (i.hasNext()) {
-				FileItem fi = (FileItem) i.next();
-				if (!fi.isFormField()) {
-					// Get the uploaded file parameters
-					String fieldName = fi.getFieldName();
-					String fileName = fi.getName();
-					String contentType = fi.getContentType();
-					boolean isInMemory = fi.isInMemory();
-					long sizeInBytes = fi.getSize();
-
-					// only mp4
-					if (!contentType.equals("video/mp4")) {
-						System.out.println("Format is bad");
-						message = "Invalid data! Only vide/mp4 format";
-						sendToUploadResultPage(request, response, message);
-						return null;
-					}
-
-					// Write the file
-					clipId = writingTheFile(fi, fileName);
-				}
-			}
-
-			System.out.println(videoClipJDBCTemplate.getClip(clipId));
-			message = "Upload successfully";
-			sendToUploadResultPage(request, response, message);
-
-		} catch (Exception ex) {
-			System.out.println(ex);
-			message = "Invalid data! Only vide/mp4 format";
-			try {
-				sendToUploadResultPage(request, response, message);
-			} catch (ServletException e) {
-				System.out.println(e);
-				response.sendRedirect("./Home");
-			}
+			clipId = (int) videoClipJDBCTemplate
+					.addVideoClip(new VideoClip(0, fileName, "mladen", path[0]));
+		} catch (VideoClipException e) {
+			return "index";
 		}
+		FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
+
 		return "index";
 	}
 
-	private void checksForUploadRequest(HttpServletRequest request, HttpServletResponse response, int clipId)
-			throws IOException {
-		String message;
-		isMultipart = ServletFileUpload.isMultipartContent(request);
-		response.setContentType("text/html");
-
-		if (!isMultipart) {
-			System.out.println(videoClipJDBCTemplate.getClip(clipId));
-			message = "Upload successfully";
-			try {
-				sendToUploadResultPage(request, response, message);
-			} catch (ServletException e) {
-				System.out.println(e);
-				response.sendRedirect("./Home");
-			}
-		}
-	}
-
-	private int writingTheFile(FileItem fi, String fileName) throws VideoClipException, Exception {
-		int clipId;
-		if (fileName.lastIndexOf("\\") >= 0) {
-			file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\")));
-		} else {
-			file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\") + 1));
-		}
-		clipId = (int) videoClipJDBCTemplate
-				.addVideoClip(new VideoClip(0, fileName, "mladen", CONSTANT_PATH + fileName));
-		System.out.println("FIle with id " + clipId + "was successfully added");
-		fi.write(file);
-		return clipId;
-	}
-
-	private void sendToUploadResultPage(HttpServletRequest request, HttpServletResponse response, String message)
-			throws ServletException, IOException {
-		request.setAttribute("message", message);
-		System.out.println(request.getAttribute("message"));
-		request.getRequestDispatcher("./view/uploadedResult.jsp").forward(request, response);
-	}
 }

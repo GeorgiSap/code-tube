@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -24,10 +25,10 @@ public class VideoController {
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
 	
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
-	public String products(Model model , HttpServletRequest request) {
-		List<VideoClip> list = videoClipJDBCTemplate.getClips();
-		System.out.println(list);
-		request.setAttribute("videos", list);
+	public String products(Model model, @PathVariable("video_id") Integer videoId) {
+		VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
+		System.out.println(clip);
+		model.addAttribute("video", clip);
 		return "singlevideo";
 	}
 }
