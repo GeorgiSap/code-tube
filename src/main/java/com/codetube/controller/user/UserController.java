@@ -1,16 +1,14 @@
-package com.codetube.controller;
+package com.codetube.controller.user;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.codetube.model.user.User;
 
-public abstract class ServletManager extends HttpServlet {
+public class UserController {
 	private static final int SESSION_LENGTH = 3*60/24;
-	private static final long serialVersionUID = 1L;
-
+	
 	public void createSession(HttpServletRequest request, User user) {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(SESSION_LENGTH);

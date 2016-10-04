@@ -1,33 +1,41 @@
-package com.codetube.controller;
+package com.codetube.controller.user;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.UserException;
 
-public class RegisterServlet extends ServletManager {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping(value = "/register")
+public class RegisterController extends UserController{
+	
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	@RequestMapping(method = RequestMethod.GET)
+	public String redirect(){
+		return "index";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public String register(HttpServletRequest request, HttpServletResponse response){
 		if (userJDBCTemplate.emailExists(request.getParameter("email"))) {
-			response.getWriter().println("Email " + request.getParameter("email")  + " already exists.");
-			return;
+		//	response.getWriter().println("Email " + request.getParameter("email")  + " already exists.");
+			return "index";
 		}
 		
 		if (userJDBCTemplate.userNameExists(request.getParameter("user_name"))) {
-			response.getWriter().println("Username " + request.getParameter("user_name")  + " already exists.");
-			return;
+			//response.getWriter().println("Username " + request.getParameter("user_name")  + " already exists.");
+			return "index";
 		}
 
 		User newUser = null;
@@ -40,16 +48,14 @@ public class RegisterServlet extends ServletManager {
 		} catch (UserException e) {
 			// TODO redirect to error page
 			e.printStackTrace();
-			return;
+			return "index";
 		}
 		int userId = userJDBCTemplate.register(newUser);
 		newUser.setId(userId);
 		createSession(request, newUser);
-		response.sendRedirect("index.jsp");
+		return "index";
 	}
+	
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+	
 }

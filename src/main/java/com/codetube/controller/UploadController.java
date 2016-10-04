@@ -43,7 +43,10 @@ public class UploadController {
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String showUploadPage(){
+	public String showUploadPage(HttpServletRequest request, HttpServletResponse response){
+		if (request.getSession(false) == null) {
+		return "index";
+		}
 		return "upload";
 	}
 	

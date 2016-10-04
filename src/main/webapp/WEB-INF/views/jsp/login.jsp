@@ -11,7 +11,7 @@
 						<h3>Login</h3>
 
 						<div class="signup">
-							<form action="./Login">
+							<form action="./login" method="POST">
 								<input name="email" type="email" class="email"
 									placeholder="Enter email" required="required"
 									pattern=".{<%=IUser.MIN_EMAIL_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"

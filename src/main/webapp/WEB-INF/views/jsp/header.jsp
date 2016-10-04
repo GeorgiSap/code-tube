@@ -26,9 +26,10 @@
 				<% if (request.getSession(false) == null) { %>
 				<%@ include file="./register.jsp"%>
 				<%@ include file="./login.jsp"%>
-				<% } else { %>
+				<% } else 
+				{ %>
 				<div class="file">
-					<a href="upload">Upload</a>
+					<a href="./upload">Upload</a>
 				</div>
 				
 				<%@ include file="./logout.jsp"%>
