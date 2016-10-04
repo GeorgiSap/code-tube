@@ -5,7 +5,7 @@
 <% String userName =  (String)request.getSession().getAttribute("user_name");  %>
 
 <div class="signin">
-	<a href="index.jsp" style="background: red; font-weight: bold">Hi, <%= userName %></a>
+	<a href="./" style="background: red; font-weight: bold">Hi, <%= userName %></a>
 	<a href="./logout">Logout</a>
 	<div id="small-dialog" class="mfp-hide">
 		<div class="clearfix"></div>
