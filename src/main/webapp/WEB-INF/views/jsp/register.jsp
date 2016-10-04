@@ -18,7 +18,7 @@
 						<h3>Create Account</h3>
 
 						<div class="signup">
-							<form role="form" method="POST" action="./Register">
+							<form role="form" method="POST" action="./register">
 								<input name="email" type="email" class="email"
 									placeholder="Email" maxlength="30" required="required"
 									pattern=".{<%=IUser.MIN_EMAIL_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
