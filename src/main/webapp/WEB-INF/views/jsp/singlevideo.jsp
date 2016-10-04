@@ -21,9 +21,8 @@
 	</p>
 
 	<video width="320" height="240" controls>
-		<source src="/videos/1.mp4" type="video/mp4">
+		<source src="../videos/1.mp4" type="video/mp4">
 	</video>
-	<img src="/videos/2.png" alt="Smiley face" height="42" width="42">
 
 </body>
 

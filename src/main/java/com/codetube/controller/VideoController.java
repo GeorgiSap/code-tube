@@ -17,13 +17,13 @@ import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 
 @Controller
-@SessionAttributes("video")
+@SessionAttributes("player")
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	@Autowired
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
 	
-	@RequestMapping(value = "/videos/{video_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
 	public String products(Model model , HttpServletRequest request) {
 		List<VideoClip> list = videoClipJDBCTemplate.getClips();
 		System.out.println(list);
