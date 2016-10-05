@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,25 +39,34 @@ public class UploadController {
 			.getBean("VideoClipJDBCTemplate");
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String showUploadPage() {
+	public String showUploadPage(HttpServletRequest request) {
+		if (request.getSession(false) == null) {
+			return "index";
+		}
+
 		return "upload";
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile,
+	public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,
 			// @RequestParam("artist") String artist,
 			ModelMap model) throws IOException {
-		int clipId;
-		String[] path = multipartFile.getOriginalFilename().split("/");
-		String fileName = path[path.length - 1];
 		try {
-			clipId = (int) videoClipJDBCTemplate
-					.addVideoClip(new VideoClip(0, fileName, "mladen", path[0]));
+			int clipId;
+
+			if (request.getSession(false) == null) {
+				return "index";
+			}
+
+			String[] path = multipartFile.getOriginalFilename().split("/");
+			String fileName = path[path.length - 1];
+
+			clipId = (int) videoClipJDBCTemplate.addVideoClip(new VideoClip(0, fileName, "mladen", path[0]));
+
+			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
 		} catch (VideoClipException e) {
 			return "index";
 		}
-		FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
-
 		return "index";
 	}
 

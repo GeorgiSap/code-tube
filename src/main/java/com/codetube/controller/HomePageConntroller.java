@@ -11,7 +11,6 @@ public class HomePageConntroller {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String sayHello(Model model) {
-		model.addAttribute("text", "Hi !");
 		return "index";
 	}	
 

@@ -22,13 +22,19 @@ import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	@Autowired
-	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context.getBean("VideoClipJDBCTemplate");
-	
+	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
+			.getBean("VideoClipJDBCTemplate");
+
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
-	public String products(Model model, @PathVariable("video_id") Integer videoId) {
-		VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
-		System.out.println(clip);
-		model.addAttribute("video", clip);
-		return "singlevideo";
+	public String products(Model model, @PathVariable("video_id") Integer videoId	) {
+		try {
+			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
+			System.out.println(clip);
+			model.addAttribute("video", clip);
+			return "singlevideo";
+		} catch (Exception e) {
+			return "index";
+		}
+
 	}
 }
