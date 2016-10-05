@@ -7,16 +7,22 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+@Component
+@Repository
 public class UserJDBCTemplate implements UserDAO {
 
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
+	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -45,7 +51,7 @@ public class UserJDBCTemplate implements UserDAO {
 
 	@Override
 	public User login(String email, String password) throws UserException {
-		//TODO Validate email and password
+		// TODO Validate email and password
 		String SQL = "select * from users where email = ? AND password = md5(?)";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email, password }, new UserMapper());
 		if (user != null) {
@@ -69,14 +75,14 @@ public class UserJDBCTemplate implements UserDAO {
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email }, new UserMapper());
 		return user;
 	}
-	
+
 	@Override
 	public boolean userNameExists(String userName) {
 		String SQL = "SELECT count(*) FROM users WHERE user_name = ?";
 		Integer cnt = jdbcTemplateObject.queryForObject(SQL, Integer.class, userName);
 		return cnt != null && cnt > 0;
 	}
-	
+
 	@Override
 	public boolean emailExists(String email) {
 		String SQL = "SELECT count(*) FROM users WHERE email = ?";

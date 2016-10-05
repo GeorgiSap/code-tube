@@ -7,12 +7,14 @@ import javax.servlet.http.HttpSession;
 import com.codetube.model.user.User;
 
 public class UserController {
-	private static final int SESSION_LENGTH = 3*60/24;
+	private static final int SESSION_LENGTH = 300*60/24;
 	
 	public void createSession(HttpServletRequest request, User user) {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(SESSION_LENGTH);
+		System.out.println(user);
 		session.setAttribute("user_name", user.getUserName());
+		session.setAttribute("user_id", user.getId());
 	}
 	
 	public void disableCache(HttpServletResponse response) {

@@ -4,6 +4,9 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -41,21 +44,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 
 	<%@ include file="./header.jsp"%>
+
 	<!-- upload -->
 	<div class="upload">
-		<!-- container -->
-		<div class="container">
-			<div class="upload-grids">
-				<div class="upload-right">
-					<div class="upload-file">
-						<form action="./upload" method="post"
-							enctype="multipart/form-data">
+		<form action="./upload" method="post" enctype="multipart/form-data">
+
+			<!-- container -->
+			<div class="container">
+				<div class="upload-grids">
+					<div class="upload-right">
+						<div class="upload-file">
+
 							<div class="services-icon">
 								<span class="glyphicon glyphicon-open" aria-hidden="true"></span>
 							</div>
-							
-		
-							
 
 							<input type="file" id="file" name="file" size="50" />
 
@@ -65,13 +67,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<input type="submit" value="Upload File" />
 
 							</div>
-						</form>
+
+
+						</div>
+						<div class="inputform">
+							<h5>Performer:</h5>
+							<input type="text" id="artist" name="artist" size="35" />
+							<form:select path="tags" >
+								<form:option value="NONE" label="--- Select ---" />
+								<form:options items="${tags}"/>
+							</form:select>
+						</div>
 					</div>
-					<div class="upload-info">
-						<h5>Select files to upload</h5>
-					</div>
-				</div>
-				<!-- 				<div class="upload-right-bottom-grids">
+					<!-- 				<div class="upload-right-bottom-grids">
 					<div class="col-md-4 upload-right-bottom-left">
 						<h4>Help and Suggestions</h4>
 						<div class="upload-right-top-list">
@@ -119,10 +127,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="clearfix"></div>
 				</div> -->
+				</div>
 			</div>
-		</div>
-		<!-- //container -->
+			<!-- //container -->
+		</form>
 	</div>
+
 	<!-- //upload -->
 	<!-- footer -->
 	<%@ include file="./footer.jsp"%>

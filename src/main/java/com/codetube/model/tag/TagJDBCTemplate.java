@@ -3,28 +3,41 @@ package com.codetube.model.tag;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.util.List;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import com.codetube.model.videoclip.VideoClip;
+import com.codetube.model.videoclip.VideoClipMapper;
+
+@Component
+@Repository
 public class TagJDBCTemplate implements TagDAO {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.tag.TagDAO#setDataSource(javax.sql.DataSource)
 	 */
+	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.tag.TagDAO#addTag(model.tag.Tag)
 	 */
 	@Override
@@ -44,7 +57,16 @@ public class TagJDBCTemplate implements TagDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	/* (non-Javadoc)
+	public List<Tag> getTags() {
+		String SQL = "select * from tags";
+		System.out.println(jdbcTemplateObject);
+		List<Tag> tags = jdbcTemplateObject.query(SQL, new TagMapper());
+		return tags;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.tag.TagDAO#deleteTag(int)
 	 */
 	@Override
@@ -55,7 +77,9 @@ public class TagJDBCTemplate implements TagDAO {
 		return number;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.tag.TagDAO#deleteAllTags()
 	 */
 	@Override

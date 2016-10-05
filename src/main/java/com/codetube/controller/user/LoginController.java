@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ public class LoginController extends UserController {
 	public static final String DEFAULT_ERROR_VIEW = "error";
 
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+	@Autowired
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 
 	@RequestMapping(method = RequestMethod.GET)

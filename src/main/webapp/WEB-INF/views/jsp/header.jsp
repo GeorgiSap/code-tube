@@ -1,4 +1,5 @@
 <%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -10,7 +11,8 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="./index.jsp"><h1>
-					<img src="images/logo.png" alt="" />
+					
+					<img src='<c:url value="/images/logo.png"/>' alt="" />
 				</h1></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">

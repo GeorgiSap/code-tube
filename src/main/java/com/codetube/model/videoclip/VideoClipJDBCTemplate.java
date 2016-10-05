@@ -55,8 +55,8 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	 * @see model.videoclip.VideoClipDAO#addVideoClip(model.videoclip.VideoClip)
 	 */
 	@Override
-	public int addVideoClip(VideoClip videoClip) {
-		final String SQL = "insert into video_clips (name, path, performer, view_count) values (?,?,?,?)";
+	public int addVideoClip(VideoClip videoClip, User user) {
+		final String SQL = "insert into video_clips (name, path, performer,user_id, view_count) values (?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		this.jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -65,7 +65,8 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 				pst.setString(1, videoClip.getName());
 				pst.setString(2, videoClip.getPath());
 				pst.setString(3, videoClip.getPerformer());
-				pst.setLong(4, videoClip.getViewCount());
+				pst.setInt(4, user.getId());
+				pst.setLong(5, videoClip.getViewCount());
 				return pst;
 			}
 		}, keyHolder);

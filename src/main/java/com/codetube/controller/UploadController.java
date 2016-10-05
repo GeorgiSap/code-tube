@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codetube.WebInitializer;
+import com.codetube.model.tag.Tag;
+import com.codetube.model.tag.TagDAO;
+import com.codetube.model.user.User;
+import com.codetube.model.user.UserDAO;
+import com.codetube.model.user.UserJDBCTemplate;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipException;
@@ -37,6 +42,11 @@ public class UploadController {
 	@Autowired
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
+	@Autowired
+	public UserJDBCTemplate userJDBCTemplate = (UserJDBCTemplate) context.getBean("UserJDBCTemplate");
+
+	@Autowired
+	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadPage(HttpServletRequest request) {
@@ -44,25 +54,47 @@ public class UploadController {
 			return "index";
 		}
 
+		List<Tag> tags = (List<Tag>) tagJDBCTemplate.getTags();
+		request.setAttribute("tags", tags);
 		return "upload";
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,
-			// @RequestParam("artist") String artist,
-			ModelMap model) throws IOException {
+			@RequestParam("artist") String performerOfVideo, @RequestParam("tag") String tag, ModelMap model)
+			throws IOException {
 		try {
 			int clipId;
-
+			int userId;
+			String[] path;
+			String fileName;
+			System.out.println(tag);
 			if (request.getSession(false) == null) {
 				return "index";
 			}
 
-			String[] path = multipartFile.getOriginalFilename().split("/");
-			String fileName = path[path.length - 1];
+			if ((performerOfVideo == null) || (performerOfVideo.trim().equals(""))
+					|| (performerOfVideo.matches(".*\\d+.*"))) {
+				return "index";
+			}
 
-			clipId = (int) videoClipJDBCTemplate.addVideoClip(new VideoClip(0, fileName, "mladen", path[0]));
+			if (request.getSession().getAttribute("user_id") == null) {
+				return "index";
+			}
 
+			userId = (int) request.getSession().getAttribute("user_id");
+			path = multipartFile.getOriginalFilename().split("/");
+			fileName = path[path.length - 1];
+
+			System.out.println("Do tuk dobre " + userId + "template " + userJDBCTemplate);
+			User user = userJDBCTemplate.get(userId);
+			if (user == null) {
+				return "index";
+			}
+
+			clipId = (int) videoClipJDBCTemplate.addVideoClip(new VideoClip(0, fileName, performerOfVideo, path[0]),
+					user);
+			System.out.println("I added successfully clip with " + clipId);
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
 		} catch (VideoClipException e) {
 			return "index";

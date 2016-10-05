@@ -1,6 +1,14 @@
 package com.codetube.model.tag;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Tag {
+
+	public Tag() {
+		super();
+	}
+
 	private int id;
 	private String keyword;
 
@@ -22,6 +30,11 @@ public class Tag {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return keyword;
 	}
 
 }

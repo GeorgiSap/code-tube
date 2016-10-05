@@ -9,10 +9,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.codetube.model.user.User;
+
 public interface VideoClipDAO {
 	void setDataSource(DataSource dataSource);
 
-	int addVideoClip(VideoClip videoClip);
+	int addVideoClip(VideoClip videoClip, User user);
 
 	int increaseViewCount(VideoClip videoClip, int numberOfViews);
 

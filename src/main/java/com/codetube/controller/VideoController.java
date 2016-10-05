@@ -26,12 +26,15 @@ public class VideoController {
 			.getBean("VideoClipJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
-	public String products(Model model, @PathVariable("video_id") Integer videoId	) {
+	public String products(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
 		try {
+			if (request.getSession(false) == null) {
+				return "index";
+			}
 			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
 			System.out.println(clip);
 			model.addAttribute("video", clip);
-			return "singlevideo";
+			return "single";
 		} catch (Exception e) {
 			return "index";
 		}
