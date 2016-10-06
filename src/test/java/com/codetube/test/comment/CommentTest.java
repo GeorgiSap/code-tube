@@ -35,10 +35,11 @@ public class CommentTest {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip);
 			int userId = (int) userJDBCTemplate.register(user);
 			user.setId(userId);
+			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip,user);
 			videoClip.setId(videoClipId);
+			
 			
 			
 			int commentId = commentJDBCTemplate.addCommentToVideo(videoClip,

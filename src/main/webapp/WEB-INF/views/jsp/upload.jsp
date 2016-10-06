@@ -19,8 +19,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
+	
 
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 </script>
@@ -70,13 +72,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 						</div>
- 						<div class="inputform">
+						<div class="inputform">
 							<h5>Performer:</h5>
 							<input type="text" id="artist" name="artist" size="35" />
-							<form:select path="tags" >
-								<form:option value="NONE" label="--- Select ---" />
-								<form:options items="${tags}"/>
-							</form:select>
+							 
+							<select name=tag>
+								<option value="${selected}" selected>${selected}</option>
+								<c:forEach items="${tags}" var="tag">
+									<c:if test="${tag != selected}">
+										<option value="${tag}">${tag}</option>
+									</c:if>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					<!-- 				<div class="upload-right-bottom-grids">
