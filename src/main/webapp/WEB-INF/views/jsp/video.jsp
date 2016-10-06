@@ -16,10 +16,11 @@
 							</h5>
 							<ul>
 								<li><p class="author author-info">
-										<a href="#" class="author">John Maniya</a>
+										<a href="#" class="author">User Name</a>
 									</p></li>
-								<li class="right-list"><p class="views views-info">2,114,200
-										views</p></li>
+								<li class="right-list">
+								<p class="views views-info">2,114,200 views</p>
+										</li>
 							</ul>
 						</div>
 					</div>

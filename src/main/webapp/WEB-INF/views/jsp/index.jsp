@@ -18,7 +18,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+
+
+
 
 
 
@@ -49,42 +65,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<div class="main-grids">
+			<div class="recommended">
 
-			<c:forEach begin="0" end="2" varStatus="loop">
 
-				<div class="recommended">
+				<c:forEach begin="1" end="12" varStatus="loop">
 
-					<div class="recommended-grids">
 
-						<div class="recommended-info">
-							<h3>Recommended</h3>
-						</div>
-
-						<c:forEach begin="0" end="3" varStatus="loop">
-							<%@ include file="./video.jsp"%>
-						</c:forEach>
-
-						<div class="clearfix"></div>
-					</div>
-
-					<c:forEach begin="0" end="0" varStatus="loop">
+					<c:if test="${loop.first or loop.index % 5 == 0}">
 						<div class="recommended-grids">
+					</c:if>
 
-							<c:forEach begin="0" end="3" varStatus="loop">
-								<%@ include file="./video.jsp"%>
-							</c:forEach>
-
-							<div class="clearfix"></div>
+					<c:if test="${loop.first}">
+						<div class="recommended-info">
+							<h3>Latest</h3>
 						</div>
-					</c:forEach>
+					</c:if>
 
-				</div>
+					<%@ include file="./video.jsp"%>
+
+					<c:if test="${not loop.first and loop.index % 4 == 0}">
+						<div class="clearfix"></div>
+						</div>
+					</c:if>
 
 			</c:forEach>
 
-		</div>
+	</div>
+	</div>
 
-		<%@ include file="./footer.jsp"%>
+	<%@ include file="./footer.jsp"%>
 
 	</div>
 	<div class="clearfix"></div>

@@ -27,11 +27,6 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 
 	public JdbcTemplate jdbcTemplateObject;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.videoclip.VideoClipDAO#setDataSource(javax.sql.DataSource)
-	 */
 	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
@@ -49,11 +44,6 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.videoclip.VideoClipDAO#addVideoClip(model.videoclip.VideoClip)
-	 */
 	@Override
 	public int addVideoClip(VideoClip videoClip, User user) {
 		final String SQL = "insert into video_clips (name, path, performer,user_id, view_count) values (?,?,?,?,?)";
@@ -75,13 +65,6 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * model.videoclip.VideoClipDAO#increaseViewCount(model.videoclip.VideoClip,
-	 * int)
-	 */
 	@Override
 	public int increaseViewCount(VideoClip videoClip, int numberOfViews) {
 		String SQL = "update video_clips set view_count = view_count + ? where video_clip_id = ?";
@@ -101,11 +84,6 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.videoclip.VideoClipDAO#getClips()
-	 */
 	@Override
 	public List<VideoClip> getClips() {
 		String SQL = "select * from video_clips";

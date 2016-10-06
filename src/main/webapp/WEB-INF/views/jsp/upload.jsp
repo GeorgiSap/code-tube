@@ -70,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 						</div>
-						<div class="inputform">
+ 						<div class="inputform">
 							<h5>Performer:</h5>
 							<input type="text" id="artist" name="artist" size="35" />
 							<form:select path="tags" >
