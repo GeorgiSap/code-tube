@@ -21,7 +21,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -88,7 +90,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="load_more">
 						<ul id="myList">
 							<li>
-								<h4>Published on 15 June 2015</h4>
+								<h4>
+									Tagged as:
+									<%=clip.getTagsOfClip()%></h4>
 								<p>Nullam fringilla sagittis tortor ut rhoncus. Nam vel
 									ultricies erat, vel sodales leo. Maecenas pellentesque, est
 									suscipit laoreet tincidunt, ipsum tortor vestibulum leo, ac

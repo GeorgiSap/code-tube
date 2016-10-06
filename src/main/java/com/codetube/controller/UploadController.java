@@ -82,19 +82,19 @@ public class UploadController {
 				return page;
 			}
 
-			userId = (int) request.getSession().getAttribute("user_id");
 			path = multipartFile.getOriginalFilename().split("/");
 			fileName = path[path.length - 1];
 
-			System.out.println("Added user succesfully with id " + userId);
+			userId = (int) request.getSession().getAttribute("user_id");
+			System.out.println("Got user form session with id " + userId);
 			user = userJDBCTemplate.get(userId);
 
 			if (user == null) {
 				return "index";
 			}
-
-			clipId = (int) videoClipJDBCTemplate.addVideoClip(new VideoClip(0, fileName, performerOfVideo, path[0]),
-					user);
+			String name = Integer.toString(userId) + "" + fileName.hashCode();
+			clipId = (int) videoClipJDBCTemplate.addVideoClip(
+					new VideoClip(0, fileName, performerOfVideo, name), user);
 			System.out.println("I added successfully clip with " + clipId);
 			clip = videoClipJDBCTemplate.getClip(clipId);
 
@@ -107,12 +107,12 @@ public class UploadController {
 				System.out.println("TagObject is null!");
 				return "index";
 			}
-			
+
 			System.out.println("I got tag wit id " + tagObject.getId());
-			
+
 			videoClipJDBCTemplate.addTagToVideo(tagObject.getId(), clipId);
 			System.out.println("Added tag in video has tags");
-			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
+			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + name));
 		} catch (VideoClipException e) {
 			return "index";
 		}

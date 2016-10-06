@@ -3,7 +3,9 @@ package com.codetube.model.videoclip;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -16,6 +18,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.codetube.model.tag.Tag;
+import com.codetube.model.tag.TagMapper;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserMapper;
 
@@ -112,5 +116,15 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 			}
 		});
 		return;
+	}
+
+	@Override
+	public Set<Tag> getVideoTags(VideoClip clip) {
+		String SQL = "SELECT t.tag_id, t.keyword FROM codetube.video_clip_has_tags vt "
+				+ "join tags t on vt.tag_id = t.tag_id " + "join  video_clips v on v.video_clip_id = vt.video_clip_id "
+				+ "where v.video_clip_id =?";
+		List<Tag> tags = jdbcTemplateObject.query(SQL, new Object[] { clip.getId() }, new TagMapper());
+		System.out.println(tags);
+		return new HashSet<Tag>(tags);
 	}
 }

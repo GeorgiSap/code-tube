@@ -1,6 +1,7 @@
 package com.codetube.model.videoclip;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.codetube.model.tag.Tag;
 import com.codetube.model.user.User;
 
 public interface VideoClipDAO {
@@ -21,7 +23,9 @@ public interface VideoClipDAO {
 	List<VideoClip> getClips();
 
 	VideoClip getClip(int id);
-	
-	void addTagToVideo(int tagId , int videId);
+
+	void addTagToVideo(int tagId, int videId);
+
+	Set<Tag> getVideoTags(VideoClip clip);
 
 }

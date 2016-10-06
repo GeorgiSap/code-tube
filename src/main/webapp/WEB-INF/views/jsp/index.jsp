@@ -26,7 +26,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -42,13 +44,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </script>
 <!-- bootstrap -->
-<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'
-	media="all" />
+<link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
+	type='text/css' media="all" />
 <!-- //bootstrap -->
-<link href="css/dashboard.css" rel="stylesheet">
+<link href='<c:url value="/css/dashboard.css"/>' rel="stylesheet">
 <!-- Custom Theme files -->
-<link href="css/style.css" rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js"></script>
+<link href='<c:url value="/css/style.css"/>' rel='stylesheet' type='text/css' media="all" />
+<script src="js/jquery-1.11.1.min.js" ></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -85,12 +87,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${not loop.first and loop.index % 4 == 0}">
 						<div class="clearfix"></div>
-						</div>
-					</c:if>
+			</div>
+			</c:if>
 
 			</c:forEach>
 
-	</div>
+		</div>
 	</div>
 
 	<%@ include file="./footer.jsp"%>
