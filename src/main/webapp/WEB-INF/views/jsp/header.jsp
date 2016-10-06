@@ -1,4 +1,4 @@
-<%@ page session="false" %>
+<%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
@@ -10,8 +10,8 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="./index.jsp"><h1>
-					
+			<a class="navbar-brand" href='<c:url value="/index"/>'><h1>
+
 					<img src='<c:url value="/images/logo.png"/>' alt="" />
 				</h1></a>
 		</div>
@@ -23,19 +23,24 @@
 				</form>
 			</div>
 			<div class="header-top-right">
-				
 
-				<% if (request.getSession(false) == null) { %>
+
+				<%
+					if (request.getSession(false) == null) {
+				%>
 				<%@ include file="./register.jsp"%>
 				<%@ include file="./login.jsp"%>
-				<% } else 
-				{ %>
+				<%
+					} else {
+				%>
 				<div class="file">
 					<a href="./upload">Upload</a>
 				</div>
-				
+
 				<%@ include file="./logout.jsp"%>
-				<% } %>
+				<%
+					}
+				%>
 				<div class="clearfix"></div>
 			</div>
 		</div>

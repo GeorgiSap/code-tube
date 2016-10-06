@@ -13,8 +13,9 @@
 	</div>
 	<div class="drop-navigation drop-navigation">
 		<ul class="nav nav-sidebar">
-			<li class="active"><a href="index.jsp" class="home-icon"><span
-					class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+			<li class="active"><a href='<c:url value="/index"/>'
+				class="home-icon"><span class="glyphicon glyphicon-home"
+					aria-hidden="true"></span>Home</a></li>
 
 			<%
 				if (request.getSession(false) != null) {
