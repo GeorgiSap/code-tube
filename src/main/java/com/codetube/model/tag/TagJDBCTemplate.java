@@ -64,6 +64,19 @@ public class TagJDBCTemplate implements TagDAO {
 		return tags;
 	}
 
+	public Tag getTag(String keyword) {
+		String SQL = "select * from tags where keyword like ?";
+		System.out.println(jdbcTemplateObject);
+		
+		List<Tag> tags = (List<Tag>) jdbcTemplateObject.query(SQL, new Object[] { keyword }, new TagMapper());
+		for (Tag tag : tags) {
+			if(tag.getKeyword().equals(keyword)){
+				return tag;
+			}
+		}
+		return null;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

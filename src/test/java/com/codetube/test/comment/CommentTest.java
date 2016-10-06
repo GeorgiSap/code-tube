@@ -1,6 +1,5 @@
 package com.codetube.test.comment;
 
-
 import java.time.LocalDateTime;
 
 import org.junit.Test;
@@ -26,7 +25,7 @@ public class CommentTest {
 	@Test
 	public void test() throws CommentException {
 		try {
-			
+
 			VideoClip videoClip = new VideoClip(0, "mladen.mp4", "mladen", "mladen.mp4");
 			User user = null;
 			try {
@@ -37,11 +36,9 @@ public class CommentTest {
 			}
 			int userId = (int) userJDBCTemplate.register(user);
 			user.setId(userId);
-			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip,user);
+			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
 			videoClip.setId(videoClipId);
-			
-			
-			
+
 			int commentId = commentJDBCTemplate.addCommentToVideo(videoClip,
 					new Comment(0, "Hello i love this clip", LocalDateTime.now(), 2), user);
 			System.out.println("Succesfully added a comment to video ");

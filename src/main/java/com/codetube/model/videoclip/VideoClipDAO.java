@@ -21,5 +21,7 @@ public interface VideoClipDAO {
 	List<VideoClip> getClips();
 
 	VideoClip getClip(int id);
+	
+	void addTagToVideo(int tagId , int videId);
 
 }

@@ -98,4 +98,19 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		VideoClip videoClip = jdbcTemplateObject.queryForObject(SQL, new Object[] { id }, new VideoClipMapper());
 		return videoClip;
 	}
+
+	@Override
+	public void addTagToVideo(int tagId, int videoId) {
+		final String SQL = "insert into video_clip_has_tags (tag_id, video_clip_id) values (?,?)";
+
+		this.jdbcTemplateObject.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pst = con.prepareStatement(SQL, new String[] { "video_clip_id" });
+				pst.setInt(1, tagId);
+				pst.setInt(2, videoId);
+				return pst;
+			}
+		});
+		return;
+	}
 }

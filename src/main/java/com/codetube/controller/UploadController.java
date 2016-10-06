@@ -66,28 +66,29 @@ public class UploadController {
 		try {
 			int clipId;
 			int userId;
+
 			String[] path;
 			String fileName;
-			System.out.println(tag);
-			if (request.getSession(false) == null) {
-				return "index";
-			}
 
-			if ((performerOfVideo == null) || (performerOfVideo.trim().equals(""))
-					|| (performerOfVideo.matches(".*\\d+.*"))) {
-				return "index";
-			}
+			VideoClip clip;
+			User user;
+			Tag tagObject;
 
-			if (request.getSession().getAttribute("user_id") == null) {
-				return "index";
+			// incoming validation, IF NULL, evryting is ok!
+			String page = validation(request, performerOfVideo, tag);
+
+			if (page != null) {
+				System.out.println("Error occured, did't add the video");
+				return page;
 			}
 
 			userId = (int) request.getSession().getAttribute("user_id");
 			path = multipartFile.getOriginalFilename().split("/");
 			fileName = path[path.length - 1];
 
-			System.out.println("Do tuk dobre " + userId + "template " + userJDBCTemplate);
-			User user = userJDBCTemplate.get(userId);
+			System.out.println("Added user succesfully with id " + userId);
+			user = userJDBCTemplate.get(userId);
+
 			if (user == null) {
 				return "index";
 			}
@@ -95,11 +96,57 @@ public class UploadController {
 			clipId = (int) videoClipJDBCTemplate.addVideoClip(new VideoClip(0, fileName, performerOfVideo, path[0]),
 					user);
 			System.out.println("I added successfully clip with " + clipId);
+			clip = videoClipJDBCTemplate.getClip(clipId);
+
+			List<Tag> tags = tagJDBCTemplate.getTags();
+			if (!doesTagExists(tag, tags)) {
+				return "index";
+			}
+			tagObject = tagJDBCTemplate.getTag(tag);
+			if (tagObject == null) {
+				System.out.println("TagObject is null!");
+				return "index";
+			}
+			
+			System.out.println("I got tag wit id " + tagObject.getId());
+			
+			videoClipJDBCTemplate.addTagToVideo(tagObject.getId(), clipId);
+			System.out.println("Added tag in video has tags");
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + fileName));
 		} catch (VideoClipException e) {
 			return "index";
 		}
 		return "index";
+	}
+
+	private boolean doesTagExists(String tag, List<Tag> tags) {
+		boolean contained = false;
+		for (Tag tagInner : tags) {
+			if (tagInner.getKeyword().equals(tag)) {
+				contained = true;
+			}
+		}
+		return contained;
+	}
+
+	private String validation(HttpServletRequest request, String performerOfVideo, String tag) {
+		if (request.getSession(false) == null) {
+			return "index";
+		}
+
+		if ((performerOfVideo == null) || (performerOfVideo.trim().equals(""))
+				|| (performerOfVideo.matches(".*\\d+.*"))) {
+			return "index";
+		}
+
+		if (tag == null || tag.trim().equals("")) {
+			return "index";
+		}
+
+		if (request.getSession().getAttribute("user_id") == null) {
+			return "index";
+		}
+		return null;
 	}
 
 }
