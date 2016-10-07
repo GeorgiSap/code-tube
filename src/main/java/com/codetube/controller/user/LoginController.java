@@ -26,7 +26,6 @@ public class LoginController extends UserController {
 	public static final String DEFAULT_ERROR_VIEW = "error";
 
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	@Autowired
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 
 	@RequestMapping(method = RequestMethod.GET)

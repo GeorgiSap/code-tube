@@ -23,11 +23,11 @@ import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 @SessionAttributes("player")
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	@Autowired
+	
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
 
-	@Autowired
+	
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
