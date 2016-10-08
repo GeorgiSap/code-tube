@@ -34,6 +34,13 @@ public class HistoryJDBCTemplate implements HistoryDAO {
 	}
 	
 	@Override
+	public void removeFromHistory(int videoClipId, int userId) {
+		String SQL = "delete from user_has_history where video_clip_id = ? and user_id = ?";
+		jdbcTemplateObject.update(SQL, videoClipId, userId);
+		System.out.println("Deleted History Record with User ID = " + userId +" and " + "VideoClip ID = " + videoClipId);
+	}
+	
+	@Override
 	public List<History> getHistory(int userId) {
 		String SQL = "select video_clip_id, last_viewed from user_has_history where user_id = ?";
 		List<History> history = jdbcTemplateObject.query(SQL, new Object[] {userId},new HistoryMapper());

@@ -13,6 +13,7 @@ import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.UserException;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
+import com.codetube.model.user.history.HistoryDeamon;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipException;
@@ -52,11 +53,11 @@ public class HistoryTest {
 			
 			try {
 				historyJDBCTemplate.addToHistory(clip1.getId(), ivan.getId());
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				historyJDBCTemplate.addToHistory(clip2.getId(), ivan.getId());
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				historyJDBCTemplate.addToHistory(clip3.getId(), ivan.getId());
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -75,6 +76,9 @@ public class HistoryTest {
 				System.out.print("Video Clip ID" + entry.getVideoClipId());
 				System.out.println(" : " + entry.getLastViewed());
 			}
+			
+			new HistoryDeamon().run();
+			//new Thread(new HistoryDeamon()).start();
 
 		} catch (UserException | VideoClipException e) {
 			e.printStackTrace();
