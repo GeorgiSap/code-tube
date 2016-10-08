@@ -14,4 +14,6 @@ public interface HistoryDAO {
 
 	List<History> getHistory(int userId);
 
+	void removeFromHistory(int videoClipId, int userId);
+
 }

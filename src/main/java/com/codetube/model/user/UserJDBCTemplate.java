@@ -28,6 +28,7 @@ public class UserJDBCTemplate implements UserDAO {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
+	
 
 	@Override
 	public int register(final User user) {

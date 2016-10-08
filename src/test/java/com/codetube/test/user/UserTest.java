@@ -29,7 +29,6 @@ public class UserTest {
 			userId = (int) userJDBCTemplate.register(
 					new User(0, "Ivan", "Ivanov", "Ivan88", "ivan@gmail.com", "pass1234"));
 		} catch (UserException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

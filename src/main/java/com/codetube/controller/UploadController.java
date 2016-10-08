@@ -31,13 +31,13 @@ import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 @Controller
 public class UploadController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	@Autowired
+
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
-	@Autowired
+
 	public UserJDBCTemplate userJDBCTemplate = (UserJDBCTemplate) context.getBean("UserJDBCTemplate");
 
-	@Autowired
+
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
