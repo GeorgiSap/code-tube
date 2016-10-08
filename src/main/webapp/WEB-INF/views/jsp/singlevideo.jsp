@@ -21,49 +21,58 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<script>
-		(function() {
-			"use strict";
+	<script type='text/javascript'>
+	
+	for (var index = 1; index < 7; index++) {
+		console.log(i);
+		window.addEventListener("load", start, false);
+	}
+	
+		function start() {
+			var video = document.createElement('video');
 
-			var video, $output;
-			var scale = 0.25;
+			video.src = "../videos/<%=clip.getPath()%>";
+			video.autoPlay = true;
+			var thecanvas = document.getElementById('thecanvas');
+			var img = document.getElementById('thumbnail_img');
 
-			var initialize = function() {
-				$output = $("#output");
-				video = $("#video").get(0);
-				$("#capture").click(captureImage);
-			};
+			video.addEventListener('loadeddata', function() {
 
-			var captureImage = function() {
-				var canvas = document.createElement("canvas");
-				canvas.width = video.videoWidth * scale;
-				canvas.height = video.videoHeight * scale;
-				canvas.getContext('2d').drawImage(video, 0, 0, canvas.width,
-						canvas.height);
+				draw(video, thecanvas, img);
 
-				var img = document.createElement("img");
-				img.src = canvas.toDataURL();
-				$output.prepend(img);
-			};
+			}, false);
 
-			$(initialize);
+		};
 
-		}());
+		function draw(video, thecanvas, img) {
+
+			// get the canvas context for drawing
+			var context = thecanvas.getContext('2d');
+
+			// draw the video contents into the canvas x, y, width, height
+			context.drawImage(video, 0, 0, thecanvas.width, thecanvas.height);
+
+			// get the image data from the canvas object
+			var dataURL = thecanvas.toDataURL();
+
+			// set the source of the img tag
+			img.setAttribute('src', dataURL);
+
+		}
 	</script>
 
-	<div id="thumbnailContainer"></div>
 
+	The Video
+	<br />
 
-	<p><%=clip.getPerformer()%>
-	</p>
-
-	<video width="320" height="240" id="video" controls="controls">
-		<source src="../videos/<%=clip.getPath()%>" type="video/mp4">
-	</video>
-	<button id="capture">Capture</button>
-
-	<div id="output"></div>
-
+	<br /> The Canvas
+	<br />
+	<canvas id="thecanvas">
+        </canvas>
+	<br /> The Image
+	<br />
+	<img id="thumbnail_img" alt="Right click to save" />
+	<br />
 
 </body>
 
