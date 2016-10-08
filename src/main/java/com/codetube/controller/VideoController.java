@@ -47,7 +47,7 @@ public class VideoController {
 			// clip.addTag(tag);
 			System.out.println(clip);
 			model.addAttribute("video", clip);
-			return "single";
+			return "singlevideo";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "index";
