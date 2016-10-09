@@ -10,5 +10,5 @@ public interface PlaylistDAO {
 
 	int addPlayList(Playlist list, User user);
 
-	public Playlist getPlaylist(int id);
+	public Playlist getPlaylist(int userId);
 }

@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>CodeTube</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<%@page import="com.codetube.model.playlist.*"%>
+
+<title>My Play a Entertainment Category Flat Bootstrap
+	Responsive Website Template | single :: w3layouts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
@@ -14,8 +16,24 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
+				
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -23,10 +41,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
 	type='text/css' media="all" />
 <!-- //bootstrap -->
+
 <link href='<c:url value="/css/dashboard.css"/>' rel="stylesheet">
 <!-- Custom Theme files -->
-<link href='<c:url value="/css/style.css"/>' rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js" ></script>
+<link href='<c:url value="/css/style.css"/>' rel='stylesheet'
+	type='text/css' media="all" />
+<script src='<c:url value="/js/jquery-1.11.1.min.js"/>'></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -35,6 +55,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='//fonts.googleapis.com/css?family=Poiret+One'
 	rel='stylesheet' type='text/css'>
 <!-- //fonts -->
+
+<%
+	Playlist list = (Playlist) request.getAttribute("playlist");
+%>
 </head>
 <body>
 
@@ -42,12 +66,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<%@ include file="./sitebar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h3 class="headerPlaylist">Your Playlist</h3>
 		<div class="main-grids">
 			<div class="recommended">
 
 
 				<c:forEach begin="1" end="12" varStatus="loop">
-
 
 					<c:if test="${loop.first or loop.index % 5 == 0}">
 						<div class="recommended-grids">
@@ -55,11 +79,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							<h3>Latest</h3>
+
+							<div class="playlist">
+								<div class="playlistElement">
+									<a href="playlist/<%=list.getId()%>"><img alt="" src="images/p1.png"> </a>
+									<h2><%=list.getTitle()%></h2>
+								</div>
+							</div>
 						</div>
 					</c:if>
 
-					<%@ include file="./video.jsp"%>
 
 					<c:if test="${not loop.first and loop.index % 4 == 0}">
 						<div class="clearfix"></div>

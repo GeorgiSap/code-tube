@@ -20,9 +20,9 @@
 			<%
 				if (request.getSession(false) != null) {
 			%>
-			<li><a href="./" class="user-icon"><span
+			<li><a href="playlists" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
-					aria-hidden="true"></span>My Videos</a></li>
+					aria-hidden="true"></span>My Playlist</a></li>
 			<li><a href="./" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Subscriptions</a></li>

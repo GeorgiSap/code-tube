@@ -23,10 +23,8 @@
 <body>
 	<script type='text/javascript'>
 	
-	for (var index = 1; index < 7; index++) {
-		console.log(i);
+	
 		window.addEventListener("load", start, false);
-	}
 	
 		function start() {
 			var video = document.createElement('video');

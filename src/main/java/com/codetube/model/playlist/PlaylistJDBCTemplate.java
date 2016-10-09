@@ -53,9 +53,9 @@ public class PlaylistJDBCTemplate implements PlaylistDAO {
 		return keyHolder.getKey().intValue();
 	}
 
-	public Playlist getPlaylist(int id ){
-		String SQL = "select * from playlists where playlist_id = ?";
-		Playlist playlist = jdbcTemplateObject.queryForObject(SQL, new Object[] { id }, new PlaylistMapper());
+	public Playlist getPlaylist(int userId ){
+		String SQL = "select * from playlists where user_id = ?";
+		Playlist playlist = jdbcTemplateObject.queryForObject(SQL, new Object[] { userId }, new PlaylistMapper());
 		return playlist;
 	}
 

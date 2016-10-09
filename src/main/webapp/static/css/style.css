@@ -178,6 +178,32 @@ ul.nav.nav-sidebar li a {
 	padding: 0 0 1em 1em;
 }
 
+.playlist {
+	position: relative;
+	width: 98%;
+	height: 300px;
+	background-color: rgb(229, 239, 255);
+	border-radius: 25px;
+	border: 2px solid #63150f;
+}
+
+.playlist img {
+	width: 100px;
+	height: 100px;
+}
+
+.playlistElement {
+	position: relative;
+	left: -45%;
+	top: 5%;
+	text-align: center;
+}
+
+.headerPlaylist {
+	position: relative;
+	left: 5%;
+}
+
 .sidebar ul.nav-sidebar li a:hover {
 	background-color: #232323 !important;
 	color: #21DEEF;
