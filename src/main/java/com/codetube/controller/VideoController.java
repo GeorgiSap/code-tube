@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
+import com.codetube.model.user.User;
+import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 
@@ -26,7 +28,7 @@ public class VideoController {
 	
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
-
+	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
 	
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
@@ -47,6 +49,17 @@ public class VideoController {
 			// clip.addTag(tag);
 			System.out.println(clip);
 			model.addAttribute("video", clip);
+			
+			//Add to history
+			if (request.getSession(false) != null) {
+				User user = (User) request.getSession().getAttribute("user");
+				historyJDBCTemplate.addToHistory(clip.getId(), user.getId());
+				//user.addToHistory(clip);
+				System.err.println("Successfully added to history?");
+			} else {
+				//Add cookie for non-registered users to keep record of last viewed
+			}
+			
 			return "singlevideo";
 		} catch (Exception e) {
 			e.printStackTrace();

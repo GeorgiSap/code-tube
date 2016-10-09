@@ -59,6 +59,8 @@ public class HistoryTest {
 				historyJDBCTemplate.addToHistory(clip3.getId(), ivan.getId());
 				Thread.sleep(1000);
 				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId());
+				Thread.sleep(1000);
+				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -1,9 +1,5 @@
 package com.codetube.controller.user;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -11,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.model.user.User;
-import com.codetube.model.videoclip.VideoClip;
 
 @Controller
 public class HomeController {
@@ -32,7 +27,6 @@ public class HomeController {
 		}
 		request.setAttribute("title", "My Videos");
 		
-		
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
 		request.setAttribute("videos", user.getVideos());
@@ -47,7 +41,7 @@ public class HomeController {
 			return "index";
 		}
 		request.setAttribute("title", "Subscriptions");
-		//User user = (User) request.getAttribute("user");
+		//User user = (User) request.getSession().getAttribute("user");
 		//TODO get videos
 		//request.setAttribute("videos", user.getSubscribtions());
 		return "home";
@@ -59,12 +53,12 @@ public class HomeController {
 		if (request.getSession(false) == null) {
 			return "index";
 		}
+		request.setAttribute("title", "Last viewed");
 		//TODO
-		User user = (User) request.getAttribute("user");
+		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
 		request.setAttribute("videos", user.getHistory());
 		}
-		request.setAttribute("title", "Last viewed");
 		return "home";
 	}
 }

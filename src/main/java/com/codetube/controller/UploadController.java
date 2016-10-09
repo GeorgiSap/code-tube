@@ -91,10 +91,12 @@ public class UploadController {
 			VideoClip videoClip = new VideoClip(0, fileName, performerOfVideo, name);
 			clipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
 			
-			//Add videoClip to current user session
+			//Add videoClip to current user session runtime
 			videoClip.setId(clipId);
-			User currentUser = (User) request.getAttribute("user");
+			User currentUser = (User) request.getSession().getAttribute("user");
+			if (currentUser != null) {
 			currentUser.addToVideos(videoClip);
+			}
 			
 			System.out.println("I added successfully clip with " + clipId);
 			clip = videoClipJDBCTemplate.getClip(clipId);
