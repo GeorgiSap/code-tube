@@ -10,7 +10,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href='<c:url value="/index"/>'><h1>
+			<a class="navbar-brand" href='<c:url value="/home"/>'><h1>
 
 					<img src='<c:url value="/images/logo.png"/>' alt="" />
 				</h1></a>

@@ -53,7 +53,8 @@ public class RegisterController extends UserController{
 		int userId = userJDBCTemplate.register(newUser);
 		newUser.setId(userId);
 		createSession(request, newUser);
-		return "index";
+		request.setAttribute("title", "Recommended");
+		return "home";
 	}
 	
 

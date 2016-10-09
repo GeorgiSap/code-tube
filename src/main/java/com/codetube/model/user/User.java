@@ -1,6 +1,7 @@
 package com.codetube.model.user;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,8 +21,8 @@ public class User implements IUser {
 	private String email;
 	private String password;
 	private List<VideoClip> videos = new ArrayList<VideoClip>();
-	private List<User> subscribtions = new ArrayList<User>();
-	private Set<VideoClip> history = new TreeSet<VideoClip>();
+	private List<User> subscriptions = new ArrayList<User>();
+	private List<VideoClip> history = new ArrayList<VideoClip>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
 
 	public User() {
@@ -67,7 +68,7 @@ public class User implements IUser {
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
 				+ ", email=" + email + ", password=" + password + ", history=" + history + ", tags=" + tags
-				+ ", subscribtions=" + subscribtions + "]";
+				+ ", subscribtions=" + subscriptions + "]";
 	}
 
 	public String getFirstName() {
@@ -127,7 +128,22 @@ public class User implements IUser {
 	}
 	
 	public void addToSubscriptions(User user) {
-		subscribtions.add(user);
+		subscriptions.add(user);
 	}
+
+	public List<VideoClip> getVideos() {
+		return Collections.unmodifiableList(videos);
+	}
+	
+	public List<VideoClip> getHistory() {
+		return Collections.unmodifiableList(history);
+	}
+
+	public List<User> getSubscribtions() {
+		return Collections.unmodifiableList(subscriptions);
+	}
+
+	
+	
 
 }
