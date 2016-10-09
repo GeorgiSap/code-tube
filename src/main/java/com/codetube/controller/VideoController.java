@@ -54,7 +54,7 @@ public class VideoController {
 			if (request.getSession(false) != null) {
 				User user = (User) request.getSession().getAttribute("user");
 				historyJDBCTemplate.addToHistory(clip.getId(), user.getId());
-				//user.addToHistory(clip);
+				user.addToHistory(clip);
 				System.err.println("Successfully added to history?");
 			} else {
 				//Add cookie for non-registered users to keep record of last viewed

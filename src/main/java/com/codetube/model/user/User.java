@@ -124,7 +124,9 @@ public class User implements IUser {
 	}
 	
 	public void addToHistory(VideoClip videoClip) {
+		if (!history.contains(videoClip)) {
 		history.add(videoClip);
+		}
 	}
 	
 	public void addToSubscriptions(User user) {

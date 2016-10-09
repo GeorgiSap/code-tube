@@ -49,7 +49,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			<% 
 			List<VideoClip> videos = (List<VideoClip>) request.getAttribute("videos"); 
-			if (videos == null) {
+			if (videos == null || videos.size() <= 0) {
 				%><h2>No Videos available in <%= request.getAttribute("title")%></h2><%
 			}
 			%>
