@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.codetube.model.comment.Comment;
 import com.codetube.model.tag.Tag;
+import com.codetube.model.user.User;
 
 @Component
 public class VideoClip {
@@ -31,6 +32,16 @@ public class VideoClip {
 	private String performer;
 	private AtomicLong viewCount;
 	private String path;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	private User user;
 
 	public VideoClip(int id, String name, String performer, String path) throws VideoClipException {
 		if (name == null || name.trim().equals("") || performer == null || performer.trim().equals("") || path == null
@@ -41,11 +52,14 @@ public class VideoClip {
 		this.name = name;
 		this.performer = performer;
 		this.path = path;
+		this.user = new User();
+		this.viewCount = new AtomicLong();
 	}
 	
-	public VideoClip(int id, String name, String performer, String path, long viewCount) throws VideoClipException {
+	public VideoClip(int id, String name, String performer, String path, long viewCount, int userId) throws VideoClipException {
 		this(id, name, performer, path);
 		this.viewCount = new AtomicLong(viewCount);
+		this.user.setId(userId);
 	}
 
 	public int getId() {

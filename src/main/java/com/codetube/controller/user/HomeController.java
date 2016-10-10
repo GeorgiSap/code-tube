@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.model.user.User;
+import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
@@ -27,6 +28,7 @@ public class HomeController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
+	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
@@ -50,6 +52,9 @@ public class HomeController {
 		List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
 		for (int video =  userVideos.size() - 1; video >= 0; video--) {
 			userVideosOrdered.add(userVideos.get(video));
+		}
+		for (VideoClip videoClip : userVideosOrdered) {
+			videoClip.setUser(user);
 		}
 		request.setAttribute("videosToLoad", userVideosOrdered);
 		}
@@ -86,6 +91,10 @@ public class HomeController {
 		List<VideoClip> historyEntries = new ArrayList<VideoClip>();
 		for (History entry : historySet) {
 			historyEntries.add(videoClipJDBCTemplate.getClip(entry.getVideoClipId()));
+		}
+		for (VideoClip videoClip : historyEntries) {
+			User publisher = userJDBCTemplate.get(videoClip.getUser().getId());
+			videoClip.setUser(publisher);
 		}
 		request.setAttribute("videosToLoad", historyEntries);
 		}

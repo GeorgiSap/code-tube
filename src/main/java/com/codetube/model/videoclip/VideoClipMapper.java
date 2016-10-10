@@ -15,7 +15,8 @@ public class VideoClipMapper implements RowMapper<VideoClip> {
 					rs.getString("name"), 
 					rs.getString("performer"),
 					rs.getString("path"),
-					rs.getInt("view_count"));
+					rs.getInt("view_count"),
+					rs.getInt("user_id"));
 		} catch (VideoClipException e) {
 			e.printStackTrace();
 		}
