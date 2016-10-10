@@ -16,10 +16,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta name="keywords"
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<%
+	VideoClip clip = (VideoClip) request.getAttribute("video");
+%>
 <script type="application/x-javascript">
+	
+	
+	 var theChosenOneVideoID = 
+<%=clip.getId()%>
+	;
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 	 
 	 addEventListener("load",refreshMovies);
+	 
+	 addEventListener("load", refreshComments);
+	 
+	 function refreshComments() {
+			$("#comments").empty();
+
+			$.get("../getComments/"+ theChosenOneVideoID,
+					function(data) {
+						if (data.length > 0) {
+						
+						}
+			
+			
+					});	
+	}
 	 
 	 function refreshMovies() {
 			$("#randomVideos").empty();
@@ -60,8 +84,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							}
 						}
 						
-					});
+					});	
 		}
+
+		function addComment() {
+			var commentText = $("#comment").val();
+			$.ajax({
+			    url: '../comment',
+			    type: 'PUT',
+			    data: JSON.stringify({"text":commentText,"id":theChosenOneVideoID}),
+			    success: function(result) {
+				    	var p = document.createElement("p");
+					p.innerHTML = commentText;
+					$("#comments").append(p);
+			    }
+			});
+		}
+
+
+
+
+
+
+
+
+
 </script>
 <!-- bootstrap -->
 <link href="../css/bootstrap.min.css" rel='stylesheet' type='text/css'
@@ -86,9 +133,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<%@ include file="./header.jsp"%>
 	<%@ include file="./sitebar.jsp"%>
-	<%
-		VideoClip clip = (VideoClip) request.getAttribute("video");
-	%>
+
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<div class="show-top-grids">
 			<div class="col-sm-8 single-left">
@@ -140,20 +185,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="all-comments">
 					<div class="media-grids">
 
-						<c:forEach begin="0" end="6" varStatus="loop">
-							<div class="media">
-								<h5>Ivan Ivanov</h5>
-								<div class="media-left">
-									<a href="#"> </a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet
-										ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex
-										pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
+
+						<div class="media">
+							<label>Add comment please:</label> <br />
+							<textarea rows="4" cols="50" id="comment">
+							</textarea>
+							<br />
+							<button onclick="addComment()">Add Comment</button>
+							<div id="comments">
+							
 							</div>
-						</c:forEach>
+						</div>
+
 
 					</div>
 				</div>
@@ -164,8 +207,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div class="single-grid-right">
 
-					<div id="randomVideos">
-					</div>
+					<div id="randomVideos"></div>
 
 				</div>
 			</div>
