@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.codetube.model.comment.Comment;
 import com.codetube.model.tag.Tag;
+import com.codetube.model.user.User;
 
 @Component
 public class VideoClip {
@@ -28,25 +30,36 @@ public class VideoClip {
 	private int id;
 	private String name;
 	private String performer;
-	private long viewCount;
+	private AtomicLong viewCount;
 	private String path;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	private User user;
 
 	public VideoClip(int id, String name, String performer, String path) throws VideoClipException {
 		if (name == null || name.trim().equals("") || performer == null || performer.trim().equals("") || path == null
 				|| path.trim().equals("")) {
 			throw new VideoClipException("Bad Data - constructor");
 		}
-
 		this.id = id;
 		this.name = name;
 		this.performer = performer;
 		this.path = path;
-		this.viewCount = 0;
-
+		this.user = new User();
+		this.viewCount = new AtomicLong();
 	}
-
-	public void setViewCount(long viewCount) {
-		this.viewCount = viewCount;
+	
+	public VideoClip(int id, String name, String performer, String path, long viewCount, int userId) throws VideoClipException {
+		this(id, name, performer, path);
+		this.viewCount = new AtomicLong(viewCount);
+		this.user.setId(userId);
 	}
 
 	public int getId() {
@@ -62,7 +75,11 @@ public class VideoClip {
 	}
 
 	public long getViewCount() {
-		return viewCount;
+		return viewCount.get();
+	}
+	
+	public void increaseViewCount() {
+		this.viewCount.incrementAndGet();
 	}
 
 	public String getPath() {

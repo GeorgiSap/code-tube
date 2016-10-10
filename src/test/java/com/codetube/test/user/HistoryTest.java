@@ -2,6 +2,7 @@ package com.codetube.test.user;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.Test;
@@ -52,15 +53,20 @@ public class HistoryTest {
 			clip4.setId(videoClipId4);
 			
 			try {
-				historyJDBCTemplate.addToHistory(clip1.getId(), ivan.getId());
+				LocalDateTime lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip1.getId(), ivan.getId(), lastViewed);
 				Thread.sleep(1000);
-				historyJDBCTemplate.addToHistory(clip2.getId(), ivan.getId());
+				lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip2.getId(), ivan.getId(), lastViewed);
 				Thread.sleep(1000);
-				historyJDBCTemplate.addToHistory(clip3.getId(), ivan.getId());
+				lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip3.getId(), ivan.getId(), lastViewed);
 				Thread.sleep(1000);
-				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId());
+				lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId(), lastViewed);
 				Thread.sleep(1000);
-				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId());
+				lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip4.getId(), petar.getId(), lastViewed);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

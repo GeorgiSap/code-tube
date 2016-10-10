@@ -36,7 +36,6 @@ public class PlayListTest {
 			System.out.println(playlist);
 			System.out.println("Added successfully");
 		} catch (PlaylistException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

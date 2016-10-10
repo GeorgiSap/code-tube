@@ -11,9 +11,12 @@ public class VideoClipMapper implements RowMapper<VideoClip> {
 
 		VideoClip videoClip = null;
 		try {
-			videoClip = new VideoClip(rs.getInt("video_clip_id"), rs.getString("name"), rs.getString("performer"),
-					rs.getString("path"));
-			videoClip.setViewCount(rs.getInt("view_count"));
+			videoClip = new VideoClip(rs.getInt("video_clip_id"), 
+					rs.getString("name"), 
+					rs.getString("performer"),
+					rs.getString("path"),
+					rs.getInt("view_count"),
+					rs.getInt("user_id"));
 		} catch (VideoClipException e) {
 			e.printStackTrace();
 		}

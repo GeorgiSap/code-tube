@@ -23,7 +23,7 @@ public class VideoClipTest {
 		User user = null;
 		
 		try {
-			user = new User(0, "Ivan", "Ivanov", "Ivan883", "ivan3@gmail.com", "pass1234");
+			user = new User(0, "Ivan", "Ivanov", "Ivan884", "ivan4@gmail.com", "pass1234");
 			
 			int userId = (int) userJDBCTemplate.register(user);
 			user.setId(userId);

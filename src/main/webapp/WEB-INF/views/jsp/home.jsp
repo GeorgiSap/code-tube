@@ -95,10 +95,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</h5>
 							<ul>
 								<li><p class="author author-info">
-										<a href="#" class="author">User Name</a>
+										<a href="#" class="author">${element.user.userName}</a>
 									</p></li>
 								<li class="right-list">
-									<p class="views views-info">2,114,200 views</p>
+									<p class="views views-info">${element.viewCount} views</p>
 								</li>
 							</ul>
 						</div>
