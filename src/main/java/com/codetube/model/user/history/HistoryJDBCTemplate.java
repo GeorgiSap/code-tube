@@ -23,6 +23,14 @@ public class HistoryJDBCTemplate implements HistoryDAO {
 	
 	@Override
 	public void addToHistory(int videoClipId, int userId) throws UserException {
+		if (!checkIfRecordExists(videoClipId, userId)) {
+			addNewRecord(videoClipId, userId);
+		} else {
+			updateRecord(videoClipId, userId);
+		}
+	}
+
+	private void addNewRecord(int videoClipId, int userId) throws UserException {
 		if (videoClipId > 0 && userId > 0) {
 			 String SQL = "insert into user_has_history (video_clip_id, user_id, last_viewed) values (?, ?, ?)";
 			 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -31,6 +39,28 @@ public class HistoryJDBCTemplate implements HistoryDAO {
 			} else {
 				throw new UserException("Unable to add to history");
 			}
+	}
+	
+	private void updateRecord(int videoClipId, int userId) throws UserException {
+		if (videoClipId > 0 && userId > 0) {
+			 String SQL = "update user_has_history set last_viewed = ? where video_clip_id = ? AND user_id = ?";
+			 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			 jdbcTemplateObject.update(SQL, timestamp, videoClipId, userId);
+				System.out.println("Updated History Record: VideoClip " + videoClipId +", User " + userId + " : " + timestamp);
+			} else {
+				throw new UserException("Unable to update history record");
+			}
+	}
+
+	private boolean checkIfRecordExists(int videoClipId, int userId) {
+		String SQL = "select * from user_has_history where video_clip_id = ? AND user_id = ?";
+		List<History> history = jdbcTemplateObject.query(SQL, new Object[] {videoClipId, userId},new HistoryMapper());
+		if (history.size() <= 0) {
+			System.out.println("History Record for Video Clip ID " + videoClipId + " User ID " + userId + " does not exist");
+			return false;
+		}
+		System.out.println("History Record for Video Clip ID " + videoClipId + " User ID " + userId + " already exists");
+		return true;
 	}
 	
 	@Override

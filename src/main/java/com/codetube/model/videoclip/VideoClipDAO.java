@@ -28,4 +28,6 @@ public interface VideoClipDAO {
 
 	Set<Tag> getVideoTags(VideoClip clip);
 
+	List<VideoClip> getClips(int userId);
+
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.codetube.model.comment.Comment;
 import com.codetube.model.tag.Tag;
+
 @Component
 public class VideoClip {
 
@@ -100,6 +101,26 @@ public class VideoClip {
 	public String toString() {
 		return "VideoClip [tagsOfClip=" + tagsOfClip + ", comments=" + comments + ", id=" + id + ", name=" + name
 				+ ", performer=" + performer + ", viewCount=" + viewCount + ", path=" + path + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		VideoClip other = (VideoClip) obj;
+		if (id != other.id) {
+			return false;
+		}
+		return true;
 	}
 
 }
