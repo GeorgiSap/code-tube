@@ -2,7 +2,7 @@ package com.codetube.model.user.history;
 
 import java.time.LocalDateTime;
 
-public class History {
+public class History implements Comparable<History>{
 	private int videoClipId;
 	private LocalDateTime lastViewed;
 	
@@ -25,6 +25,15 @@ public class History {
 
 	public void setLastViewed(LocalDateTime lastViewed) {
 		this.lastViewed = lastViewed;
+	}
+
+	@Override
+	public int compareTo(History entry) {
+		if (this.videoClipId == entry.getVideoClipId()) {
+			entry.setLastViewed(this.lastViewed);
+			return 0;
+		}
+		return entry.getLastViewed().compareTo(this.lastViewed);
 	}
 	
 	

@@ -39,7 +39,7 @@ public class UserController {
 
 		List<History> history = historyJDBCTemplate.getHistory(user.getId());
 		for (History entry : history) {
-			user.addToHistory(videoClipJDBCTemplate.getClip(entry.getVideoClipId()));
+			user.addToHistory(entry);
 		}
 
 		List<Subscription> subscriptions = subscriptionJDBCTemplate.listSubscriptions(user.getId());

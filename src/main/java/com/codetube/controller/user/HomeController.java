@@ -1,15 +1,26 @@
 package com.codetube.controller.user;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.model.user.User;
+import com.codetube.model.user.history.History;
+import com.codetube.model.videoclip.VideoClip;
+import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 public class HomeController {
+	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
@@ -29,7 +40,7 @@ public class HomeController {
 		
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
-		request.setAttribute("videos", user.getVideos());
+		request.setAttribute("videosToLoad", user.getVideos());
 		}
 		return "home";
 	}
@@ -43,7 +54,7 @@ public class HomeController {
 		request.setAttribute("title", "Subscriptions");
 		//User user = (User) request.getSession().getAttribute("user");
 		//TODO get videos
-		//request.setAttribute("videos", user.getSubscribtions());
+		//request.setAttribute("videosToLoad", user.getSubscribtions());
 		return "home";
 	}
 	
@@ -57,7 +68,13 @@ public class HomeController {
 		//TODO
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
-		request.setAttribute("videos", user.getHistory());
+			
+		Set<History> history = user.getHistory();
+		List<VideoClip> historyEntries = new ArrayList<VideoClip>();
+		for (History entry : history) {
+			historyEntries.add(videoClipJDBCTemplate.getClip(entry.getVideoClipId()));
+		}
+		request.setAttribute("videosToLoad", historyEntries);
 		}
 		return "home";
 	}

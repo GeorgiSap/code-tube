@@ -48,14 +48,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="recommended">
 
 			<% 
-			List<VideoClip> videos = (List<VideoClip>) request.getAttribute("videos"); 
-			if (videos == null || videos.size() <= 0) {
+			List<VideoClip> videosToLoad = (List<VideoClip>) request.getAttribute("videosToLoad"); 
+			if (videosToLoad == null || videosToLoad.size() <= 0) {
 				%><h2>No Videos available in <%= request.getAttribute("title")%></h2><%
 			}
 			%>
 
 
-				<c:forEach items="${videos}" var="element" varStatus="loop">
+				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
 
 
 					<c:if test="${loop.first or loop.index % 4 == 0}">
