@@ -18,9 +18,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -72,13 +74,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							<h3><%=request.getAttribute("title")%></h3>
+						<% if (request.getAttribute("userProfilePage") != null) {%>
+							<div class="heading">
+							<% } %>
+								<h3><%=request.getAttribute("title")%></h3>
+							<% if (request.getAttribute("userProfilePage") != null) { %>	
+							</div>
+							<% } %>
+							<% if (request.getAttribute("userProfilePage") != null) { %>
+							<div class="heading-right">
+								<a href="#small-dialog8" class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+							</div>
+							<div class="clearfix"> </div>
+							<% } %>
 						</div>
 					</c:if>
 
 					<div class="col-md-3 resent-grid recommended-grid">
 						<div class="resent-grid-img recommended-grid-img">
-							<a href="player/${element.id}"><video width="300" height="200">
+							<a href="player/${element.id}"><video width="300"
+									height="200">
 									<source src="videos/${element.path}" type="video/mp4">
 								</video></a>
 							<div class="time small-time">
@@ -95,10 +110,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</h5>
 							<ul>
 								<li><p class="author author-info">
-										<a href="#" class="author">${element.user.userName}</a>
+										<a href="/user/${element.user.id}" class="author">${element.user.userName}</a>
 									</p></li>
 								<li class="right-list">
-									<p class="views views-info">${element.viewCount} views</p>
+									<p class="views views-info">${element.viewCount}views</p>
 								</li>
 							</ul>
 						</div>
