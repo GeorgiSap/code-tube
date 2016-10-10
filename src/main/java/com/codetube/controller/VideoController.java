@@ -1,11 +1,11 @@
 package com.codetube.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -27,11 +27,11 @@ import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 @SessionAttributes("player")
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	
+
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
-	
+
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
@@ -51,8 +51,8 @@ public class VideoController {
 			// clip.addTag(tag);
 			System.out.println(clip);
 			model.addAttribute("video", clip);
-			
-			//Add to history
+
+			// Add to history
 			if (request.getSession(false) != null) {
 				User user = (User) request.getSession().getAttribute("user");
 				LocalDateTime lastViewed = LocalDateTime.now();
@@ -60,14 +60,30 @@ public class VideoController {
 				user.addToHistory(new History(videoId, lastViewed));
 				System.err.println("Successfully added to history?");
 			} else {
-				//Add cookie for non-registered users to keep record of last viewed
+				// Add cookie for non-registered users to keep record of last
+				// viewed
 			}
-			
+
 			return "single";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "index";
 		}
+
+	}
+
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	public String showVideos(Model model, HttpServletRequest request) {
+		if (request.getSession(false) == null) {
+			return "index";
+		}
+
+		List<VideoClip> videoclips = videoClipJDBCTemplate.getClips();
+		model.addAttribute("videos", videoclips);
+		for (VideoClip clip : videoclips) {
+			System.out.println(clip);
+		}
+		return "singlevideo";
 
 	}
 }
