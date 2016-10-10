@@ -1,5 +1,6 @@
 package com.codetube.controller;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
+import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
@@ -53,14 +55,15 @@ public class VideoController {
 			//Add to history
 			if (request.getSession(false) != null) {
 				User user = (User) request.getSession().getAttribute("user");
-				historyJDBCTemplate.addToHistory(clip.getId(), user.getId());
-				user.addToHistory(clip);
+				LocalDateTime lastViewed = LocalDateTime.now();
+				historyJDBCTemplate.addToHistory(clip.getId(), user.getId(), lastViewed);
+				user.addToHistory(new History(videoId, lastViewed));
 				System.err.println("Successfully added to history?");
 			} else {
 				//Add cookie for non-registered users to keep record of last viewed
 			}
 			
-			return "singlevideo";
+			return "single";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "index";

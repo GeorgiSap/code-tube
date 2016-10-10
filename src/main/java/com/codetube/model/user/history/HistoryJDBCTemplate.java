@@ -22,18 +22,18 @@ public class HistoryJDBCTemplate implements HistoryDAO {
 	}
 	
 	@Override
-	public void addToHistory(int videoClipId, int userId) throws UserException {
+	public void addToHistory(int videoClipId, int userId, LocalDateTime lastViewed) throws UserException {
 		if (!checkIfRecordExists(videoClipId, userId)) {
-			addNewRecord(videoClipId, userId);
+			addNewRecord(videoClipId, userId, lastViewed);
 		} else {
-			updateRecord(videoClipId, userId);
+			updateRecord(videoClipId, userId, lastViewed);
 		}
 	}
 
-	private void addNewRecord(int videoClipId, int userId) throws UserException {
+	private void addNewRecord(int videoClipId, int userId, LocalDateTime lastViewed) throws UserException {
 		if (videoClipId > 0 && userId > 0) {
 			 String SQL = "insert into user_has_history (video_clip_id, user_id, last_viewed) values (?, ?, ?)";
-			 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			 Timestamp timestamp = Timestamp.valueOf(lastViewed);
 			 jdbcTemplateObject.update( SQL, videoClipId, userId, timestamp);
 			 System.out.println("VideoClip " + videoClipId +" added to User " + userId + " history: " + timestamp);
 			} else {
@@ -41,10 +41,10 @@ public class HistoryJDBCTemplate implements HistoryDAO {
 			}
 	}
 	
-	private void updateRecord(int videoClipId, int userId) throws UserException {
+	private void updateRecord(int videoClipId, int userId, LocalDateTime lastViewed) throws UserException {
 		if (videoClipId > 0 && userId > 0) {
 			 String SQL = "update user_has_history set last_viewed = ? where video_clip_id = ? AND user_id = ?";
-			 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			 Timestamp timestamp = Timestamp.valueOf(lastViewed);
 			 jdbcTemplateObject.update(SQL, timestamp, videoClipId, userId);
 				System.out.println("Updated History Record: VideoClip " + videoClipId +", User " + userId + " : " + timestamp);
 			} else {

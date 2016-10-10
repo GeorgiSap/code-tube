@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import org.springframework.stereotype.Component;
 
 import com.codetube.model.tag.UserTag;
+import com.codetube.model.user.history.History;
 import com.codetube.model.videoclip.VideoClip;
 
 @Component
@@ -22,7 +23,8 @@ public class User implements IUser {
 	private String password;
 	private List<VideoClip> videos = new ArrayList<VideoClip>();
 	private List<User> subscriptions = new ArrayList<User>();
-	private List<VideoClip> history = new ArrayList<VideoClip>();
+	//private List<VideoClip> history = new ArrayList<VideoClip>();
+	private Set<History> history = new TreeSet<History>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
 
 	public User() {
@@ -123,10 +125,8 @@ public class User implements IUser {
 		videos.add(videoClip);
 	}
 	
-	public void addToHistory(VideoClip videoClip) {
-		if (!history.contains(videoClip)) {
-		history.add(videoClip);
-		}
+	public void addToHistory(History entry) {
+		history.add(entry);
 	}
 	
 	public void addToSubscriptions(User user) {
@@ -137,8 +137,8 @@ public class User implements IUser {
 		return Collections.unmodifiableList(videos);
 	}
 	
-	public List<VideoClip> getHistory() {
-		return Collections.unmodifiableList(history);
+	public Set<History> getHistory() {
+		return history;
 	}
 
 	public List<User> getSubscribtions() {
