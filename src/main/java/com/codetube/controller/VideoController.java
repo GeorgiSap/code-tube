@@ -1,10 +1,13 @@
 package com.codetube.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,7 +24,9 @@ import com.codetube.model.user.User;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
+import com.codetube.model.videoclip.VideoClipException;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
+import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes("player")
@@ -73,17 +78,30 @@ public class VideoController {
 	}
 
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public String showVideos(Model model, HttpServletRequest request) {
-		if (request.getSession(false) == null) {
-			return "index";
-		}
+	protected void getDataJSon(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/json");
+		response.setCharacterEncoding("UTF-8");
+		try {
 
-		List<VideoClip> videoclips = videoClipJDBCTemplate.getClips();
-		model.addAttribute("videos", videoclips);
-		for (VideoClip clip : videoclips) {
-			System.out.println(clip);
-		}
-		return "singlevideo";
+			String username = request.getParameter("user");
+			List<VideoClip> list = videoClipJDBCTemplate.getClips();
+			for (VideoClip clip : list) {
+				Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
 
+				for (Tag tag : tags) {
+					clip.addTag(tag);
+				}
+			}
+
+			if (list != null)
+				response.getWriter().print(new Gson().toJson(list));
+			else
+				response.getWriter().print("[]");
+
+		} catch (VideoClipException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

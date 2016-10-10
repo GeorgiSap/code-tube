@@ -17,17 +17,51 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
-	
-	
-	
-	
-	
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+	 
+	 addEventListener("load",refreshMovies);
+	 
+	 function refreshMovies() {
+			$("#randomVideos").empty();
 
-
-
-
-
+			$.get("../data",
+					function(data) {
+						if (data.length > 0) {
+							
+								
+							for ( var index in data) {
+								var video = data[index];
+								var div  = document.createElement("div");
+								var performer = document.createElement("h6");
+								var nameOfFile = document.createElement("h5");
+								var path = document.createElement("p");
+								var videoControl = document.createElement("video");
+								var link = document.createElement("a");
+								
+								
+								performer.innerHTML = "Performer: " + video.performer;
+								nameOfFile.innerHTML  = "Video name: "+ video.name;
+								path.innerHTML = video.path;
+							
+								
+								videoControl.src = "../videos/" + path.innerHTML;
+								videoControl.controls = false;
+								videoControl.width = 500;
+								videoControl.height = 300;
+								videoControl.id = "videoControl";
+								
+								link.href = "./"+video.id;
+								
+								link.appendChild(videoControl);
+								div.appendChild(link);
+								div.appendChild(nameOfFile);
+								div.appendChild(performer);
+								$("#randomVideos").append(div);
+							}
+						}
+						
+					});
+		}
 </script>
 <!-- bootstrap -->
 <link href="../css/bootstrap.min.css" rel='stylesheet' type='text/css'
@@ -130,23 +164,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div class="single-grid-right">
 
-					<c:forEach begin="0" end="11" varStatus="loop">
-
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author">
-									<a href="#" class="author">John Maniya</a>
-								</p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-
-					</c:forEach>
+					<div id="randomVideos">
+					</div>
 
 				</div>
 			</div>
