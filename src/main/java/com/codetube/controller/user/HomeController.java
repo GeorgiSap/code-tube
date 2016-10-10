@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.model.user.User;
 import com.codetube.model.user.history.History;
+import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 
@@ -21,6 +22,7 @@ import com.codetube.model.videoclip.VideoClipDAO;
 public class HomeController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
+	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
@@ -69,7 +71,7 @@ public class HomeController {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
 			
-		Set<History> history = user.getHistory();
+		Set<History> history = (Set<History>) historyJDBCTemplate.getHistory(user.getId());
 		List<VideoClip> historyEntries = new ArrayList<VideoClip>();
 		for (History entry : history) {
 			historyEntries.add(videoClipJDBCTemplate.getClip(entry.getVideoClipId()));
