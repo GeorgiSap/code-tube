@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.codetube.model.tag.Tag;
+import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
@@ -25,7 +27,8 @@ public class UserController {
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
-
+	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
+	
 	public void createSession(HttpServletRequest request, User user) {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(SESSION_LENGTH);
@@ -48,6 +51,9 @@ public class UserController {
 		}
 
 		session.setAttribute("user", user);
+		List<Tag> allTags = tagJDBCTemplate.getTags();
+		request.setAttribute("allTags", allTags);
+
 	}
 
 	public void disableCache(HttpServletResponse response) {
