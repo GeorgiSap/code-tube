@@ -38,7 +38,9 @@ public class PlaylistController {
 		if (validateSesion(request) != null) {
 			return validateSesion(request);
 		}
-		playlistJDBCTemplate.getPlaylist(request.getSession().getAttribute("user_id"))
+		int userId = (int) request.getSession().getAttribute("user_id");
+		System.out.println(userId);
+		playlistJDBCTemplate.getPlaylist(userId);
 		return "index";
 	}
 

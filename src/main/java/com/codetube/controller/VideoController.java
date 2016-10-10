@@ -1,10 +1,10 @@
 package com.codetube.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -23,17 +23,15 @@ import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 @SessionAttributes("player")
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	
+
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
 
-	
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
 	public String products(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
 		try {
-			System.out.println("dafaq");
 			if (request.getSession(false) == null) {
 				return "index";
 			}
@@ -47,11 +45,25 @@ public class VideoController {
 			// clip.addTag(tag);
 			System.out.println(clip);
 			model.addAttribute("video", clip);
-			return "singlevideo";
+			return "single";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "index";
 		}
+	}
+
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	public String showVideos(Model model, HttpServletRequest request) {
+		if (request.getSession(false) == null) {
+			return "index";
+		}
+
+		List<VideoClip> videoclips = videoClipJDBCTemplate.getClips();
+		model.addAttribute("videos", videoclips);
+		for (VideoClip clip : videoclips) {
+			System.out.println(clip);
+		}
+		return "singlevideo";
 
 	}
 }

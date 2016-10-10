@@ -14,7 +14,7 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 <%
-	VideoClip clip = (VideoClip) request.getAttribute("video");
+	List<VideoClip> videoclips = (List<VideoClip>) request.getAttribute("videos");
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,28 +22,36 @@
 </head>
 <body>
 	<script type='text/javascript'>
+	var index = 0;
+	var clipPaths = new Array(<%=videoclips.size() -1%>);
+	<%for (VideoClip clip : videoclips) {%>
+		clipPaths[index] = <%=clip.getPath()%>;
+		index = index + 1;
+	<%}%>
 	
+		window.addEventListener("load", function() {
+
+			start(clipPaths);
+
+		}, false);
 	
-		window.addEventListener("load", start, false);
-	
-		function start() {
+		function start(clipPaths) {
+			for(index = 0; index < clipPaths.length;index++){
 			var video = document.createElement('video');
+			video.src = "videos/" + clipPaths[index];
+				video.autoPlay = true;
+				var thecanvas = document.getElementById('thecanvas');
 
-			video.src = "../videos/<%=clip.getPath()%>";
-			video.autoPlay = true;
-			var thecanvas = document.getElementById('thecanvas');
-			var img = document.getElementById('thumbnail_img');
+				video.addEventListener('loadeddata', function() {
 
-			video.addEventListener('loadeddata', function() {
+					draw(video, thecanvas);
 
-				draw(video, thecanvas, img);
-
-			}, false);
-
+				}, false);
+			}
 		};
 
-		function draw(video, thecanvas, img) {
-
+		function draw(video, thecanvas) {
+			$thecanvas = thecanvas;
 			// get the canvas context for drawing
 			var context = thecanvas.getContext('2d');
 
@@ -54,8 +62,9 @@
 			var dataURL = thecanvas.toDataURL();
 
 			// set the source of the img tag
+			var img = document.createElement("img");
 			img.setAttribute('src', dataURL);
-
+			$("thecanvas").prepend(img);
 		}
 	</script>
 
@@ -67,10 +76,8 @@
 	<br />
 	<canvas id="thecanvas">
         </canvas>
-	<br /> The Image
 	<br />
-	<img id="thumbnail_img" alt="Right click to save" />
-	<br />
+
 
 </body>
 
