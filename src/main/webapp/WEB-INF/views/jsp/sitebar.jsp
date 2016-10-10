@@ -13,7 +13,7 @@
 	</div>
 	<div class="drop-navigation drop-navigation">
 		<ul class="nav nav-sidebar">
-		
+
 			<li class="active"><a href='<c:url value="/home"/>'
 				class="home-icon"><span class="glyphicon glyphicon-home"
 					aria-hidden="true"></span>Home</a></li>
@@ -21,17 +21,15 @@
 			<%
 				if (request.getSession(false) != null) {
 			%>
-<<<<<<< HEAD
-			<li><a href="playlists" class="user-icon"><span
-					class="glyphicon glyphicon-home glyphicon-blackboard"
-					aria-hidden="true"></span>My Playlist</a></li>
-			<li><a href="./" class="user-icon"><span
-=======
 			<li><a href="./videos" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
+
+			<li><a href="playlists" class="user-icon"><span
+					class="glyphicon glyphicon-home glyphicon-blackboard"
+					aria-hidden="true"></span>My Playlists</a></li>
+
 			<li><a href="./subscriptions" class="user-icon"><span
->>>>>>> 67f170ade2bcbb1c905dd930188a5b483480a1cc
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Subscriptions</a></li>
 			<%
