@@ -91,6 +91,17 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL,new Object[] { userId }, new VideoClipMapper());
 		return videoClips;
 	}
+	
+	@Override
+	public List<VideoClip> getClipsByTag(int tagId) {
+		String SQL = "select * from video_clips v "
+				+ "join video_clip_has_tags t "
+				+ "on v.video_clip_id = t.video_clip_id"
+				+ "  where t.tag_id = ?";
+		System.out.println(jdbcTemplateObject);
+		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL,new Object[] { tagId }, new VideoClipMapper());
+		return videoClips;
+	}
 
 	@Override
 	public VideoClip getClip(int id) {
