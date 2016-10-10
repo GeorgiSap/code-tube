@@ -98,7 +98,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<a href="#" class="author">User Name</a>
 									</p></li>
 								<li class="right-list">
-									<p class="views views-info">2,114,200 views</p>
+									<p class="views views-info">${element.viewCount} views</p>
 								</li>
 							</ul>
 						</div>

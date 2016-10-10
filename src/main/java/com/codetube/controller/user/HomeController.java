@@ -1,8 +1,12 @@
 package com.codetube.controller.user;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,7 +46,12 @@ public class HomeController {
 		
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
-		request.setAttribute("videosToLoad", user.getVideos());
+		List<VideoClip> userVideos = user.getVideos();
+		List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
+		for (int video =  userVideos.size() - 1; video >= 0; video--) {
+			userVideosOrdered.add(userVideos.get(video));
+		}
+		request.setAttribute("videosToLoad", userVideosOrdered);
 		}
 		return "home";
 	}
@@ -67,13 +76,15 @@ public class HomeController {
 			return "index";
 		}
 		request.setAttribute("title", "Last viewed");
-		//TODO
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
-			
-		Set<History> history = (Set<History>) historyJDBCTemplate.getHistory(user.getId());
+		Map<Integer, LocalDateTime> history = user.getHistory();
+		Set<History> historySet = new TreeSet<History>();
+		for (Entry<Integer, LocalDateTime> entry : history.entrySet()) {
+			historySet.add(new History(entry.getKey(), entry.getValue()));
+		}
 		List<VideoClip> historyEntries = new ArrayList<VideoClip>();
-		for (History entry : history) {
+		for (History entry : historySet) {
 			historyEntries.add(videoClipJDBCTemplate.getClip(entry.getVideoClipId()));
 		}
 		request.setAttribute("videosToLoad", historyEntries);

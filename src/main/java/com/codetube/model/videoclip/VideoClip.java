@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +29,7 @@ public class VideoClip {
 	private int id;
 	private String name;
 	private String performer;
-	private long viewCount;
+	private AtomicLong viewCount;
 	private String path;
 
 	public VideoClip(int id, String name, String performer, String path) throws VideoClipException {
@@ -36,17 +37,15 @@ public class VideoClip {
 				|| path.trim().equals("")) {
 			throw new VideoClipException("Bad Data - constructor");
 		}
-
 		this.id = id;
 		this.name = name;
 		this.performer = performer;
 		this.path = path;
-		this.viewCount = 0;
-
 	}
-
-	public void setViewCount(long viewCount) {
-		this.viewCount = viewCount;
+	
+	public VideoClip(int id, String name, String performer, String path, long viewCount) throws VideoClipException {
+		this(id, name, performer, path);
+		this.viewCount = new AtomicLong(viewCount);
 	}
 
 	public int getId() {
@@ -62,7 +61,11 @@ public class VideoClip {
 	}
 
 	public long getViewCount() {
-		return viewCount;
+		return viewCount.get();
+	}
+	
+	public void increaseViewCount() {
+		this.viewCount.incrementAndGet();
 	}
 
 	public String getPath() {

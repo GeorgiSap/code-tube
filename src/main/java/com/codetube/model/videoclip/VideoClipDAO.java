@@ -18,8 +18,6 @@ public interface VideoClipDAO {
 
 	int addVideoClip(VideoClip videoClip, User user);
 
-	int increaseViewCount(VideoClip videoClip, int numberOfViews);
-
 	List<VideoClip> getClips();
 
 	VideoClip getClip(int id);
@@ -29,5 +27,7 @@ public interface VideoClipDAO {
 	Set<Tag> getVideoTags(VideoClip clip);
 
 	List<VideoClip> getClips(int userId);
+
+	void increaseViewCount(VideoClip videoClip);
 
 }

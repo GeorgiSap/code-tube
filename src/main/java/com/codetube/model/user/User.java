@@ -1,8 +1,11 @@
 package com.codetube.model.user;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,8 +26,7 @@ public class User implements IUser {
 	private String password;
 	private List<VideoClip> videos = new ArrayList<VideoClip>();
 	private List<User> subscriptions = new ArrayList<User>();
-	//private List<VideoClip> history = new ArrayList<VideoClip>();
-	private Set<History> history = new TreeSet<History>();
+	private HashMap<Integer, LocalDateTime> history = new HashMap<Integer, LocalDateTime>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
 
 	public User() {
@@ -125,8 +127,8 @@ public class User implements IUser {
 		videos.add(videoClip);
 	}
 	
-	public void addToHistory(History entry) {
-		history.add(entry);
+	public void addToHistory(int videoClipId, LocalDateTime lastViewed) {
+		history.put(videoClipId, lastViewed);
 	}
 	
 	public void addToSubscriptions(User user) {
@@ -137,8 +139,8 @@ public class User implements IUser {
 		return Collections.unmodifiableList(videos);
 	}
 	
-	public Set<History> getHistory() {
-		return history;
+	public Map<Integer, LocalDateTime> getHistory() {
+		return Collections.unmodifiableMap(history);
 	}
 
 	public List<User> getSubscribtions() {

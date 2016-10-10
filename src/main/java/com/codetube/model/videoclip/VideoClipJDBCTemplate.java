@@ -70,22 +70,10 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	}
 
 	@Override
-	public int increaseViewCount(VideoClip videoClip, int numberOfViews) {
-		String SQL = "update video_clips set view_count = view_count + ? where video_clip_id = ?";
-
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-
-		this.jdbcTemplateObject.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement pst = con.prepareStatement(SQL, new String[] { "view_count" });
-				pst.setInt(1, numberOfViews);
-				pst.setInt(2, videoClip.getId());
-				return pst;
-			}
-		}, keyHolder);
-		jdbcTemplateObject.update(SQL, numberOfViews, videoClip.getId());
-		System.out.println("Upadeted! , the new views of the clip are " + keyHolder.getKey().intValue());
-		return keyHolder.getKey().intValue();
+	public void increaseViewCount(VideoClip videoClip) {
+		String SQL = "update video_clips set view_count = view_count + 1 where video_clip_id = ?";
+		jdbcTemplateObject.update(SQL, videoClip.getId());
+		System.out.println("Incremented view count");
 	}
 
 	@Override
