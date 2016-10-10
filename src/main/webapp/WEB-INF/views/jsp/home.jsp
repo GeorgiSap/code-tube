@@ -16,9 +16,13 @@
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 
 </script>
 <!-- bootstrap -->
@@ -27,8 +31,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //bootstrap -->
 <link href='<c:url value="/css/dashboard.css"/>' rel="stylesheet">
 <!-- Custom Theme files -->
-<link href='<c:url value="/css/style.css"/>' rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js" ></script>
+<link href='<c:url value="/css/style.css"/>' rel='stylesheet'
+	type='text/css' media="all" />
+<script src="js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -47,12 +52,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="main-grids">
 			<div class="recommended">
 
-			<% 
-			List<VideoClip> videosToLoad = (List<VideoClip>) request.getAttribute("videosToLoad"); 
-			if (videosToLoad == null || videosToLoad.size() <= 0) {
-				%><h2>No Videos available in <%= request.getAttribute("title")%></h2><%
-			}
-			%>
+				<%
+					List<VideoClip> videosToLoad = (List<VideoClip>) request.getAttribute("videosToLoad");
+					if (videosToLoad == null || videosToLoad.size() <= 0) {
+				%><h2>
+					No Videos available in
+					<%=request.getAttribute("title")%></h2>
+				<%
+					}
+				%>
 
 
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
@@ -64,13 +72,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							<h3><%= request.getAttribute("title")%></h3>
+							<h3><%=request.getAttribute("title")%></h3>
 						</div>
 					</c:if>
 
-										<div class="col-md-3 resent-grid recommended-grid">
+					<div class="col-md-3 resent-grid recommended-grid">
 						<div class="resent-grid-img recommended-grid-img">
-							<a href="./videoclip"><img src="images/r1.jpg" alt="" /></a>
+							<a href="player/${element.id}"><video width="300" height="200">
+									<source src="videos/${element.path}" type="video/mp4">
+								</video></a>
 							<div class="time small-time">
 								<p>2:34</p>
 							</div>
@@ -88,8 +98,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<a href="#" class="author">User Name</a>
 									</p></li>
 								<li class="right-list">
-								<p class="views views-info">2,114,200 views</p>
-										</li>
+									<p class="views views-info">2,114,200 views</p>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -101,9 +111,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</c:if>
 
 			</c:forEach>
-			
+
 			<div class="clearfix"></div>
-			
+
 		</div>
 	</div>
 
