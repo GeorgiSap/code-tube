@@ -1,6 +1,7 @@
 package com.codetube.test.comment;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -28,20 +29,24 @@ public class CommentTest {
 
 			VideoClip videoClip = new VideoClip(0, "mladen.mp4", "mladen", "mladen.mp4");
 			User user = null;
-			try {
-				user = new User(0, "Ivan", "Ivanov", "Ivan883", "ivan3@gmail.com", "pass1234");
-			} catch (UserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			int userId = (int) userJDBCTemplate.register(user);
-			user.setId(userId);
-			int videoClipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
-			videoClip.setId(videoClipId);
+//			try {
+//				user = new User(0, "Ivan", "Ivanov", "Ivan1883", "ivan33@gmail.com", "pass1234");
+//			} catch (UserException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+			user = userJDBCTemplate.get(6);
+//			int userId = (int) userJDBCTemplate.register(user);
+			user.setId(6);
+			videoClip = videoClipJDBCTemplate.getClip(12);
+			videoClip.setId(12);
 
-			int commentId = commentJDBCTemplate.addCommentToVideo(videoClip,
-					new Comment(0, "Hello i love this clip", LocalDateTime.now(), 2), user);
+//			int commentId = commentJDBCTemplate.addCommentToVideo(videoClip,
+//					new Comment(0, "Hello i love this clip", LocalDateTime.now(), 2), user);
 			System.out.println("Succesfully added a comment to video ");
+			Set<Comment> comment = commentJDBCTemplate.getComments(12);
+			System.out.println(comment);
 
 		} catch (VideoClipException e) {
 			// TODO Auto-generated catch block

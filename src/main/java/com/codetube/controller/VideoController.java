@@ -3,6 +3,7 @@ package com.codetube.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -18,15 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.codetube.model.comment.Comment;
+import com.codetube.model.comment.CommentDAO;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
+import com.codetube.model.user.UserJDBCTemplate;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipException;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Controller
 @SessionAttributes("player")
@@ -35,18 +41,18 @@ public class VideoController {
 
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
-	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
-
+	public CommentDAO commentJDBCTemplate = (CommentDAO) context.getBean("CommentJDBCTemplate");
+	public HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
+	public UserJDBCTemplate userJDBCTemplate = (UserJDBCTemplate) context.getBean("UserJDBCTemplate");
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
-	public String products(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
+	public String showVideo(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
 		try {
-			System.out.println("dafaq");
 			if (request.getSession(false) == null) {
 				return "index";
 			}
-			System.out.println("tyk");
+
 			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
 			Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
 			System.out.println(tags);
@@ -64,7 +70,8 @@ public class VideoController {
 				historyJDBCTemplate.addToHistory(clip.getId(), user.getId(), lastViewed);
 				user.addToHistory(clip.getId(), lastViewed);
 			} else {
-				// Add cookie for non-registered users to keep record of last viewed
+				// Add cookie for non-registered users to keep record of last
+				// viewed
 			}
 			videoClipJDBCTemplate.increaseViewCount(clip);
 			clip.increaseViewCount();
@@ -82,8 +89,6 @@ public class VideoController {
 		response.setContentType("text/json");
 		response.setCharacterEncoding("UTF-8");
 		try {
-
-			String username = request.getParameter("user");
 			List<VideoClip> list = videoClipJDBCTemplate.getClips();
 			for (VideoClip clip : list) {
 				Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
@@ -103,4 +108,82 @@ public class VideoController {
 			e.printStackTrace();
 		}
 	}
+
+	@RequestMapping(value = "/getComments/{video_id}", method = RequestMethod.GET)
+	protected void getComments(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/json");
+		response.setCharacterEncoding("UTF-8");
+
+		Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
+		System.out.println("They called me ");
+//		for(Comment comment : comments){
+//			userJDBCTemplate.get(id)
+//		}
+		if (comments != null)
+			response.getWriter().print(new Gson().toJson(comments));
+		else
+			response.getWriter().print("[]");
+
+	}
+
+	@RequestMapping(value = "/data/{video_id}", method = RequestMethod.GET)
+	protected void getDataJSonToSingleVideo(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/json");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
+
+			Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
+
+			for (Tag tag : tags) {
+				clip.addTag(tag);
+			}
+
+			if (clip != null)
+				response.getWriter().print(new Gson().toJson(clip));
+			else
+				response.getWriter().print("[]");
+
+		} catch (VideoClipException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping(value = "/comment", method = RequestMethod.PUT)
+	protected void putCommentIn(HttpServletRequest request, HttpServletResponse response) {
+		Scanner sc;
+		User user;
+		VideoClip clip;
+
+		try {
+
+			sc = new Scanner(request.getInputStream());
+
+			StringBuilder buf = new StringBuilder();
+			while (sc.hasNextLine()) {
+				buf.append(sc.nextLine());
+			}
+
+			System.out.println(request.getRequestURI());
+			JsonObject object = (JsonObject) new JsonParser().parse(buf.toString());
+			System.out.println(object);
+			String text = object.get("textAreaAddingComment").getAsString();
+			text = text.trim();
+			int clipId = object.get("id").getAsInt();
+			clip = videoClipJDBCTemplate.getClip(clipId);
+			
+			int userId = (int) request.getSession().getAttribute("user_id");
+			user = userJDBCTemplate.get(userId);
+
+			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(), 1),
+					user);
+			System.out.println("Added a comment with id " + commetId);
+
+		} catch (Exception e) {
+		}
+	}
+
 }
