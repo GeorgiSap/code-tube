@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
@@ -15,12 +18,15 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
+import com.codetube.model.videoclip.VideoClipMapper;
 
 public class CommentJDBCTemplate implements CommentDAO {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.comment.CommentDAO#setDataSource(javax.sql.DataSource)
 	 */
 	@Override
@@ -29,8 +35,12 @@ public class CommentJDBCTemplate implements CommentDAO {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/* (non-Javadoc)
-	 * @see model.comment.CommentDAO#addCommentToVideo(model.videoclip.VideoClip, model.comment.Comment, model.user.User)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * model.comment.CommentDAO#addCommentToVideo(model.videoclip.VideoClip,
+	 * model.comment.Comment, model.user.User)
 	 */
 	@Override
 	public int addCommentToVideo(VideoClip video, Comment comment, User user) {
@@ -53,4 +63,14 @@ public class CommentJDBCTemplate implements CommentDAO {
 		return keyHolder.getKey().intValue();
 
 	}
+
+	@Override
+	public Set<Comment> getComments(int video_clip_id) {
+		String SQL = "select * from comments where video_clip_id = ?";
+		List<Comment> comments = jdbcTemplateObject.query(SQL, new Object[] { video_clip_id }, new CommentMapper());
+		Set<Comment> set = new TreeSet<Comment>((o1, o2) -> o1.getDateOfComment().compareTo(o2.getDateOfComment()));
+		set.addAll(comments);
+		return set;
+	}
+
 }
