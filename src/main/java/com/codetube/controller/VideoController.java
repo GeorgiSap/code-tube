@@ -70,7 +70,8 @@ public class VideoController {
 				historyJDBCTemplate.addToHistory(clip.getId(), user.getId(), lastViewed);
 				user.addToHistory(clip.getId(), lastViewed);
 			} else {
-				// Add cookie for non-registered users to keep record of last viewed
+				// Add cookie for non-registered users to keep record of last
+				// viewed
 			}
 			videoClipJDBCTemplate.increaseViewCount(clip);
 			clip.increaseViewCount();
@@ -113,14 +114,17 @@ public class VideoController {
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/json");
 		response.setCharacterEncoding("UTF-8");
-		
-		/*Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
-	
+
+		Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
+		System.out.println("They called me ");
+//		for(Comment comment : comments){
+//			userJDBCTemplate.get(id)
+//		}
 		if (comments != null)
 			response.getWriter().print(new Gson().toJson(comments));
 		else
 			response.getWriter().print("[]");
-			*/
+
 	}
 
 	@RequestMapping(value = "/data/{video_id}", method = RequestMethod.GET)
@@ -173,7 +177,7 @@ public class VideoController {
 			int userId = (int) request.getSession().getAttribute("user_id");
 			user = userJDBCTemplate.get(userId);
 
-			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(), 1),
+			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(),userId, 1),
 					user);
 			System.out.println("Added a comment with id " + commetId);
 

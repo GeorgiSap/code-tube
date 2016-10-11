@@ -6,11 +6,13 @@ public class Comment {
 	private int id;
 	private String message;
 
-	// private User user;
+	private int userId;
+	
+
 	private LocalDateTime dateOfComment;
 	private int rating;
 
-	public Comment(int id, String message, LocalDateTime dateOfComment, int rating) throws CommentException {
+	public Comment(int id, String message, LocalDateTime dateOfComment,int userId, int rating) throws CommentException {
 		if ((message == null) || (message.trim().equals("")) || (rating > 5) || (rating < 1)) {
 			throw new CommentException("Bad data in comment");
 		}
@@ -18,6 +20,7 @@ public class Comment {
 		this.dateOfComment = dateOfComment;
 		this.rating = rating;
 		this.id = id;
+		this.userId = userId;
 	}
 
 	public int getId() {
@@ -35,10 +38,19 @@ public class Comment {
 	public int getRating() {
 		return rating;
 	}
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", message=" + message + ", dateOfComment=" + dateOfComment + ", rating=" + rating
-				+ "]";
+		return "Comment [id=" + id + ", message=" + message + ", userId=" + userId + ", dateOfComment=" + dateOfComment
+				+ ", rating=" + rating + "]";
 	}
+
+	
 }

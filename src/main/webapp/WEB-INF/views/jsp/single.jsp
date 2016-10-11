@@ -22,8 +22,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
 	 var theChosenOneVideoID = 
+
 <%=clip.getId()%>
+	
 	;
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
@@ -38,7 +41,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$.get("../getComments/"+ theChosenOneVideoID,
 					function(data) {
 						if (data.length > 0) {
-						
+							for ( var index in data) {
+								var quote = data[index];
+								var div  = document.createElement("div");
+								var textArea = document.createElement("textarea");
+								
+								textArea.value = quote.message;
+								textArea.rows = 4;
+								textArea.cols = 50;
+								textArea.readOnly  = true;
+								textArea.setAttribute("id", "textArea");
+								
+								div.appendChild(textArea);
+								$("#comments").append(div);
+							}
 						}
 			
 			
@@ -100,6 +116,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			    }
 			});
 		}
+
 
 
 
@@ -187,14 +204,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 						<div class="media">
-							<label>Add comment please:</label> <br />
-							<textarea rows="4" cols="50" id="comment">
+							<div class ="addComment">
+								<label>Add comment please:</label> <br />
+								<textarea id="textAreaAddingComment" rows="4" cols="50" id="comment">
 							</textarea>
-							<br />
-							<button onclick="addComment()">Add Comment</button>
-							<div id="comments">
-							
+								<br />
+								<button onclick="addComment()">Add Comment</button>
 							</div>
+							<div id="comments"></div>
 						</div>
 
 
