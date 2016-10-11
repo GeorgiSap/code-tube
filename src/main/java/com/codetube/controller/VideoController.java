@@ -47,7 +47,7 @@ public class VideoController {
 	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
-	public String products(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
+	public String showVideo(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
 		try {
 			if (request.getSession(false) == null) {
 				return "index";
@@ -169,15 +169,16 @@ public class VideoController {
 
 			System.out.println(request.getRequestURI());
 			JsonObject object = (JsonObject) new JsonParser().parse(buf.toString());
-			String text = object.get("text").getAsString();
+			System.out.println(object);
+			String text = object.get("textAreaAddingComment").getAsString();
 			text = text.trim();
 			int clipId = object.get("id").getAsInt();
 			clip = videoClipJDBCTemplate.getClip(clipId);
-
+			
 			int userId = (int) request.getSession().getAttribute("user_id");
 			user = userJDBCTemplate.get(userId);
 
-			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(),userId, 1),
+			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(), 1),
 					user);
 			System.out.println("Added a comment with id " + commetId);
 

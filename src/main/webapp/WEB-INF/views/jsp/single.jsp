@@ -104,15 +104,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 
 		function addComment() {
-			var commentText = $("#comment").val();
+			var commentText = $("#textAreaAddingComment").val();
 			$.ajax({
 			    url: '../comment',
 			    type: 'PUT',
-			    data: JSON.stringify({"text":commentText,"id":theChosenOneVideoID}),
+			    data: JSON.stringify({"textAreaAddingComment":commentText,"id":theChosenOneVideoID}),
 			    success: function(result) {
-				    	var p = document.createElement("p");
-					p.innerHTML = commentText;
-					$("#comments").append(p);
+				    	var textArea = document.createElement("textarea");
+				    	
+				    	textArea.value = commentText;
+				    	textArea.rows = 4;
+						textArea.cols = 50;
+						textArea.readOnly  = true;
+				    	textArea.setAttribute("id", "textArea");
+				    	
+						$("#comments").append(textArea);
 			    }
 			});
 		}
