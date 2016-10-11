@@ -1,5 +1,6 @@
 package com.codetube.controller.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,18 @@ public class UserController {
 		session.setAttribute("user", user);
 		List<Tag> allTags = tagJDBCTemplate.getTags();
 		request.setAttribute("allTags", allTags);
+		
+		
+		List<VideoClip> allVideos = videoClipJDBCTemplate.getClips();
+		
+		List<VideoClip> allVideosOrdered = new ArrayList<VideoClip>();
+		for (int video =  allVideos.size() - 1; video >= 0; video--) {
+			User currentUser = userJDBCTemplate.get(allVideos.get(video).getUser().getId());
+			allVideos.get(video).setUser(currentUser);
+			allVideosOrdered.add(allVideos.get(video));
+		}
+		
+		request.setAttribute("videosToLoad", allVideosOrdered);
 
 	}
 
