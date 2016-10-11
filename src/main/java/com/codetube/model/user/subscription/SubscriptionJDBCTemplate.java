@@ -42,6 +42,16 @@ public class SubscriptionJDBCTemplate implements SubscriptionDAO {
 	}
 	
 	@Override
+	public boolean checkIfSubscribed(int userId, int subscriberId) {
+		String SQL = "select * from user_has_subscribers where user_id = ? AND subscriber_id = ?";
+		List<Subscription> users = jdbcTemplateObject.query(SQL, new Object[] {userId, subscriberId}, new SubscriptionMapper());
+		if (users != null && users.size() > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
 	public  List<Subscription> listSubscibers(int userId) {
 		String SQL = "select * from user_has_subscribers where user_id = ?";
 		List<Subscription> users = jdbcTemplateObject.query(SQL, new Object[] {userId},new SubscriptionMapper());

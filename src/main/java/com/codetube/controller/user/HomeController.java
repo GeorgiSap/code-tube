@@ -20,6 +20,7 @@ import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
+import com.codetube.model.user.subscription.Subscription;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 
@@ -35,6 +36,16 @@ public class HomeController {
 		if (request.getSession(false) == null) {
 			return "index";
 		}
+		List<VideoClip> allVideos = videoClipJDBCTemplate.getClips();
+		
+		List<VideoClip> allVideosOrdered = new ArrayList<VideoClip>();
+		for (int video =  allVideos.size() - 1; video >= 0; video--) {
+			User user = userJDBCTemplate.get(allVideos.get(video).getUser().getId());
+			allVideos.get(video).setUser(user);
+			allVideosOrdered.add(allVideos.get(video));
+		}
+		
+		request.setAttribute("videosToLoad", allVideosOrdered);
 		request.setAttribute("title", "Recommended");
 		return "home";
 	}
@@ -68,10 +79,29 @@ public class HomeController {
 			return "index";
 		}
 		request.setAttribute("title", "Subscriptions");
-		//User user = (User) request.getSession().getAttribute("user");
-		//TODO get videos
-		//request.setAttribute("videosToLoad", user.getSubscribtions());
-		return "home";
+		User user = (User) request.getSession().getAttribute("user");
+		List<User> subscriptions = user.getSubscribtions();
+		List<VideoClip> subscriptionVideos = new ArrayList<VideoClip>();
+		
+//		for (int subscription = subscriptions.size() - 1; subscription >= 0; subscription--) {
+//			List<VideoClip> currentChannelVideos = videoClipJDBCTemplate.getClips(subscriptions.get(subscription).getId());
+//			for (int video =  currentChannelVideos.size() - 1; video >= 0; video--) {
+//				subscriptionVideos.add(currentChannelVideos.get(video));
+//				currentChannelVideos.get(video).setUser(subscriptions.get(subscription));
+//			}
+//		}
+		
+		
+		for (User subscription : subscriptions) {
+			List<VideoClip> currentChannelVideos = videoClipJDBCTemplate.getClips(subscription.getId());
+			for (int video =  currentChannelVideos.size() - 1; video >= 0; video--) {
+				subscriptionVideos.add(currentChannelVideos.get(video));
+				currentChannelVideos.get(video).setUser(subscription);
+			}
+		}
+
+		request.setAttribute("videosToLoad", subscriptionVideos);
+		return "subscriptions";
 	}
 	
 	

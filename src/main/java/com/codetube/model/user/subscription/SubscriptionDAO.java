@@ -19,4 +19,6 @@ public interface SubscriptionDAO {
 
 	List<Subscription> listSubscriptions(int subscriberId);
 
+	boolean checkIfSubscribed(int userId, int subscriberId);
+
 }

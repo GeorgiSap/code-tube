@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="false"%>
+<%@page import="com.codetube.model.tag.Tag"%>
+<%@page import="java.util.List"%>
 
 <div class="col-sm-3 col-md-2 sidebar">
 	<div class="top-navigation">
@@ -43,11 +45,25 @@
 					class="glyphicon glyphicon-film" aria-hidden="true"></span>Categories<span
 					class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 			<ul class="cl-effect-2">
+
+				<%
+					if (request.getSession(false) != null) {
+					List<Tag> allTags = (List<Tag>)request.getAttribute("allTags");
+				%>
+				<c:forEach items="${allTags}" var="element">
+					<li><a href="./tag/${element.keyword}">${element.keyword}</a></li>
+				</c:forEach>
+				<%
+					} else {
+				%>
 				<li><a href="./">Java</a></li>
 				<li><a href="./">JavaScript</a></li>
 				<li><a href="./">C#</a></li>
 				<li><a href="./">C</a></li>
 				<li><a href="./">C++</a></li>
+				<%
+					}
+				%>
 			</ul>
 			<!-- script-for-menu -->
 			<script>

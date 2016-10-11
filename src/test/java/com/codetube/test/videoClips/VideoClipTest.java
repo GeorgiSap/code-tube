@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.UserException;
+import com.codetube.model.user.history.History;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipException;
@@ -23,7 +24,7 @@ public class VideoClipTest {
 		User user = null;
 		
 		try {
-			user = new User(0, "Ivan", "Ivanov", "Ivan884", "ivan4@gmail.com", "pass1234");
+			user = new User(0, "Ivan", "Ivanov", "Ivan887", "ivan7@gmail.com", "pass1234");
 			
 			int userId = (int) userJDBCTemplate.register(user);
 			user.setId(userId);
@@ -43,6 +44,19 @@ public class VideoClipTest {
 			}
 
 			System.out.println("Succesfully adding a videoClip");
+			
+			int tagId = 11;
+			System.out.println("------Listing Videos With Tag ID " + tagId + " ------");
+			List<VideoClip> videosWithTag = videoClipJDBCTemplate.getClipsByTag(tagId);
+			for (VideoClip video : videosWithTag) {
+				System.out.print("Video Clip ID " + video.getId());
+				System.out.println(" : " + video.getPerformer());
+			}
+			
+			
+			
+			
+			
 		} catch (VideoClipException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

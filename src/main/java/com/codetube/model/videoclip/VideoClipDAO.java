@@ -30,4 +30,6 @@ public interface VideoClipDAO {
 
 	void increaseViewCount(VideoClip videoClip);
 
+	List<VideoClip> getClipsByTag(int tagId);
+
 }
