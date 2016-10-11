@@ -19,9 +19,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -64,7 +66,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					}
 				%>
 
-<c:set var="counter" value="1" />
+				<c:set var="counter" value="1" />
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
 
 
@@ -74,51 +76,69 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-						<% if (request.getAttribute("userProfilePage") != null) {%>
-							
+							<%
+								if (request.getAttribute("userProfilePage") != null) {
+							%>
+
+
+
+
 							<div class="heading">
-							<% } %>
+								<%
+									}
+								%>
 								<h3><%=request.getAttribute("title")%></h3>
-							<% if (request.getAttribute("userProfilePage") != null) { %>	
+								<%
+									if (request.getAttribute("userProfilePage") != null) {
+								%>
 							</div>
-							<% } %>
-							<% if (request.getAttribute("userProfilePage") != null) { %>
+							<%
+								}
+							%>
+							<%
+								if (request.getAttribute("userProfilePage") != null) {
+							%>
 							<div class="heading-right">
-								<a href="subscribe/<%= request.getAttribute("userProfilePage") %>" class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+								<a
+									href="subscribe/<%=request.getAttribute("userProfilePage")%>"
+									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 							</div>
-							<div class="clearfix"> </div>
-							<% } %>
+							<div class="clearfix"></div>
+							<%
+								}
+							%>
 						</div>
 					</c:if>
-					
-					
-					
-								
+
+
+
+
 					<c:if test="${element.user.userName != userName}">
-					<div class="recommended-info">
-						
-						<div class="heading">
-							<h3>${element.user.userName}</h3>
-						</div>
-						<div class="heading-right">
-							<a href="subscribe/${element.user.id}"
-								class="play-icon popup-with-zoom-anim">Unsubscribe</a>
-						</div>
 						<div class="clearfix"></div>
-					</div>
+						<div class="recommended-info">
+
+							<div class="heading">
+								<h3>${element.user.userName}</h3>
+							</div>
+							<div class="heading-right">
+								<a href="subscribe/${element.user.id}"
+									class="play-icon popup-with-zoom-anim">Unsubscribe</a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
 					</c:if>
-					
-			
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+
+
+
+
+
+
+
+
+
+
+
+
 
 					<div class="col-md-3 resent-grid recommended-grid">
 						<div class="resent-grid-img recommended-grid-img">
@@ -149,38 +169,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 
-
-
-
-
-				
-			<%-- 	 <c:if test="${element.user.userName != userName}">
-				<div class="clearfix"></div>
-					</div>
-				</c:if>  --%>
-			
-			
-					<c:if test="${not loop.first and counter % 4 == 0}">
+					<c:if test="${counter % 4 == 0}">
 						<div class="clearfix"></div>
-					</div>
-					</c:if>
+			</div>
+			</c:if>
 
 
-
-	<c:set var="counter" value="${counter + 1}" />
-	<c:if test="${not loop.first and element.user.userName != userName}">
-	<c:set var="counter" value="1" />
-	</c:if> 
-
-
-<c:set var="userName" value="${element.user.userName}" />
+		<c:set var="counter" value="${counter + 1}" />
+		<c:if test="${not loop.first and element.user.userName != userName}">
+			<c:set var="counter" value="1" />
+		</c:if>
 
 
-			</c:forEach>
+		<c:set var="userName" value="${element.user.userName}" />
 
-			<div class="clearfix"></div>
 
-		</div>
+		</c:forEach>
+
+		<div class="clearfix"></div>
+
+	</div>
 	</div>
 
 	<%@ include file="./footer.jsp"%>
