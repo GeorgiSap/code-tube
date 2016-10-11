@@ -83,7 +83,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<% } %>
 							<% if (request.getAttribute("userProfilePage") != null) { %>
 							<div class="heading-right">
-								<a href="#small-dialog8" class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+								<a href="subscribe/<%= request.getAttribute("userProfilePage") %>" class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 							</div>
 							<div class="clearfix"> </div>
 							<% } %>
@@ -110,7 +110,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</h5>
 							<ul>
 								<li><p class="author author-info">
-										<a href="/user/${element.user.id}" class="author">${element.user.userName}</a>
+										<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
 									</p></li>
 								<li class="right-list">
 									<p class="views views-info">${element.viewCount}views</p>

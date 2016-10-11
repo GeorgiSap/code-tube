@@ -25,13 +25,13 @@ public class SubscriptionTest {
 
 		try {
 			int userId1 = userJDBCTemplate.register(
-					new User(0, "Ivan", "Ivanov", "Ivan188", "ivan1@gmail.com", "pass1234"));
+					new User(0, "Ivan", "Ivanov", "Ivan888", "ivan28@gmail.com", "pass1234"));
 			int userId2 = userJDBCTemplate.register(
-					new User(0, "Petar", "Petrov", "Petar194", "petar1@gmail.com", "pass5678"));
+					new User(0, "Petar", "Petrov", "Petar894", "petar28@gmail.com", "pass5678"));
 			int userId3 = userJDBCTemplate.register(
-					new User(0, "Georgi", "Ivanov", "Georgi192", "georgi1@gmail.com", "password"));
+					new User(0, "Georgi", "Ivanov", "Georgi892", "georgi28@gmail.com", "password"));
 			int userId4 = userJDBCTemplate.register(
-					new User(0, "Maria", "Ivanova", "Maria190", "maria1@gmail.com", "password"));
+					new User(0, "Maria", "Ivanova", "Maria890", "maria28@gmail.com", "password"));
 			subscriptionJDBCTemplate.subscribe(userId1, userId2);
 			subscriptionJDBCTemplate.subscribe(userId1, userId3);
 			subscriptionJDBCTemplate.subscribe(userId1, userId4);
@@ -52,6 +52,9 @@ public class SubscriptionTest {
 				System.out.print("User ID : " + subscription.getUserId());
 				System.out.println(", Subscriber ID : " + subscription.getSubscriberId());
 			}
+			
+			System.out.println("User ID " + userId2 + " subscribed to User ID " + userId1 + " - " + subscriptionJDBCTemplate.checkIfSubscribed(userId1, userId2));
+			System.out.println("User ID " + userId2 + " subscribed to User ID " + userId3 + " - " + subscriptionJDBCTemplate.checkIfSubscribed(userId3, userId2));
 		} catch (UserException e) {
 			e.printStackTrace();
 		}
