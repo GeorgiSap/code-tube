@@ -33,6 +33,9 @@ public class VideoClip {
 	private AtomicLong viewCount;
 	private String path;
 	
+	private User user;
+	
+	
 	public User getUser() {
 		return user;
 	}
@@ -41,7 +44,7 @@ public class VideoClip {
 		this.user = user;
 	}
 
-	private User user;
+	
 
 	public VideoClip(int id, String name, String performer, String path) throws VideoClipException {
 		if (name == null || name.trim().equals("") || performer == null || performer.trim().equals("") || path == null
