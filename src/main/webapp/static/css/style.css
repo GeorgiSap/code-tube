@@ -27,6 +27,11 @@ body {
 	margin: 2%;
 }
 
+.randomVideosHome{
+	  style="overflow:hidden;
+	  width = 80%;
+	  display: inline-block;
+}
 body a {
 	transition: 0.5s all;
 	-webkit-transition: 0.5s all;
