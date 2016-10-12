@@ -14,8 +14,73 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
+	
+	
+	
+	
+	
+	
+	
 
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+	 addEventListener("load",refreshMovies);
+	 
+	 function refreshMovies() {
+			$("#randomVideosHome").empty();
+
+			$.get("data",
+					function(data) {
+						if (data.length > 0) {
+							
+								
+							for ( var index in data) {
+								var video = data[index];
+								var div  = document.createElement("div");
+								var performer = document.createElement("h6");
+								var nameOfFile = document.createElement("h5");
+								var path = document.createElement("p");
+								var videoControl = document.createElement("video");
+								var link = document.createElement("a");
+								
+								
+								performer.innerHTML = "Performer: " + video.performer;
+								nameOfFile.innerHTML  = "Video name: "+ video.name;
+								path.innerHTML = video.path;
+							
+								videoControl.src = "videos/" + path.innerHTML;
+								videoControl.controls = false;
+								videoControl.width = 300;
+								videoControl.height = 200;
+								videoControl.id = "videoControl";
+								videoControl.style.borderRadius  = "25px";
+								videoControl.style.border = "2px solid #73AD21";
+								videoControl.style.backgroundColor = "black";
+								link.href = "player/"+video.id;
+								
+								link.appendChild(videoControl);
+								div.appendChild(link);
+								div.appendChild(nameOfFile);
+								div.appendChild(performer);
+								div.style.position = "relative";
+								div.style.left = "1%";
+								div.style.display= "inline-block";
+								div.style.margin = "1%"
+								div.style.backgroundColor = "white";
+								div.style.padding = "1%";
+								div.style.borderRadius  = "25px";
+								div.style.border = "2px solid #73AD21";
+								$("#randomVideosHome").append(div);
+							}
+						}
+						
+					});	
+		}
+
+
+
+
+
+
 
 
 </script>
@@ -25,8 +90,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //bootstrap -->
 <link href='<c:url value="/css/dashboard.css"/>' rel="stylesheet">
 <!-- Custom Theme files -->
-<link href='<c:url value="/css/style.css"/>' rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js" ></script>
+<link href='<c:url value="/css/style.css"/>' rel='stylesheet'
+	type='text/css' media="all" />
+<script src="js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -44,36 +110,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<div class="main-grids">
 			<div class="recommended">
-
-
-				<c:forEach begin="1" end="12" varStatus="loop">
-
-
-					<c:if test="${loop.first or loop.index % 5 == 0}">
-						<div class="recommended-grids">
-					</c:if>
-
-					<c:if test="${loop.first}">
-						<div class="recommended-info">
-							<h3>Latest</h3>
+				<div class="recommended-grids">
+					<div class="recommended-info">
+						<div class="heading">
+							<h3>Hello There traveler</h3>
+							<%
+								if (request.getAttribute("userProfilePage") != null) {
+							%>
+							</div>
+							<%
+								}
+							%>
+							
+							<%
+								if (request.getAttribute("userProfilePage") != null) {
+							%>
+						<div class="heading-right">
+							<a href="subscribe/<%=request.getAttribute("userProfilePage")%>"
+								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 						</div>
-					</c:if>
-
-					<%@ include file="./video.jsp"%>
-
-					<c:if test="${not loop.first and loop.index % 4 == 0}">
 						<div class="clearfix"></div>
+						<%
+							}
+						%>
+						
+						<div id="randomVideosHome"></div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+
+				<div class="clearfix"></div>
+
 			</div>
-			</c:if>
-
-			</c:forEach>
-
 		</div>
 	</div>
-
 	<%@ include file="./footer.jsp"%>
 
-	</div>
 	<div class="clearfix"></div>
 	<div class="drop-menu">
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
@@ -87,6 +160,5 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 </html>
