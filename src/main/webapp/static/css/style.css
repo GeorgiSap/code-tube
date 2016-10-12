@@ -10,6 +10,28 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
+#textAreaAddingComment {
+	resize: none;
+}
+
+#textArea {
+	resize: none;
+	position: relative;
+	left: 3%;
+	margin: 2%;
+}
+
+.addComment {
+	position: relative;
+	left: 3%;
+	margin: 2%;
+}
+
+.randomVideosHome{
+	  style="overflow:hidden;
+	  width = 80%;
+	  display: inline-block;
+}
 body a {
 	transition: 0.5s all;
 	-webkit-transition: 0.5s all;
