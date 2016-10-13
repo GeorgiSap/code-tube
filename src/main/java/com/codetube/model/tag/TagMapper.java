@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.codetube.model.project.ProjectException;
-
 public class TagMapper implements RowMapper<Tag>{
 	public Tag mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Tag tag = null;

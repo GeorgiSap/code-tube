@@ -2,9 +2,6 @@ package com.codetube.model.comment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 import org.springframework.jdbc.core.RowMapper;
 

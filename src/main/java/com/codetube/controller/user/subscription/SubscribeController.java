@@ -44,9 +44,11 @@ public class SubscribeController {
 		try {
 			if (!(subscriptionJDBCTemplate.checkIfSubscribed(userId, subscriberId))) {
 				subscriptionJDBCTemplate.subscribe(userId, subscriberId);
+				subscriber.addToSubscriptions(viewedUser);
 				request.setAttribute("subscribe_button", "Unsubscribe");
 			} else {
 				subscriptionJDBCTemplate.unsubscribe(userId, subscriberId);
+				subscriber.removeFromSubscriptions(viewedUser);
 				request.setAttribute("subscribe_button", "Subscribe");
 			}
 		} catch (UserException e) {

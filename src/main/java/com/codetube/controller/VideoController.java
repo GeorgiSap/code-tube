@@ -25,7 +25,6 @@ import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserJDBCTemplate;
-import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipException;
@@ -98,10 +97,11 @@ public class VideoController {
 				}
 			}
 
-			if (list != null)
+			if (list != null) {
 				response.getWriter().print(new Gson().toJson(list));
-			else
+			} else {
 				response.getWriter().print("[]");
+			}
 
 		} catch (VideoClipException e) {
 			// TODO Auto-generated catch block

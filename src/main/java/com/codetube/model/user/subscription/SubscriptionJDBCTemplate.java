@@ -6,16 +6,12 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.codetube.model.user.User;
 import com.codetube.model.user.UserException;
-import com.codetube.model.user.UserMapper;
 public class SubscriptionJDBCTemplate implements SubscriptionDAO {
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
 	@Override
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 

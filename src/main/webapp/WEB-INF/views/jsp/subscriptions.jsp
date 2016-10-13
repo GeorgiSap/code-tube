@@ -56,15 +56,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="main-grids">
 			<div class="recommended">
 
-				<%
-					List<VideoClip> videosToLoad = (List<VideoClip>) request.getAttribute("videosToLoad");
-					if (videosToLoad == null || videosToLoad.size() <= 0) {
-				%><h2>
-					No Videos available in
-					<%=request.getAttribute("title")%></h2>
-				<%
-					}
-				%>
+				<c:if test="${empty videosToLoad}">
+					<h2>No Videos available in ${title}</h2>
+				</c:if>
 
 				<c:set var="counter" value="1" />
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
@@ -76,37 +70,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-
-
-
-
-							<div class="heading">
-								<%
-									}
-								%>
-								<h3><%=request.getAttribute("title")%></h3>
-								<%
-									if (request.getAttribute("userProfilePage") != null) {
-								%>
+							
+							<c:if test="${not empty userProfilePage}">
+								<div class="heading">
+							</c:if>
+								<h3>${title}</h3>
+							<c:if test="${not empty userProfilePage}">
 							</div>
-							<%
-								}
-							%>
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
 							<div class="heading-right">
 								<a
 									href="subscribe/<%=request.getAttribute("userProfilePage")%>"
 									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 							</div>
 							<div class="clearfix"></div>
-							<%
-								}
-							%>
+							</c:if>
+							
+							
 						</div>
 					</c:if>
 
@@ -127,18 +106,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="clearfix"></div>
 						</div>
 					</c:if>
-
-
-
-
-
-
-
-
-
-
-
-
 
 					<div class="col-md-3 resent-grid recommended-grid">
 						<div class="resent-grid-img recommended-grid-img">

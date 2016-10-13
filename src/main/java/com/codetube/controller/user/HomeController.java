@@ -20,7 +20,6 @@ import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
-import com.codetube.model.user.subscription.Subscription;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 

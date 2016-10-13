@@ -1,6 +1,5 @@
 package com.codetube.test.comment;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.junit.Test;
@@ -12,7 +11,6 @@ import com.codetube.model.comment.CommentDAO;
 import com.codetube.model.comment.CommentException;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
-import com.codetube.model.user.UserException;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipException;

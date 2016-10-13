@@ -7,10 +7,6 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import com.codetube.model.search.SearchQueryDAO;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class SearchTest {
 
@@ -19,8 +15,9 @@ public class SearchTest {
 		
 		Scanner sc = new Scanner(System.in);
 		String searchQuery = sc.nextLine();
-		String jsonString = new SearchQueryDAO().search(searchQuery);
+		sc.close();
 		
+		String jsonString = new SearchQueryDAO().search(searchQuery);
 		JSONObject json = new JSONObject(jsonString);
 		JSONObject hitsObj = json.getJSONObject("hits");
 		JSONArray hitsArr = hitsObj.getJSONArray("hits");

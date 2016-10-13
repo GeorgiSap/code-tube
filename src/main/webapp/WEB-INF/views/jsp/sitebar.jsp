@@ -23,6 +23,7 @@
 			<%
 				if (request.getSession(false) != null) {
 			%>
+			
 			<li><a href="./videos" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
@@ -73,15 +74,7 @@
 					});
 				});
 			</script>
-			<!-- 				<li><a href="#" class="menu"><span
-						class="glyphicon glyphicon-film glyphicon-king" aria-hidden="true"></span>Sports<span
-						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li> -->
-			<!-- 				<ul class="cl-effect-1">
-					<li><a href="sports.html">Football</a></li>
-					<li><a href="sports.html">Cricket</a></li>
-					<li><a href="sports.html">Tennis</a></li>
-					<li><a href="sports.html">Shattil</a></li>
-				</ul> -->
+
 			<!-- script-for-menu -->
 			<script>
 				$("li a.menu").click(function() {

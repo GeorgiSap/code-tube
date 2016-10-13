@@ -18,30 +18,15 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
-import com.codetube.model.videoclip.VideoClipMapper;
 
 public class CommentJDBCTemplate implements CommentDAO {
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.comment.CommentDAO#setDataSource(javax.sql.DataSource)
-	 */
 	@Override
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * model.comment.CommentDAO#addCommentToVideo(model.videoclip.VideoClip,
-	 * model.comment.Comment, model.user.User)
-	 */
 	@Override
 	public int addCommentToVideo(VideoClip video, Comment comment, User user) {
 		final String SQL = "insert into comments (message, time, video_clip_id, user_id, rating) values (?,?,?,?,?)";

@@ -6,18 +6,19 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.codetube.model.user.UserException;
 
-
+@Repository
 public class HistoryJDBCTemplate implements HistoryDAO {
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
 	@Override
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 	

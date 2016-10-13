@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import org.springframework.stereotype.Component;
 
 import com.codetube.model.tag.UserTag;
-import com.codetube.model.user.history.History;
 import com.codetube.model.videoclip.VideoClip;
 
 @Component
@@ -134,6 +133,10 @@ public class User implements IUser {
 	public void addToSubscriptions(User user) {
 		subscriptions.add(user);
 	}
+	
+	public void removeFromSubscriptions(User user) {
+		subscriptions.remove(user);
+	}
 
 	public List<VideoClip> getVideos() {
 		return Collections.unmodifiableList(videos);
@@ -146,6 +149,33 @@ public class User implements IUser {
 	public List<User> getSubscribtions() {
 		return Collections.unmodifiableList(subscriptions);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
+
+	
 
 	
 	

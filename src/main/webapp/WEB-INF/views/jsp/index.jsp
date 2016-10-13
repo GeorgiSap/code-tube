@@ -113,26 +113,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="recommended-grids">
 					<div class="recommended-info">
 						<div class="heading">
-							<h3>Hello There traveler</h3>
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-							</div>
-							<%
-								}
-							%>
+							<h3>Hello There, Traveller</h3>
 							
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-						<div class="heading-right">
+							<c:if test="${not empty userProfilePage}">
+								</div>
+								<div class="heading-right">
 							<a href="subscribe/<%=request.getAttribute("userProfilePage")%>"
 								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 						</div>
 						<div class="clearfix"></div>
-						<%
-							}
-						%>
+							</c:if>
 						
 						<div id="randomVideosHome"></div>
 					</div>

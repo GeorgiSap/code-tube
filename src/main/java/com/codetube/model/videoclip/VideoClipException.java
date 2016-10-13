@@ -1,7 +1,5 @@
 package com.codetube.model.videoclip;
 
-import org.springframework.stereotype.Component;
-
 public class VideoClipException extends Exception {
 
 	private static final long serialVersionUID = 1L;
