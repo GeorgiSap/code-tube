@@ -16,7 +16,7 @@
 	<div class="drop-navigation drop-navigation">
 		<ul class="nav nav-sidebar">
 
-			<li class="active"><a href='<c:url value="/home"/>'
+			<li class="active"><a href='<c:url value="http://localhost:8080/codetube/home"/>'
 				class="home-icon"><span class="glyphicon glyphicon-home"
 					aria-hidden="true"></span>Home</a></li>
 
@@ -24,22 +24,22 @@
 				if (request.getSession(false) != null) {
 			%>
 			
-			<li><a href="./videos" class="user-icon"><span
+			<li><a href="http://localhost:8080/codetube/videos" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
 
-			<li><a href="playlists" class="user-icon"><span
+			<li><a href="http://localhost:8080/codetube/playlists" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Playlists</a></li>
 
-			<li><a href="./subscriptions" class="user-icon"><span
+			<li><a href="http://localhost:8080/codetube/subscriptions" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Subscriptions</a></li>
 			<%
 				}
 			%>
 
-			<li><a href="./history" class="sub-icon"><span
+			<li><a href="http://localhost:8080/codetube/history" class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-hourglass"
 					aria-hidden="true"></span>History</a></li>
 			<li><a href="#" class="menu1"><span
@@ -52,16 +52,16 @@
 					List<Tag> allTags = (List<Tag>)request.getAttribute("allTags");
 				%>
 				<c:forEach items="${allTags}" var="element">
-					<li><a href="./tag/${element.keyword}">${element.keyword}</a></li>
+					<li><a href="http://localhost:8080/codetube/tag/${element.keyword}">${element.keyword}</a></li>
 				</c:forEach>
 				<%
 					} else {
 				%>
-				<li><a href="./">Java</a></li>
-				<li><a href="./">JavaScript</a></li>
-				<li><a href="./">C#</a></li>
-				<li><a href="./">C</a></li>
-				<li><a href="./">C++</a></li>
+				<li><a href="/">Java</a></li>
+				<li><a href="/">JavaScript</a></li>
+				<li><a href="/">C#</a></li>
+				<li><a href="/">C</a></li>
+				<li><a href="/">C++</a></li>
 				<%
 					}
 				%>

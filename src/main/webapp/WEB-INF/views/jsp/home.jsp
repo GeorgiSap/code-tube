@@ -84,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<c:if test="${not empty userProfilePage}">
 						</div>
 						<div class="heading-right">
-							<a href="subscribe/${userProfilePage}"
+							<a href="../subscribe/${userProfilePage}"
 								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 						</div>
 						<div class="clearfix"></div>
