@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Custom Theme files -->
 <link href='<c:url value="/css/style.css"/>' rel='stylesheet'
 	type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js"></script>
+<script src='<c:url value="js/jquery-1.11.1.min.js"/>'></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -163,7 +163,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</ul>
 	</div>
 
-	<script src="js/bootstrap.min.js"></script>
+	<script src='<c:url value="/js/bootstrap.min.js"/>'></script>
 
 </body>
 </html>

@@ -32,14 +32,12 @@ public class RegisterController extends UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String register(HttpServletRequest request, HttpServletResponse response) {
 		if (userJDBCTemplate.emailExists(request.getParameter("email"))) {
-			// response.getWriter().println("Email " +
-			// request.getParameter("email") + " already exists.");
+			request.setAttribute("messageLogging", "The email already exists!");
 			return "index";
 		}
 
 		if (userJDBCTemplate.userNameExists(request.getParameter("user_name"))) {
-			// response.getWriter().println("Username " +
-			// request.getParameter("user_name") + " already exists.");
+			request.setAttribute("messageLogging", "The username already exists!");
 			return "index";
 		}
 

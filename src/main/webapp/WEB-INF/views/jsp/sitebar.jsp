@@ -9,7 +9,7 @@
 	<div class="top-navigation">
 		<div class="t-menu">MENU</div>
 		<div class="t-img">
-			<img src="images/lines.png" alt="" />
+			<img src='<c:url value="/images/lines.png"/>' alt="" />
 		</div>
 		<div class="clearfix"></div>
 	</div>
