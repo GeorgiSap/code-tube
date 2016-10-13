@@ -72,11 +72,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 						</div>
+						
+			
+						
 						<div class="inputform">
 							<h5>Performer:</h5>
 							<input type="text" id="artist" name="artist" size="35" />
 							 
-							<select name=tag>
+							<select name=tag multiple>
 								<option value="${selected}" selected>${selected}</option>
 								<c:forEach items="${tags}" var="tag">
 									<c:if test="${tag != selected}">

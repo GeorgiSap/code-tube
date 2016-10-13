@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,14 +18,24 @@ public class IndexVideoClipDAO {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	public String pathComponent = (String) context.getBean("pathComponent");
 	
-	public String index(VideoClip videoClip, User user, Tag tag) {
+	public String index(VideoClip videoClip, User user, List<Tag> tags) {
 		HttpURLConnection connection = null;
 		String jsonString = null;
 		String localURL = "http://localhost:9200/videos/video/" + videoClip.getId();
 		String indexCloudURL = "http://1ae7caf5273f0f6555d2619c07dfabb4.eu-west-1.aws.found.io:9200/" + pathComponent + "/video/" + videoClip.getId();
+		
+		StringBuilder tagsArray = new StringBuilder("[");
+		for (int tag = 0; tag < tags.size(); tag++) {
+			tagsArray.append("\"" + tags.get(tag).getKeyword() + "\"");
+			if (tag < tags.size() - 1) {
+				tagsArray.append(", ");
+			}
+		}
+		tagsArray.append("]");
+		
 		String indexOutput ="{\"id\": " + videoClip.getId() + 
-				", \"tag\": \"" + tag.getKeyword() + 
-				"\", \"title\": \"" + videoClip.getPerformer() + 
+				", \"tags\": " + tagsArray + 
+				", \"title\": \"" + videoClip.getPerformer() + 
 				"\", \"username\": \"" + user.getUserName() + "\"}";
 
 		try {

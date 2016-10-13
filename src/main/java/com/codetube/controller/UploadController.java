@@ -2,6 +2,7 @@ package com.codetube.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class UploadController {
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String singleFileUpload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,
-			@RequestParam("artist") String performerOfVideo, @RequestParam("tag") String tag, ModelMap model)
+			@RequestParam("artist") String performerOfVideo, @RequestParam("tag") List<String> tags, ModelMap model)
 			throws IOException {
 		try {
 			int clipId;
@@ -65,7 +66,7 @@ public class UploadController {
 			Tag tagObject;
 
 			// incoming validation, IF NULL, evryting is ok!
-			String page = validation(request, performerOfVideo, tag);
+			String page = validation(request, performerOfVideo, tags);
 
 			if (page != null) {
 				System.out.println("Error occured, did't add the video");
@@ -85,7 +86,6 @@ public class UploadController {
 			
 			String name = Integer.toString(userId) + "" +(new Date().getTime());
 			
-			
 			VideoClip videoClip = new VideoClip(0, fileName, performerOfVideo, name);
 			clipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
 			videoClip.setId(clipId);
@@ -96,23 +96,29 @@ public class UploadController {
 			System.out.println("I added successfully clip with " + clipId);
 			clip = videoClipJDBCTemplate.getClip(clipId);
 
-			List<Tag> tags = tagJDBCTemplate.getTags();
-			if (!doesTagExists(tag, tags)) {
-				return "index";
+			List<Tag> existingTags = tagJDBCTemplate.getTags();
+			List<Tag> currentVideoTags = new ArrayList<Tag>();
+			for (String tag : tags) {
+				if (!doesTagExists(tag, existingTags)) {
+					return "index";
+				}
+				tagObject = tagJDBCTemplate.getTag(tag);
+				if (tagObject == null) {
+					System.out.println("TagObject is null!");
+					return "index";
+				}
+				currentVideoTags.add(tagObject);
+				System.out.println("I got tag with id " + tagObject.getId());
 			}
-			tagObject = tagJDBCTemplate.getTag(tag);
-			if (tagObject == null) {
-				System.out.println("TagObject is null!");
-				return "index";
-			}
-
-			System.out.println("I got tag wit id " + tagObject.getId());
 
 			//index VideoClip for search
-			new IndexVideoClipDAO().index(videoClip, user, tagObject);
+			new IndexVideoClipDAO().index(videoClip, user, currentVideoTags);
 			
-			videoClipJDBCTemplate.addTagToVideo(tagObject.getId(), clipId);
-			System.out.println("Added tag in video has tags");
+			for (Tag tagObj : currentVideoTags) {
+				videoClipJDBCTemplate.addTagToVideo(tagObj.getId(), clipId);
+				System.out.println("Added tag " + tagObj.getKeyword() + " in video has tags");
+			}
+
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + name));
 		} catch (VideoClipException e) {
 			return "index";
@@ -137,7 +143,7 @@ public class UploadController {
 		return contained;
 	}
 
-	private String validation(HttpServletRequest request, String performerOfVideo, String tag) {
+	private String validation(HttpServletRequest request, String performerOfVideo, List<String> tags) {
 		if (request.getSession(false) == null) {
 			return "index";
 		}
@@ -147,8 +153,10 @@ public class UploadController {
 			return "index";
 		}
 
-		if (tag == null || tag.trim().equals("")) {
-			return "index";
+		for (String tag : tags) {
+			if (tag == null || tag.trim().equals("")) {
+				return "index";
+			}
 		}
 
 		if (request.getSession().getAttribute("user_id") == null) {

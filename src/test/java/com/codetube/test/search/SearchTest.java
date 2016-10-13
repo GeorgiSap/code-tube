@@ -13,9 +13,10 @@ public class SearchTest {
 	@Test
 	public void test() {
 		
-		Scanner sc = new Scanner(System.in);
-		String searchQuery = sc.nextLine();
-		sc.close();
+//		Scanner sc = new Scanner(System.in);
+//		String searchQuery = sc.nextLine();
+//		sc.close();
+		String searchQuery = "java";
 		
 		String jsonString = new SearchQueryDAO().search(searchQuery);
 		JSONObject json = new JSONObject(jsonString);
@@ -27,9 +28,27 @@ public class SearchTest {
 			JSONObject source = jsonObj.getJSONObject("_source");
 			int id = source.getInt("id");
 			String title = source.getString("title");
-			String tag = source.getString("tag");
+			
+			
+
+			JSONArray arrJson= source.getJSONArray("tags");
+			String[] arr= new String[arrJson.length()];
+			for(int i=0;i<arrJson.length();i++)
+			    arr[i]=arrJson.getString(i);
+
 			String userName = source.getString("username");
-			System.out.println(id + " " + title + " " + tag + " " + userName);
+			
+			StringBuilder builder = new StringBuilder("[");
+			for (int element = 0; element < arr.length; element++) {
+				builder.append(arr[element]);
+				if (element < arr.length - 1) {
+					builder.append(", ");
+				}
+			}
+			builder.append("]");
+			
+			
+			System.out.println(id + " " + title + " " + builder + " " + userName);
 			System.out.println();
 		}
 	}
