@@ -20,9 +20,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 
 
 
@@ -56,16 +60,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="main-grids">
 			<div class="recommended">
 
-				<%
-					List<VideoClip> videosToLoad = (List<VideoClip>) request.getAttribute("videosToLoad");
-					if (videosToLoad == null || videosToLoad.size() <= 0) {
-				%><h2>
-					No Videos available in
-					<%=request.getAttribute("title")%></h2>
-				<%
-					}
-				%>
 
+				<c:if test="${empty videosToLoad}">
+					<h2>No Videos available in ${title}</h2>
+				</c:if>
 
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
 
@@ -76,76 +74,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-							<div class="heading">
-								<%
-									}
-								%>
-								<h3><%=request.getAttribute("title")%></h3>
-								<%
-									if (request.getAttribute("userProfilePage") != null) {
-								%>
-							</div>
-							<%
-								}
-							%>
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-							<div class="heading-right">
-								<a
-									href="subscribe/<%=request.getAttribute("userProfilePage")%>"
-									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
-							</div>
-							<div class="clearfix"></div>
-							<%
-								}
-							%>
-						</div>
-					</c:if>
 
-					<div class="col-md-3 resent-grid recommended-grid">
-						<div class="resent-grid-img recommended-grid-img">
-							<a href="player/${element.id}"><video width="300"
-									height="200">
-									<source src="videos/${element.path}" type="video/mp4">
-								</video></a>
-							<div class="time small-time">
-								<p>2:34</p>
-							</div>
-							<div class="clck small-clck">
-								<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-							</div>
-						</div>
-						<div
-							class="resent-grid-info recommended-grid-info video-info-grid">
-							<h5>
-								<a href="single.jsp" class="title">${element.performer}</a>
-							</h5>
-							<ul>
-								<li><p class="author author-info">
-										<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
-									</p></li>
-								<li class="right-list">
-									<p class="views views-info">${element.viewCount}views</p>
-								</li>
-							</ul>
-						</div>
-					</div>
+							<c:if test="${not empty userProfilePage}">
+								<div class="heading">
+							</c:if>
 
+							<h3>${title}</h3>
 
-					<c:if test="${not loop.first and (loop.index - 3) % 4 == 0}">
+							<c:if test="${not empty userProfilePage}">
+						</div>
+						<div class="heading-right">
+							<a href="../subscribe/${userProfilePage}"
+								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+						</div>
 						<div class="clearfix"></div>
+					</c:if>
 			</div>
 			</c:if>
 
-			</c:forEach>
+			<div class="col-md-3 resent-grid recommended-grid">
+				<div class="resent-grid-img recommended-grid-img">
+					<a href="player/${element.id}"><video width="300" height="200">
+							<source src="videos/${element.path}" type="video/mp4">
+						</video></a>
+					<div class="time small-time">
+						<p>2:34</p>
+					</div>
+					<div class="clck small-clck">
+						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+					</div>
+				</div>
+				<div class="resent-grid-info recommended-grid-info video-info-grid">
+					<h5>
+						<a href="single.jsp" class="title">${element.performer}</a>
+					</h5>
+					<ul>
+						<li><p class="author author-info">
+								<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
+							</p></li>
+						<li class="right-list">
+							<p class="views views-info">${element.viewCount}views</p>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-			 <div class="clearfix"></div> 
 
+			<c:if test="${not loop.first and (loop.index - 3) % 4 == 0}">
+				<div class="clearfix"></div>
 		</div>
+		</c:if>
+
+		</c:forEach>
+
+		<div class="clearfix"></div>
+
+	</div>
 	</div>
 
 	<%@ include file="./footer.jsp"%>

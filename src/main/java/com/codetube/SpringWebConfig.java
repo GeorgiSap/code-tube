@@ -21,7 +21,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.codetube.model.comment.CommentDAO;
 import com.codetube.model.videoclip.VideoClipDAO;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 

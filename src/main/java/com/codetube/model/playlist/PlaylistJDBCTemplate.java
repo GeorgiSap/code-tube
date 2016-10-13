@@ -12,29 +12,15 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.codetube.model.user.User;
-import com.codetube.model.user.UserMapper;
-import com.codetube.model.videoclip.VideoClip;
 
 public class PlaylistJDBCTemplate implements PlaylistDAO {
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.playlist.PlaylistDAO#setDataSource(javax.sql.DataSource)
-	 */
 	@Override
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.playlist.PlaylistDAO#addPlayList(model.playlist.Playlist)
-	 */
 	@Override
 	public int addPlayList(Playlist list, User user) {
 		final String SQL = "insert into playlists (title, user_id) values (?,?)";

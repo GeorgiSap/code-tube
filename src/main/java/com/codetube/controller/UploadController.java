@@ -2,13 +2,11 @@ package com.codetube.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codetube.WebInitializer;
+import com.codetube.model.search.IndexVideoClipDAO;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
@@ -89,13 +88,10 @@ public class UploadController {
 			
 			VideoClip videoClip = new VideoClip(0, fileName, performerOfVideo, name);
 			clipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
-			
-			//Add videoClip to current user session runtime
 			videoClip.setId(clipId);
-			User currentUser = (User) request.getSession().getAttribute("user");
-			if (currentUser != null) {
-			currentUser.addToVideos(videoClip);
-			}
+			
+			//Add videoClip to current user session
+			addVideoClipToSession(request, videoClip);
 			
 			System.out.println("I added successfully clip with " + clipId);
 			clip = videoClipJDBCTemplate.getClip(clipId);
@@ -112,6 +108,9 @@ public class UploadController {
 
 			System.out.println("I got tag wit id " + tagObject.getId());
 
+			//index VideoClip for search
+			new IndexVideoClipDAO().index(videoClip, user, tagObject);
+			
 			videoClipJDBCTemplate.addTagToVideo(tagObject.getId(), clipId);
 			System.out.println("Added tag in video has tags");
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + name));
@@ -119,6 +118,13 @@ public class UploadController {
 			return "index";
 		}
 		return "index";
+	}
+
+	private void addVideoClipToSession(HttpServletRequest request, VideoClip videoClip) {
+		User currentUser = (User) request.getSession().getAttribute("user");
+		if (currentUser != null) {
+		currentUser.addToVideos(videoClip);
+		}
 	}
 
 	private boolean doesTagExists(String tag, List<Tag> tags) {

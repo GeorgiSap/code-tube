@@ -5,9 +5,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.codetube.model.tag.Tag;
-import com.codetube.model.tag.TagException;
-
 public class PlaylistMapper implements RowMapper<Playlist>{
 
 	@Override

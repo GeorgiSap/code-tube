@@ -22,7 +22,8 @@
 									pattern=".{<%=IUser.MIN_PASSWORD_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
 									required
 									title="<%=IUser.MIN_PASSWORD_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters"
-									autocomplete="off" /> <input type="submit" value="LOGIN" />
+									autocomplete="off" /> 
+									<input type="submit" value="LOGIN" />
 							</form>
 
 							<div class="button-bottom">

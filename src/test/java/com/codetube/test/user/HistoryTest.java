@@ -1,7 +1,5 @@
 package com.codetube.test.user;
 
-import static org.junit.Assert.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

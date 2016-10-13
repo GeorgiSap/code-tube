@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.codetube.model.user.User;
 import com.codetube.model.user.UserException;
 
 public interface SubscriptionDAO {

@@ -17,9 +17,9 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<div class="top-search">
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search...">
-					<input type="submit" value=" ">
+				<form class="navbar-form navbar-right" action="./search" method="POST">
+					<input name="searchQuery" type="text" class="form-control" placeholder="Search..."  required="required">
+					<input type="submit" value="SEARCH">
 				</form>
 			</div>
 			<div class="header-top-right">

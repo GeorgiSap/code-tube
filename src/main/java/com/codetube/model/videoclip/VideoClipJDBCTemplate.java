@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Repository;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagMapper;
 import com.codetube.model.user.User;
-import com.codetube.model.user.UserMapper;
 
 @Component
 @Repository
@@ -39,8 +37,6 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	}
 
 	public VideoClipJDBCTemplate() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public VideoClipJDBCTemplate(DataSource dataSource) {
