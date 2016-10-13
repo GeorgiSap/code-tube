@@ -11,7 +11,8 @@ public class SearchQueryDAO {
 	public String search(String searchQuery) {
 		HttpURLConnection connection = null;
 		String jsonString = null;
-		String URL = "http://localhost:9200/_search";
+		String localURL = "http://localhost:9200/_search";
+		String URL = "http://1ae7caf5273f0f6555d2619c07dfabb4.eu-west-1.aws.found.io:9200/_search";
 		String str = "{\"query\": {\"query_string\": {\"query\": \"" + searchQuery + "\"}}}'";
 
 		try {

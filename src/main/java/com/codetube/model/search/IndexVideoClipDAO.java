@@ -14,7 +14,8 @@ public class IndexVideoClipDAO {
 	public String index(VideoClip videoClip, User user, Tag tag) {
 		HttpURLConnection connection = null;
 		String jsonString = null;
-		String URL = "http://localhost:9200/videos/video/" + videoClip.getId();
+		String localURL = "http://localhost:9200/videos/video/" + videoClip.getId();
+		String URL = "http://1ae7caf5273f0f6555d2619c07dfabb4.eu-west-1.aws.found.io:9200/videos/video/" + videoClip.getId();
 		String str ="{\"id\": " + videoClip.getId() + 
 				", \"tag\": \"" + tag.getKeyword() + 
 				"\", \"title\": \"" + videoClip.getPerformer() + 
