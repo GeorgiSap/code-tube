@@ -57,11 +57,11 @@
 				<%
 					} else {
 				%>
-				<li><a href="/">Java</a></li>
-				<li><a href="/">JavaScript</a></li>
-				<li><a href="/">C#</a></li>
-				<li><a href="/">C</a></li>
-				<li><a href="/">C++</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/java">Java</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/javascript">JavaScript</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/c#">C#</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/c">C</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/c++">C++</a></li>
 				<%
 					}
 				%>
@@ -83,10 +83,6 @@
 					});
 				});
 			</script>
-			<li><a href="./" class="news-icon"><span
-					class="glyphicon glyphicon-envelope" aria-hidden="true"></span>News</a></li>
-			<li><a href="./" class="news-icon"><span
-					class="glyphicon glyphicon-envelope" aria-hidden="true"></span>About</a></li>
 		</ul>
 		<!-- script-for-menu -->
 		<script>

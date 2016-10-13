@@ -158,8 +158,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	</div>
 
-	<%@ include file="./footer.jsp"%>
-
 	</div>
 	<div class="clearfix"></div>
 	<div class="drop-menu">

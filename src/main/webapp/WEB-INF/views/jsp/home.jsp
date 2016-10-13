@@ -16,22 +16,7 @@
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
-	
-	
-	
-	
-	
-	
-
-	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-
-
-
-
 </script>
 <!-- bootstrap -->
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
@@ -131,8 +116,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	</div>
 	</div>
-
-	<%@ include file="./footer.jsp"%>
 
 	</div>
 	<div class="clearfix"></div>

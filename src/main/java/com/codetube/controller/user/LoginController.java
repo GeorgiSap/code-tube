@@ -39,7 +39,7 @@ public class LoginController extends UserController {
 		
 		if (user != null) {
 			createSession(request, user);
-			request.setAttribute("title", "Recommended");
+			
 			return "home";
 		} else {
 			return "index";
