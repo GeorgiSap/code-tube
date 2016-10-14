@@ -41,33 +41,43 @@
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Subscriptions</a></li>
 
-
 			<li><a href="http://localhost:8080/codetube/history"
 				class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-hourglass"
 					aria-hidden="true"></span>History</a></li>
+
+			<%
+				} else {
+			%>
+						<li><a href="http://localhost:8080/codetube/player/0"
+				class="sub-icon"><span
+					class="glyphicon glyphicon-home glyphicon-hourglass"
+					aria-hidden="true"></span>History</a></li>
+			
 			<%
 				}
 			%>
-
-
+			
 
 
 			<li><a href="http://localhost:8080/codetube/viewed"
-				class="user-icon"><span class="glyphicon glyphicon-home glyphicon-expand"
+				class="user-icon"><span
+					class="glyphicon glyphicon-home glyphicon-expand"
 					aria-hidden="true"></span>Most Viewed</a></li>
-					
-								<li><a href="http://localhost:8080/codetube/commented"
-				class="user-icon"><span class="glyphicon glyphicon-home glyphicon-expand"
+
+			<li><a href="http://localhost:8080/codetube/commented"
+				class="user-icon"><span
+					class="glyphicon glyphicon-home glyphicon-expand"
 					aria-hidden="true"></span>Most Commented</a></li>
 
 			<!-- <li><a class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-expand" aria-hidden="true"></span>Tags</a></li>
  -->
-<li><a class="sub-icon"><span
-					class="glyphicon glyphicon-home glyphicon-chevron-down" aria-hidden="true"></span>Tags</a></li>
+			<li><a class="sub-icon"><span
+					class="glyphicon glyphicon-home glyphicon-chevron-down"
+					aria-hidden="true"></span>Tags</a></li>
 
- 
+
 			<c:forEach items="${allTags}" var="element">
 				<li><a
 					href="http://localhost:8080/codetube/tag/${element.keyword}"

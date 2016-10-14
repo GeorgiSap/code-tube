@@ -1,15 +1,23 @@
 package com.codetube.controller.user;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -38,7 +46,7 @@ public class HistoryController {
 			request.setAttribute("allTags", allTags);
 			return "index";
 		}
-		request.setAttribute("title", "Last viewed");
+		
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
 		Map<Integer, LocalDateTime> history = user.getHistory();
@@ -57,6 +65,7 @@ public class HistoryController {
 		request.setAttribute("videosToLoad", historyEntries);
 		}
 		List<Tag> allTags = tagJDBCTemplate.getTags();
+		request.setAttribute("title", "Last viewed");
 		request.setAttribute("allTags", allTags);
 		return "home";
 	}
