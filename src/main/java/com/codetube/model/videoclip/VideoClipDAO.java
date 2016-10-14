@@ -27,4 +27,8 @@ public interface VideoClipDAO {
 
 	List<VideoClip> getClipsByTag(int tagId);
 
+	List<VideoClip> getMostViewedVideos(int count);
+
+	List<VideoClip> getMostCommentedVideos(int numberOfVideos);
+
 }

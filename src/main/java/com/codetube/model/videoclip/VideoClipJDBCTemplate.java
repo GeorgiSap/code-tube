@@ -2,7 +2,9 @@ package com.codetube.model.videoclip;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -79,23 +82,21 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new VideoClipMapper());
 		return videoClips;
 	}
-	
+
 	@Override
 	public List<VideoClip> getClips(int userId) {
 		String SQL = "select * from video_clips where user_id = ?";
 		System.out.println(jdbcTemplateObject);
-		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL,new Object[] { userId }, new VideoClipMapper());
+		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new Object[] { userId }, new VideoClipMapper());
 		return videoClips;
 	}
-	
+
 	@Override
 	public List<VideoClip> getClipsByTag(int tagId) {
-		String SQL = "select * from video_clips v "
-				+ "join video_clip_has_tags t "
-				+ "on v.video_clip_id = t.video_clip_id"
-				+ "  where t.tag_id = ?";
+		String SQL = "select * from video_clips v " + "join video_clip_has_tags t "
+				+ "on v.video_clip_id = t.video_clip_id" + "  where t.tag_id = ?";
 		System.out.println(jdbcTemplateObject);
-		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL,new Object[] { tagId }, new VideoClipMapper());
+		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new Object[] { tagId }, new VideoClipMapper());
 		return videoClips;
 	}
 
@@ -130,4 +131,32 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		System.out.println(tags);
 		return new HashSet<Tag>(tags);
 	}
+
+	@Override
+	public List<VideoClip> getMostViewedVideos(int countOfVideos) {
+		String SQL = "select * from video_clips order by view_count desc limit " + countOfVideos;
+		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new VideoClipMapper());
+		return videoClips;
+	}
+
+	@Override
+	public List<VideoClip> getMostCommentedVideos(int numberOfVideos) {
+		String SQL = "select v.video_clip_id, count(v.video_clip_id) from video_clips v "
+				+ "join comments c on (v.video_clip_id = c.video_clip_id) " + "group by v.video_clip_id limit "
+				+ numberOfVideos;
+
+		List<Integer> commentedVideoIds = 
+				jdbcTemplateObject.query(SQL, (rs, rowNum) -> rs.getInt("v.video_clip_id"));
+
+		List<VideoClip> videoClips = new ArrayList<VideoClip>();
+		commentedVideoIds.forEach(videoId->videoClips.add(this.getClip(videoId)));
+		return videoClips;
+	}
+
+	public VideoClipJDBCTemplate(JdbcTemplate jdbcTemplateObject, DataSource dataSource) {
+		super();
+		this.jdbcTemplateObject = jdbcTemplateObject;
+		this.dataSource = dataSource;
+	}
+
 }
