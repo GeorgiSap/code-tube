@@ -236,9 +236,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		<!-- footer -->
-		<%@ include file="./footer.jsp"%>
-		<!-- //footer -->
+
 	</div>
 	<div class="clearfix"></div>
 	<div class="drop-menu">

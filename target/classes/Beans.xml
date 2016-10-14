@@ -14,14 +14,26 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+<<<<<<< HEAD
 		<property name="url" value="jdbc:mysql://localhost/codetube" />
 		<property name="username" value="root" />
 		<property name="password" value="parolata" />
 
+=======
+>>>>>>> 2ba40484ca816e8e6aaaaf9ea8be8595519aefec
 		<!--<property name="url" value="jdbc:mysql://192.168.8.22:3306/hr" /> -->
 		<!--<property name="username" value="ittstudent" /> -->
 		<!--<property name="password" value="ittstudent-123" /> -->
+		<property name="url" value="jdbc:mysql://localhost/codetube" />
+		<property name="username" value="root" />
+		<property name="password" value="parolata" />
 	</bean>
+	
+	<!-- Initialization for path component used in elastic cloud requests -->
+	<bean id="pathComponent" class="java.lang.String">
+  	<constructor-arg value="videosmladen"/>
+	</bean>
+	
 	<!-- Definition for UserJDBCTemplate bean -->
 	<bean id="UserJDBCTemplate" class="com.codetube.model.user.UserJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />

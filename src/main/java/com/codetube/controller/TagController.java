@@ -36,6 +36,9 @@ public class TagController {
 		}
 		request.setAttribute("videosToLoad", videosOrdered);
 		request.setAttribute("title", tag);
+		List<Tag> allTags = tagJDBCTemplate.getTags();
+		request.setAttribute("allTags", allTags);
+		
 		return "home";
 	}
 }

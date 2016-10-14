@@ -18,8 +18,6 @@ import com.codetube.model.user.User;
 public class VideoClip {
 
 	public VideoClip() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	private Set<Tag> tagsOfClip = new TreeSet<Tag>((o1, o2) -> o1.getKeyword().compareTo(o2.getKeyword()));

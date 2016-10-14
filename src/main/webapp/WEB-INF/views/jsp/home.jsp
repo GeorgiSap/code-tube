@@ -16,22 +16,7 @@
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
-	
-	
-	
-	
-	
-	
-
-	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-
-
-
-
 </script>
 <!-- bootstrap -->
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
@@ -91,7 +76,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</c:if>
 			</div>
 			</c:if>
-
 			<div class="col-md-3 resent-grid recommended-grid">
 				<div class="resent-grid-img recommended-grid-img">
 					<a href="player/${element.id}"><video width="300" height="200">
@@ -118,35 +102,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</ul>
 				</div>
 			</div>
-
-
 			<c:if test="${not loop.first and (loop.index - 3) % 4 == 0}">
 				<div class="clearfix"></div>
 		</div>
 		</c:if>
-
 		</c:forEach>
-
 		<div class="clearfix"></div>
-
 	</div>
 	</div>
-
-	<%@ include file="./footer.jsp"%>
-
 	</div>
 	<div class="clearfix"></div>
-	<div class="drop-menu">
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
-			<li role="presentation"><a role="menuitem" tabindex="-1"
-				href="#">Regular link</a></li>
-			<li role="presentation" class="disabled"><a role="menuitem"
-				tabindex="-1" href="#">Disabled link</a></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1"
-				href="#">Another link</a></li>
-		</ul>
-	</div>
-
 	<script src='<c:url value="/js/bootstrap.min.js"/>'></script>
 
 </body>

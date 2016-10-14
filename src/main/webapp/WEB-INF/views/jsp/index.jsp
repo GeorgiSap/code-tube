@@ -13,18 +13,20 @@
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
-	 var pathData = '<c:url value="/data" />';
-	 var pathVideo = '<c:url value="/videos/" />';
-	 var pathPlayer ='<c:url value="/player/" />';
-	 
+	
+	
+	
+	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 	 addEventListener("load",refreshMovies);
-	
 	 
 	 function refreshMovies() {
 			$("#randomVideosHome").empty();
-
-			$.get(pathData,
+			$.get("data",
 					function(data) {
 						if (data.length > 0) {
 							
@@ -43,7 +45,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								nameOfFile.innerHTML  = "Video name: "+ video.name;
 								path.innerHTML = video.path;
 							
-								videoControl.src = pathVideo + path.innerHTML;
+								videoControl.src = "videos/" + path.innerHTML;
 								videoControl.controls = false;
 								videoControl.width = 300;
 								videoControl.height = 200;
@@ -51,7 +53,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								videoControl.style.borderRadius  = "25px";
 								videoControl.style.border = "2px solid #73AD21";
 								videoControl.style.backgroundColor = "black";
-								link.href = pathPlayer+video.id;
+								link.href = "player/"+video.id;
 								
 								link.appendChild(videoControl);
 								div.appendChild(link);
@@ -71,14 +73,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
 					});	
 		}
-
-
-
-
-
-
-
-
 </script>
 <!-- bootstrap -->
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
@@ -88,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Custom Theme files -->
 <link href='<c:url value="/css/style.css"/>' rel='stylesheet'
 	type='text/css' media="all" />
-<script src='<c:url value="/js/jquery-1.11.1.min.js"/>'></script>
+<script src="js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link
@@ -109,25 +103,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="recommended-grids">
 					<div class="recommended-info">
 						<div class="heading">
-
-							<%
-								if (request.getAttribute("messageLogging") != null) {
-							%>
-								<h3><%= request.getAttribute("messageLogging") %> </h3>
-							<%
-								}
-							%>
-							<h3>Hello There traveler</h3>
-							<%
-								if (request.getAttribute("userProfilePage") != null) {
-							%>
-							</div>
-							<%
-								}
-							%>
-
-
-							
+							<h3>Hello There, Traveller</h3>
 							<c:if test="${not empty userProfilePage}">
 								</div>
 								<div class="heading-right">
@@ -136,32 +112,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="clearfix"></div>
 							</c:if>
-						
-						<div id ="randomVideosHome"></div>
+						<div id="randomVideosHome"></div>
 					</div>
 					<div class="clearfix"></div>
 				</div>
-
-
 				<div class="clearfix"></div>
-
 			</div>
 		</div>
 	</div>
-	<%@ include file="./footer.jsp"%>
-
 	<div class="clearfix"></div>
-	<div class="drop-menu">
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
-			<li role="presentation"><a role="menuitem" tabindex="-1"
-				href="#">Regular link</a></li>
-			<li role="presentation" class="disabled"><a role="menuitem"
-				tabindex="-1" href="#">Disabled link</a></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1"
-				href="#">Another link</a></li>
-		</ul>
-	</div>
-
-	<script src='<c:url value="/js/bootstrap.min.js"/>'></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

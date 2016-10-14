@@ -19,7 +19,7 @@
 			<div class="top-search">
 				<form class="navbar-form navbar-right" action="./search" method="POST">
 					<input name="searchQuery" type="text" class="form-control" placeholder="Search..."  required="required">
-					<input type="submit" value="SEARCH">
+					<input type="submit" value=" ">
 				</form>
 			</div>
 			<div class="header-top-right">

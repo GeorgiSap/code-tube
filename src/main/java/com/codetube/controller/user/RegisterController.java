@@ -58,7 +58,6 @@ public class RegisterController extends UserController {
 			e.printStackTrace();
 		}
 		System.out.println("Successfully added playlist and user");
-		request.setAttribute("title", "Recommended");
 		return "home";
 	}
 

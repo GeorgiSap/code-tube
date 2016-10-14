@@ -22,6 +22,7 @@ import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
 
 public class UserController {
+	private static final int MAX_COUNT_OF_VIDEOS_IN_NEWEST = 10;
 	private static final int SESSION_LENGTH = 300 * 60 / 24;
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
@@ -52,21 +53,29 @@ public class UserController {
 		}
 
 		session.setAttribute("user", user);
+		
 		List<Tag> allTags = tagJDBCTemplate.getTags();
 		request.setAttribute("allTags", allTags);
 		
+		loadNewestVideos(request);
 		
+	}
+
+	protected void loadNewestVideos(HttpServletRequest request) {
 		List<VideoClip> allVideos = videoClipJDBCTemplate.getClips();
-		
+		int countOfVideos = 0;
 		List<VideoClip> allVideosOrdered = new ArrayList<VideoClip>();
 		for (int video =  allVideos.size() - 1; video >= 0; video--) {
 			User currentUser = userJDBCTemplate.get(allVideos.get(video).getUser().getId());
 			allVideos.get(video).setUser(currentUser);
 			allVideosOrdered.add(allVideos.get(video));
+			countOfVideos++;
+			if (countOfVideos >= MAX_COUNT_OF_VIDEOS_IN_NEWEST) {
+				break;
+			}
 		}
-		
 		request.setAttribute("videosToLoad", allVideosOrdered);
-
+		request.setAttribute("title", "Newest");
 	}
 
 	public void disableCache(HttpServletResponse response) {
