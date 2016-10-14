@@ -37,7 +37,6 @@ import com.google.gson.JsonParser;
 @SessionAttributes("player")
 public class VideoController {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-
 	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
 			.getBean("VideoClipJDBCTemplate");
 	public CommentDAO commentJDBCTemplate = (CommentDAO) context.getBean("CommentJDBCTemplate");
@@ -48,9 +47,6 @@ public class VideoController {
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
 	public String showVideo(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request) {
 		try {
-			if (request.getSession(false) == null) {
-				return "index";
-			}
 
 			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
 			Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
@@ -58,8 +54,7 @@ public class VideoController {
 			for (Tag tag : tags) {
 				clip.addTag(tag);
 			}
-			// clip.addTag(tag);
-			System.out.println(clip);
+
 			model.addAttribute("video", clip);
 
 			// Add to history
@@ -71,10 +66,15 @@ public class VideoController {
 			} else {
 				// Add cookie for non-registered users to keep record of last
 				// viewed
+
 			}
+
+			// Increase view count
 			videoClipJDBCTemplate.increaseViewCount(clip);
 			clip.increaseViewCount();
+
 			return "single";
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "index";
@@ -109,24 +109,6 @@ public class VideoController {
 		}
 	}
 
-	@RequestMapping(value = "/getComments/{video_id}", method = RequestMethod.GET)
-	protected void getComments(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		response.setCharacterEncoding("UTF-8");
-
-		Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
-		System.out.println("They called me ");
-//		for(Comment comment : comments){
-//			userJDBCTemplate.get(id)
-//		}
-		if (comments != null)
-			response.getWriter().print(new Gson().toJson(comments));
-		else
-			response.getWriter().print("[]");
-
-	}
-
 	@RequestMapping(value = "/data/{video_id}", method = RequestMethod.GET)
 	protected void getDataJSonToSingleVideo(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -151,39 +133,4 @@ public class VideoController {
 			e.printStackTrace();
 		}
 	}
-
-	@RequestMapping(value = "/comment", method = RequestMethod.PUT)
-	protected void putCommentIn(HttpServletRequest request, HttpServletResponse response) {
-		Scanner sc;
-		User user;
-		VideoClip clip;
-
-		try {
-
-			sc = new Scanner(request.getInputStream());
-
-			StringBuilder buf = new StringBuilder();
-			while (sc.hasNextLine()) {
-				buf.append(sc.nextLine());
-			}
-
-			System.out.println(request.getRequestURI());
-			JsonObject object = (JsonObject) new JsonParser().parse(buf.toString());
-			System.out.println(object);
-			String text = object.get("textAreaAddingComment").getAsString();
-			text = text.trim();
-			int clipId = object.get("id").getAsInt();
-			clip = videoClipJDBCTemplate.getClip(clipId);
-			
-			int userId = (int) request.getSession().getAttribute("user_id");
-			user = userJDBCTemplate.get(userId);
-
-			int commetId = commentJDBCTemplate.addCommentToVideo(clip, new Comment(0, text, LocalDateTime.now(), 1),
-					user);
-			System.out.println("Added a comment with id " + commetId);
-
-		} catch (Exception e) {
-		}
-	}
-
 }

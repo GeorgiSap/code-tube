@@ -53,9 +53,9 @@ public class UserController {
 		}
 
 		session.setAttribute("user", user);
+		
 		List<Tag> allTags = tagJDBCTemplate.getTags();
 		request.setAttribute("allTags", allTags);
-		
 		
 		loadNewestVideos(request);
 		

@@ -19,12 +19,12 @@
 		<!--<property name="password" value="ittstudent-123" /> -->
 		<property name="url" value="jdbc:mysql://localhost/codetube" />
 		<property name="username" value="root" />
-		<property name="password" value="parolata" />
+		<property name="password" value="@Bulgaria2016" />
 	</bean>
 	
 	<!-- Initialization for path component used in elastic cloud requests -->
 	<bean id="pathComponent" class="java.lang.String">
-  	<constructor-arg value="videosmladen"/>
+  	<constructor-arg value="videosgeorgi"/>
 	</bean>
 	
 	<!-- Definition for UserJDBCTemplate bean -->

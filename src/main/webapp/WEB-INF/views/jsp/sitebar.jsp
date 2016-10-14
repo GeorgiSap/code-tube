@@ -28,9 +28,9 @@
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
 
-			<li><a href="http://localhost:8080/codetube/playlists" class="user-icon"><span
+		<!-- 	<li><a href="http://localhost:8080/codetube/playlists" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
-					aria-hidden="true"></span>My Playlists</a></li>
+					aria-hidden="true"></span>My Playlists</a></li> -->
 
 			<li><a href="http://localhost:8080/codetube/subscriptions" class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
@@ -42,30 +42,18 @@
 			<li><a href="http://localhost:8080/codetube/history" class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-hourglass"
 					aria-hidden="true"></span>History</a></li>
-			<li><a href="#" class="menu1"><span
-					class="glyphicon glyphicon-film" aria-hidden="true"></span>Categories<span
-					class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
-			<ul class="cl-effect-2">
+					
+				<li><a class="sub-icon"><span
+					class="glyphicon glyphicon-film"
+					aria-hidden="true"></span>Tags</a></li>
 
-				<%
-					if (request.getSession(false) != null) {
-					List<Tag> allTags = (List<Tag>)request.getAttribute("allTags");
-				%>
+
 				<c:forEach items="${allTags}" var="element">
-					<li><a href="http://localhost:8080/codetube/tag/${element.keyword}">${element.keyword}</a></li>
+				<li><a href="http://localhost:8080/codetube/tag/${element.keyword}" class="sub-icon"><span
+					aria-hidden="true"></span>#${element.keyword}</a></li>
+					<%-- <li><a href="http://localhost:8080/codetube/tag/${element.keyword}">${element.keyword}</a></li> --%>
 				</c:forEach>
-				<%
-					} else {
-				%>
-				<li><a href="http://localhost:8080/codetube/tag/java">Java</a></li>
-				<li><a href="http://localhost:8080/codetube/tag/javascript">JavaScript</a></li>
-				<li><a href="http://localhost:8080/codetube/tag/c#">C#</a></li>
-				<li><a href="http://localhost:8080/codetube/tag/c">C</a></li>
-				<li><a href="http://localhost:8080/codetube/tag/c++">C++</a></li>
-				<%
-					}
-				%>
-			</ul>
+				
 			<!-- script-for-menu -->
 			<script>
 				$("li a.menu1").click(function() {
@@ -75,22 +63,22 @@
 				});
 			</script>
 
-			<!-- script-for-menu -->
+			script-for-menu
 			<script>
 				$("li a.menu").click(function() {
 					$("ul.cl-effect-1").slideToggle(300, function() {
 						// Animation complete.
 					});
 				});
-			</script>
+			</script> 
 		</ul>
 		<!-- script-for-menu -->
-		<script>
+ 		<script>
 			$(".top-navigation").click(function() {
 				$(".drop-navigation").slideToggle(300, function() {
 					// Animation complete.
 				});
 			});
-		</script>
+		</script> 
 	</div>
 </div>

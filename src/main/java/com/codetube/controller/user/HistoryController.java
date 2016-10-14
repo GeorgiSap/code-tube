@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codetube.model.tag.Tag;
+import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
@@ -27,10 +29,13 @@ public class HistoryController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
+	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 	
 	@RequestMapping(value = "/history", method = RequestMethod.GET)
 	public String showHistory(HttpServletRequest request) {
 		if (request.getSession(false) == null) {
+			List<Tag> allTags = tagJDBCTemplate.getTags();
+			request.setAttribute("allTags", allTags);
 			return "index";
 		}
 		request.setAttribute("title", "Last viewed");
@@ -51,6 +56,8 @@ public class HistoryController {
 		}
 		request.setAttribute("videosToLoad", historyEntries);
 		}
+		List<Tag> allTags = tagJDBCTemplate.getTags();
+		request.setAttribute("allTags", allTags);
 		return "home";
 	}
 }

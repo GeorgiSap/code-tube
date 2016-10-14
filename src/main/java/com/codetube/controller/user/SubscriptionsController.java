@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codetube.model.tag.Tag;
+import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
 import com.codetube.model.videoclip.VideoClipDAO;
@@ -19,6 +21,7 @@ import com.codetube.model.videoclip.VideoClipDAO;
 public class SubscriptionsController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
+	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 	
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	public String showSubscriptions(HttpServletRequest request) {
@@ -37,7 +40,8 @@ public class SubscriptionsController {
 				currentChannelVideos.get(video).setUser(subscription);
 			}
 		}
-
+		List<Tag> allTags = tagJDBCTemplate.getTags();
+		request.setAttribute("allTags", allTags);
 		request.setAttribute("videosToLoad", subscriptionVideos);
 		return "subscriptions";
 	}

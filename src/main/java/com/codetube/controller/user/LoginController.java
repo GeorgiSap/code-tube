@@ -1,6 +1,7 @@
 package com.codetube.controller.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codetube.model.tag.Tag;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
 
@@ -39,7 +41,6 @@ public class LoginController extends UserController {
 		
 		if (user != null) {
 			createSession(request, user);
-			
 			return "home";
 		} else {
 			return "index";
