@@ -5,6 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <%@page import="com.codetube.model.videoclip.*"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -17,15 +18,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <%
+	String userJavaName = "Guest";
 	VideoClip clip = (VideoClip) request.getAttribute("video");
+
+	if (request.getSession(false) != null) {
+		userJavaName = (String) request.getSession().getAttribute("userNameComment");
+	}
 %>
 <script type="application/x-javascript">
 	
 	
 	
+	
+	
+	
 	 var theChosenOneVideoID = 
 
+
+
+
 <%=clip.getId()%>
+	
+	
+	
 	
 	;
 	
@@ -44,7 +59,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							for ( var index in data) {
 								var quote = data[index];
 								var div  = document.createElement("div");
+								var userName = document.createElement("h5");
 								var textArea = document.createElement("textarea");
+								
+								userName.innerHTML = quote.user.userName;
+								userName.style.position = "relative";
+								userName.style.left = "5%";
+								
 								
 								textArea.value = quote.message;
 								textArea.rows = 4;
@@ -52,6 +73,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								textArea.readOnly  = true;
 								textArea.setAttribute("id", "textArea");
 								
+								div.appendChild(userName);
 								div.appendChild(textArea);
 								$("#comments").append(div);
 							}
@@ -111,17 +133,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			    data: JSON.stringify({"textAreaAddingComment":commentText,"id":theChosenOneVideoID}),
 			    success: function(result) {
 				    	var textArea = document.createElement("textarea");
+				    	var userName =   document.createElement("h5");
+				    	var div = document.createElement("div");
 				    	
+				  		userName.innerHTML = "<%=userJavaName%>";
+				  		userName.style.position = "relative";
+						userName.style.left = "5%";
+						
 				    	textArea.value = commentText;
 				    	textArea.rows = 4;
 						textArea.cols = 50;
 						textArea.readOnly  = true;
 				    	textArea.setAttribute("id", "textArea");
 				    	
-						$("#comments").append(textArea);
+				    	div.appendChild(userName);
+				    	div.appendChild(textArea);
+						$("#comments").append(div);
 			    }
 			});
 		}
+
+
+
 
 
 
@@ -195,11 +228,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<h4>
 									Tagged as:
 									<%=clip.getTagsOfClip()%></h4>
-								<p>Nullam fringilla sagittis tortor ut rhoncus. Nam vel
-									ultricies erat, vel sodales leo. Maecenas pellentesque, est
-									suscipit laoreet tincidunt, ipsum tortor vestibulum leo, ac
-									dignissim diam velit id tellus. Morbi luctus velit quis semper
-									egestas.</p>
+
 							</li>
 
 						</ul>
@@ -210,13 +239,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 						<div class="media">
-							<div class ="addComment">
+							<%if(request.getSession(false) != null){ %>
+							<div class="addComment">
 								<label>Add comment please:</label> <br />
-								<textarea id="textAreaAddingComment" rows="4" cols="50" id="comment">
+								<textarea id="textAreaAddingComment" rows="4" cols="50"
+									id="comment">
 							</textarea>
 								<br />
 								<button onclick="addComment()">Add Comment</button>
 							</div>
+							<% }%>
 							<div id="comments"></div>
 						</div>
 

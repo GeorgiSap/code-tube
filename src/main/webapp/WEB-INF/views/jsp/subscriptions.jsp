@@ -20,9 +20,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -70,76 +72,68 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<c:if test="${loop.first}">
 						<div class="recommended-info">
-							
+
 							<c:if test="${not empty userProfilePage}">
 								<div class="heading">
 							</c:if>
-								<h3>${title}</h3>
+							<h3>${title}</h3>
 							<c:if test="${not empty userProfilePage}">
-							</div>
-							<div class="heading-right">
-								<a
-									href="subscribe/<%=request.getAttribute("userProfilePage")%>"
-									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
-							</div>
-							<div class="clearfix"></div>
-							</c:if>
-							
-							
 						</div>
-					</c:if>
-
-
-
-
-					<c:if test="${element.user.userName != userName}">
+						<div class="heading-right">
+							<a href="subscribe/<%=request.getAttribute("userProfilePage")%>"
+								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+						</div>
 						<div class="clearfix"></div>
-						<div class="recommended-info">
-
-							<div class="heading">
-								<h3>${element.user.userName}</h3>
-							</div>
-							<div class="heading-right">
-								<a href="subscribe/${element.user.id}"
-									class="play-icon popup-with-zoom-anim">Unsubscribe</a>
-							</div>
-							<div class="clearfix"></div>
-						</div>
 					</c:if>
-
-					<div class="col-md-3 resent-grid recommended-grid">
-						<div class="resent-grid-img recommended-grid-img">
-							<a href="player/${element.id}"><video width="300"
-									height="200">
-									<source src="videos/${element.path}" type="video/mp4">
-								</video></a>
-							<div class="time small-time">
-								<p>2:34</p>
-							</div>
-							<div class="clck small-clck">
-								<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-							</div>
-						</div>
-						<div
-							class="resent-grid-info recommended-grid-info video-info-grid">
-							<h5>
-								<a href="single.jsp" class="title">${element.performer}</a>
-							</h5>
-							<ul>
-								<li><p class="author author-info">
-										<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
-									</p></li>
-								<li class="right-list">
-									<p class="views views-info">${element.viewCount}views</p>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<c:if test="${counter % 4 == 0}">
-						<div class="clearfix"></div>
 			</div>
 			</c:if>
+
+
+
+
+			<c:if test="${element.user.userName != userName}">
+				<div class="clearfix"></div>
+				<div class="recommended-info">
+
+					<div class="heading">
+						<h3>${element.user.userName}</h3>
+					</div>
+					<div class="heading-right">
+						<a href="subscribe/${element.user.id}"
+							class="play-icon popup-with-zoom-anim">Unsubscribe</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</c:if>
+
+			<div class="col-md-3 resent-grid recommended-grid">
+				<div class="resent-grid-img recommended-grid-img">
+					<div id="videoDiv">
+						<a href="player/${element.id}"><video id="videoHome">
+								<source src="videos/${element.path}" type="video/mp4">
+							</video></a>
+					</div>
+
+				</div>
+				<div class="resent-grid-info recommended-grid-info video-info-grid">
+					<h5>
+						<a href="single.jsp" class="title">${element.performer}</a>
+					</h5>
+					<ul>
+						<li><p class="author author-info">
+								<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
+							</p></li>
+						<li class="right-list">
+							<p class="views views-info">${element.viewCount}views</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<c:if test="${counter % 4 == 0}">
+				<div class="clearfix"></div>
+		</div>
+		</c:if>
 
 
 		<c:set var="counter" value="${counter + 1}" />

@@ -30,15 +30,15 @@ public class UserVideosController {
 		
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
-		List<VideoClip> userVideos = user.getVideos();
-		List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
-		for (int video =  userVideos.size() - 1; video >= 0; video--) {
-			userVideosOrdered.add(userVideos.get(video));
-		}
-		for (VideoClip videoClip : userVideosOrdered) {
-			videoClip.setUser(user);
-		}
-		request.setAttribute("videosToLoad", userVideosOrdered);
+			List<VideoClip> userVideos = user.getVideos();
+			List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
+			for (int video = userVideos.size() - 1; video >= 0; video--) {
+				userVideosOrdered.add(userVideos.get(video));
+			}
+			for (VideoClip videoClip : userVideosOrdered) {
+				videoClip.setUser(user);
+			}
+			request.setAttribute("videosToLoad", userVideosOrdered);
 		}
 		List<Tag> allTags = tagJDBCTemplate.getTags();
 		request.setAttribute("allTags", allTags);

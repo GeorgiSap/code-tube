@@ -31,4 +31,6 @@ public interface VideoClipDAO {
 
 	List<VideoClip> getMostCommentedVideos(int numberOfVideos);
 
+	List<VideoClip> getNewestVideos(int countOfVideos);
+
 }

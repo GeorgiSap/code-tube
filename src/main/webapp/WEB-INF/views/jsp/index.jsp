@@ -23,6 +23,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 	 addEventListener("load",refreshMovies);
+	 var videoPath = '<c:url value="videos/"/>';
 	 
 	 function refreshMovies() {
 			$("#randomVideosHome").empty();
@@ -45,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								nameOfFile.innerHTML  = "Video name: "+ video.name;
 								path.innerHTML = video.path;
 							
-								videoControl.src = "videos/" + path.innerHTML;
+								videoControl.src = videoPath + "/" + path.innerHTML;
 								videoControl.controls = false;
 								videoControl.width = 300;
 								videoControl.height = 200;
@@ -98,6 +99,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<%@ include file="./sitebar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<c:if test="${not empty messageLogging}">
+			<h3 id="messageLogging">${messageLogging }</h3>
+		</c:if>
 		<div class="main-grids">
 			<div class="recommended">
 				<div class="recommended-grids">

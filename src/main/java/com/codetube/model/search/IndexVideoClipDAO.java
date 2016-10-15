@@ -17,13 +17,14 @@ import com.codetube.model.videoclip.VideoClip;
 public class IndexVideoClipDAO {
 	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	public String pathComponent = (String) context.getBean("pathComponent");
-	
+
 	public String index(VideoClip videoClip, User user, List<Tag> tags) {
 		HttpURLConnection connection = null;
 		String jsonString = null;
 		String localURL = "http://localhost:9200/videos/video/" + videoClip.getId();
-		String indexCloudURL = "http://1ae7caf5273f0f6555d2619c07dfabb4.eu-west-1.aws.found.io:9200/" + pathComponent + "/video/" + videoClip.getId();
-		
+		String indexCloudURL = "http://1ae7caf5273f0f6555d2619c07dfabb4.eu-west-1.aws.found.io:9200/" + pathComponent
+				+ "/video/" + videoClip.getId();
+
 		StringBuilder tagsArray = new StringBuilder("[");
 		for (int tag = 0; tag < tags.size(); tag++) {
 			tagsArray.append("\"" + tags.get(tag).getKeyword() + "\"");
@@ -32,11 +33,9 @@ public class IndexVideoClipDAO {
 			}
 		}
 		tagsArray.append("]");
-		
-		String indexOutput ="{\"id\": " + videoClip.getId() + 
-				", \"tags\": " + tagsArray + 
-				", \"title\": \"" + videoClip.getPerformer() + 
-				"\", \"username\": \"" + user.getUserName() + "\"}";
+
+		String indexOutput = "{\"id\": " + videoClip.getId() + ", \"tags\": " + tagsArray + ", \"title\": \""
+				+ videoClip.getPerformer() + "\", \"username\": \"" + user.getUserName() + "\"}";
 
 		try {
 			connection = (HttpURLConnection) new URL(indexCloudURL).openConnection();
@@ -48,15 +47,15 @@ public class IndexVideoClipDAO {
 			os.write(outputInBytes);
 			os.close();
 
-			//if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			// if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
-				byte[] bytes = null;
-				try (BufferedInputStream bis = new BufferedInputStream(connection.getInputStream())) {
-					bytes = new byte[connection.getContentLength()];
-					bis.read(bytes);
-				}
-				jsonString = new String(bytes, "UTF-8");
-			//}
+			byte[] bytes = null;
+			try (BufferedInputStream bis = new BufferedInputStream(connection.getInputStream())) {
+				bytes = new byte[connection.getContentLength()];
+				bis.read(bytes);
+			}
+			jsonString = new String(bytes, "UTF-8");
+			// }
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

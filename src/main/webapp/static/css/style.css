@@ -14,6 +14,25 @@ body {
 	resize: none;
 }
 
+#videoDiv{
+	
+    
+}
+
+#videoHome{
+	
+	width : 250px;
+	height : 200px;
+	max-height: 180px;
+	border-radius: 15px;
+    border: 2px solid #4285f4;
+	background-color : #272c2e;
+	position: relative;
+
+	
+	
+}
+
 #textArea {
 	resize: none;
 	position: relative;
@@ -159,7 +178,7 @@ form.navbar-form.navbar-right {
 
 .signin a {
 	padding: 8px 20px;
-	background: #21DEEF;
+	background: #4285f4;
 	color: #FFF;
 	font-size: 14px;
 	text-decoration: none;
@@ -860,10 +879,14 @@ a.btn.btn-primary.btn-lg.see-button.hvr-shutter-out-horizontal {
 	float: left;
 	margin: .5em 0 0 3em;
 }
-
+#messageLogging{
+	position: relative;
+	left:1%;
+	color: red; 	
+}
 .heading-right a {
 	padding: 8px 20px;
-	background: #21DEEF;
+	background: #4285f4;
 	color: #FFF;
 	font-size: 14px;
 	text-decoration: none;
@@ -2022,6 +2045,7 @@ span.glyphicon.glyphicon-user {
 .upload-right {
 	padding: 10em 0;
 	background: #FFFFFF;
+	height: 400px;
 }
 
 .upload-file input[type="file"] {
@@ -2881,6 +2905,7 @@ span.glyphicon.glyphicon-user {
 		padding: .5em 0 .5em 18em !important;
 	}
 	.video-info-grid ul li {
+	
 		width: 100%;
 	}
 	.video-info-grid ul li.right-list {

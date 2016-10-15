@@ -13,21 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codetube.controller.ControllerManager;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 
 @Controller
 @RequestMapping(value = "/logout")
-public class LogoutController {
-	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
-	
+public class LogoutController extends UserController {
+
 	@RequestMapping(method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String logout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getSession().invalidate();
-		List<Tag> allTags = tagJDBCTemplate.getTags();
-		request.setAttribute("allTags", allTags);
-		return "index";
+		loadNewestVideos(request);
+		loadTags(request);
+		return "home";
 	}
 
 }

@@ -16,7 +16,13 @@
 	content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
 </script>
 <!-- bootstrap -->
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'
@@ -42,6 +48,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<%@ include file="./sitebar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<c:if test="${not empty messageLogging}">
+			<h3 id="messageLogging">${messageLogging }</h3>
+		</c:if>
 		<div class="main-grids">
 			<div class="recommended">
 
@@ -68,25 +77,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							<c:if test="${not empty userProfilePage}">
 						</div>
-						<div class="heading-right">
-							<a href="../subscribe/${userProfilePage}"
-								class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
-						</div>
+						<c:if test="${not empty subscribe_button}">
+							<div class="heading-right">
+								<a href="../subscribe/${userProfilePage}"
+									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
+							</div>
+						</c:if>
 						<div class="clearfix"></div>
 					</c:if>
 			</div>
 			</c:if>
 			<div class="col-md-3 resent-grid recommended-grid">
 				<div class="resent-grid-img recommended-grid-img">
-					<a href="player/${element.id}"><video width="300" height="200">
-							<source src="videos/${element.path}" type="video/mp4">
-						</video></a>
-					<div class="time small-time">
-						<p>2:34</p>
+					<div id="videoDiv">
+						<a href='<c:url value="/player/${element.id}"/>'> <video
+								id="videoHome">
+								<source src='<c:url value="/videos/${element.path}"/>'
+									type="video/mp4">
+							</video>
+						</a>
 					</div>
-					<div class="clck small-clck">
-						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-					</div>
+
 				</div>
 				<div class="resent-grid-info recommended-grid-info video-info-grid">
 					<h5>
@@ -94,7 +105,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</h5>
 					<ul>
 						<li><p class="author author-info">
-								<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
+						
+								<a href='<c:url value="/user/${element.user.id}"/>' class="author">${element.user.userName}</a>
 							</p></li>
 						<li class="right-list">
 							<p class="views views-info">${element.viewCount}views</p>

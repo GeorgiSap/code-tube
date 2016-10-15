@@ -42,7 +42,7 @@ public class UploadController {
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadPage(HttpServletRequest request) {
 		if (request.getSession(false) == null) {
-			return "index";
+			return "home";
 		}
 
 		List<Tag> tags = (List<Tag>) tagJDBCTemplate.getTags();
@@ -81,18 +81,18 @@ public class UploadController {
 			user = userJDBCTemplate.get(userId);
 
 			if (user == null) {
-				return "index";
+				return "home";
 			}
-			
-			String name = Integer.toString(userId) + "" +(new Date().getTime());
-			
+
+			String name = Integer.toString(userId) + "" + (new Date().getTime());
+
 			VideoClip videoClip = new VideoClip(0, fileName, performerOfVideo, name);
 			clipId = (int) videoClipJDBCTemplate.addVideoClip(videoClip, user);
 			videoClip.setId(clipId);
-			
-			//Add videoClip to current user session
+
+			// Add videoClip to current user session
 			addVideoClipToSession(request, videoClip);
-			
+
 			System.out.println("I added successfully clip with " + clipId);
 			clip = videoClipJDBCTemplate.getClip(clipId);
 
@@ -100,20 +100,20 @@ public class UploadController {
 			List<Tag> currentVideoTags = new ArrayList<Tag>();
 			for (String tag : tags) {
 				if (!doesTagExists(tag, existingTags)) {
-					return "index";
+					return "home";
 				}
 				tagObject = tagJDBCTemplate.getTag(tag);
 				if (tagObject == null) {
 					System.out.println("TagObject is null!");
-					return "index";
+					return "home";
 				}
 				currentVideoTags.add(tagObject);
 				System.out.println("I got tag with id " + tagObject.getId());
 			}
 
-			//index VideoClip for search
+			// index VideoClip for search
 			new IndexVideoClipDAO().index(videoClip, user, currentVideoTags);
-			
+
 			for (Tag tagObj : currentVideoTags) {
 				videoClipJDBCTemplate.addTagToVideo(tagObj.getId(), clipId);
 				System.out.println("Added tag " + tagObj.getKeyword() + " in video has tags");
@@ -121,15 +121,30 @@ public class UploadController {
 
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + name));
 		} catch (VideoClipException e) {
-			return "index";
+			return "home";
 		}
-		return "index";
+		request.setAttribute("messageLogging", "Successfully uploaded video");
+
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			List<VideoClip> userVideos = user.getVideos();
+			List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
+			for (int video = userVideos.size() - 1; video >= 0; video--) {
+				userVideosOrdered.add(userVideos.get(video));
+			}
+			for (VideoClip videoClip : userVideosOrdered) {
+				videoClip.setUser(user);
+			}
+			request.setAttribute("videosToLoad", userVideosOrdered);
+		}
+
+		return "home";
 	}
 
 	private void addVideoClipToSession(HttpServletRequest request, VideoClip videoClip) {
 		User currentUser = (User) request.getSession().getAttribute("user");
 		if (currentUser != null) {
-		currentUser.addToVideos(videoClip);
+			currentUser.addToVideos(videoClip);
 		}
 	}
 
@@ -145,22 +160,22 @@ public class UploadController {
 
 	private String validation(HttpServletRequest request, String performerOfVideo, List<String> tags) {
 		if (request.getSession(false) == null) {
-			return "index";
+			return "home";
 		}
 
 		if ((performerOfVideo == null) || (performerOfVideo.trim().equals(""))
 				|| (performerOfVideo.matches(".*\\d+.*"))) {
-			return "index";
+			return "home";
 		}
 
 		for (String tag : tags) {
 			if (tag == null || tag.trim().equals("")) {
-				return "index";
+				return "home";
 			}
 		}
 
 		if (request.getSession().getAttribute("user_id") == null) {
-			return "index";
+			return "home";
 		}
 		return null;
 	}

@@ -49,7 +49,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<!-- upload -->
 	<div class="upload">
-		<form action="./upload" method="post" enctype="multipart/form-data">
+		<form action='<c:url value="/upload"/>' method="post" enctype="multipart/form-data">
 
 			<!-- container -->
 			<div class="container">

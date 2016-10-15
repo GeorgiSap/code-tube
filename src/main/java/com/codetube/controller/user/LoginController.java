@@ -22,12 +22,9 @@ import com.codetube.model.user.UserDAO;
 public class LoginController extends UserController {
 	public static final String DEFAULT_ERROR_VIEW = "error";
 
-	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String redirect() {
-		return "index";
+		return "home";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -36,14 +33,16 @@ public class LoginController extends UserController {
 		try {
 			user = userJDBCTemplate.login(request.getParameter("email"), request.getParameter("password"));
 		} catch (Exception e) {
-			return "index";
+			System.out.println("wrong password");
+			request.setAttribute("messageLogging", "Can't be logged right now! Wrong email/password!");
+			return "home";
 		}
-		
 		if (user != null) {
 			createSession(request, user);
 			return "home";
 		} else {
-			return "index";
+			request.setAttribute("messageLogging", "Something went wrong! Try again later!");
+			return "home";
 		}
 	}
 

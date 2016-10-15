@@ -1,6 +1,5 @@
 package com.codetube.controller.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,71 +9,70 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.codetube.controller.ControllerManager;
 import com.codetube.model.tag.Tag;
-import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
-import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
 import com.codetube.model.user.subscription.Subscription;
 import com.codetube.model.user.subscription.SubscriptionDAO;
 import com.codetube.model.videoclip.VideoClip;
-import com.codetube.model.videoclip.VideoClipDAO;
 
-public class UserController {
-	private static final int MAX_COUNT_OF_VIDEOS_IN_NEWEST = 10;
+public class UserController extends ControllerManager{
+	private static final int COUNT_OF_VIDEOS_IN_NEWEST = 12;
 	private static final int SESSION_LENGTH = 300 * 60 / 24;
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
-	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
-	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
-	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
+
 	
 	public void createSession(HttpServletRequest request, User user) {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(SESSION_LENGTH);
-		System.out.println(user);
 		session.setAttribute("user_id", user.getId());
+		session.setAttribute("userNameComment", user.getUserName());
+		addUserVideos(user);
 
-		List<VideoClip> videos = videoClipJDBCTemplate.getClips(user.getId());
-		for (VideoClip videoClip : videos) {
-			user.addToVideos(videoClip);
-		}
+		addUserHistory(user);
 
-		List<History> history = historyJDBCTemplate.getHistory(user.getId());
-		for (History entry : history) {
-			user.addToHistory(entry.getVideoClipId(), entry.getLastViewed());
-		}
-
-		List<Subscription> subscriptions = subscriptionJDBCTemplate.listSubscriptions(user.getId());
-		for (Subscription subscription : subscriptions) {
-			user.addToSubscriptions(userJDBCTemplate.get(subscription.getUserId()));
-		}
+		addUserSubscriptions(user);
 
 		session.setAttribute("user", user);
 		
-		List<Tag> allTags = tagJDBCTemplate.getTags();
-		request.setAttribute("allTags", allTags);
+		loadTags(request);
 		
 		loadNewestVideos(request);
 		
 	}
 
-	protected void loadNewestVideos(HttpServletRequest request) {
-		List<VideoClip> allVideos = videoClipJDBCTemplate.getClips();
-		int countOfVideos = 0;
-		List<VideoClip> allVideosOrdered = new ArrayList<VideoClip>();
-		for (int video =  allVideos.size() - 1; video >= 0; video--) {
-			User currentUser = userJDBCTemplate.get(allVideos.get(video).getUser().getId());
-			allVideos.get(video).setUser(currentUser);
-			allVideosOrdered.add(allVideos.get(video));
-			countOfVideos++;
-			if (countOfVideos >= MAX_COUNT_OF_VIDEOS_IN_NEWEST) {
-				break;
-			}
+	private void addUserSubscriptions(User user) {
+		List<Subscription> subscriptions = subscriptionJDBCTemplate.listSubscriptions(user.getId());
+		for (Subscription subscription : subscriptions) {
+			user.addToSubscriptions(userJDBCTemplate.get(subscription.getUserId()));
 		}
-		request.setAttribute("videosToLoad", allVideosOrdered);
+	}
+
+	private void addUserHistory(User user) {
+		List<History> history = historyJDBCTemplate.getHistory(user.getId());
+		for (History entry : history) {
+			user.addToHistory(entry.getVideoClipId(), entry.getLastViewed());
+		}
+	}
+
+	private void addUserVideos(User user) {
+		List<VideoClip> videos = videoClipJDBCTemplate.getClips(user.getId());
+		for (VideoClip videoClip : videos) {
+			user.addToVideos(videoClip);
+		}
+	}
+
+	protected void loadNewestVideos(HttpServletRequest request) {
+		List<VideoClip> newestVideos = videoClipJDBCTemplate.getNewestVideos(COUNT_OF_VIDEOS_IN_NEWEST);
+		for (VideoClip videoClip : newestVideos) {
+			User publisher = userJDBCTemplate.get(videoClip.getUser().getId());
+			videoClip.setUser(publisher);
+		}
+		request.setAttribute("videosToLoad", newestVideos);
 		request.setAttribute("title", "Newest");
 	}
 

@@ -5,7 +5,7 @@
 <%@ page session="false" %>	
 
 				<div class="signin">
-					<a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign
+					<a href='<c:url value="#small-dialog"/>' class="play-icon popup-with-zoom-anim">Sign
 						In</a>
 					<div id="small-dialog" class="mfp-hide">
 						<h3>Login</h3>

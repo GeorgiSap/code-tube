@@ -24,31 +24,31 @@ public class SearchController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
-	
-	@RequestMapping(method = RequestMethod.POST)	
+
+	@RequestMapping(method = RequestMethod.POST)
 	public String searchQuery(HttpServletRequest request) {
 		String searchQuery = request.getParameter("searchQuery");
 		String jsonString = new SearchQueryDAO().search(searchQuery);
-		
+
 		JSONObject json = new JSONObject(jsonString);
 		JSONObject hitsObj = json.getJSONObject("hits");
 		JSONArray hitsArr = hitsObj.getJSONArray("hits");
-		
+
 		List<VideoClip> searchResults = new ArrayList<VideoClip>();
-		
+
 		for (int index = 0; index < hitsArr.length(); index++) {
 			JSONObject jsonObj = hitsArr.getJSONObject(index);
 			JSONObject source = jsonObj.getJSONObject("_source");
 			int videoClipId = source.getInt("id");
-			VideoClip videoClip =  videoClipJDBCTemplate.getClip(videoClipId);
+			VideoClip videoClip = videoClipJDBCTemplate.getClip(videoClipId);
 			User user = userJDBCTemplate.get(videoClip.getUser().getId());
 			videoClip.setUser(user);
 			searchResults.add(videoClip);
 		}
-		
+
 		request.setAttribute("title", "Results for " + searchQuery);
 		request.setAttribute("videosToLoad", searchResults);
 		return "home";
 	}
-	
+
 }

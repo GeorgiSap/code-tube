@@ -28,17 +28,17 @@ public class SubscribeController {
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
 	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
 	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
-	
+
 	@RequestMapping(value = "/subscribe/{user_id}", method = RequestMethod.GET)
 	public String redirect(Model model, @PathVariable("user_id") Integer userId, HttpServletRequest request) {
 
 		User viewedUser = userJDBCTemplate.get(userId);
 		List<VideoClip> viewedUserVideos = videoClipJDBCTemplate.getClips(userId);
 		List<VideoClip> viewedUserVideosOrdered = new ArrayList<VideoClip>();
-		for (int video =  viewedUserVideos.size() - 1; video >= 0; video--) {
+		for (int video = viewedUserVideos.size() - 1; video >= 0; video--) {
 			viewedUserVideosOrdered.add(viewedUserVideos.get(video));
 		}
-		
+
 		User subscriber = (User) request.getSession().getAttribute("user");
 		int subscriberId = subscriber.getId();
 		try {
@@ -57,7 +57,7 @@ public class SubscribeController {
 		request.setAttribute("userProfilePage", userId);
 		request.setAttribute("title", viewedUser.getUserName() + "'s Channel");
 		request.setAttribute("videosToLoad", viewedUserVideosOrdered);
-		
+
 		return "home";
 	}
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class VideoClipController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String openVideo(HttpServletRequest request, HttpServletResponse response){
+	public String openVideo(HttpServletRequest request, HttpServletResponse response) {
 		return "single";
 	}
-	
+
 }
