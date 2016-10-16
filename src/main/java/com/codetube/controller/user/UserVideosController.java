@@ -17,21 +17,23 @@ import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
 
 @Controller
-public class UserVideosController extends UserController{
+public class UserVideosController extends UserController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
-	
+
 	@RequestMapping(value = "/videos", method = RequestMethod.GET)
 	public String showMyVideos(HttpServletRequest request) {
-		if (request.getSession(false) == null) {
-			return "index";
+		try {
+			if (request.getSession(false) == null) {
+				return "index";
+			}
+			request.setAttribute("title", "My Videos");
+			loadUserVideos(request);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		request.setAttribute("title", "My Videos");
-		loadUserVideos(request);
-		loadTags(request);
-		return "home";
 	}
-
-
 
 }

@@ -24,21 +24,25 @@ public class HistoryController extends ControllerManager {
 
 	@RequestMapping(value = "/history", method = RequestMethod.GET)
 	public String showHistory(HttpServletRequest request) {
-		if (request.getSession(false) == null) {
-			loadTags(request);
-			return "index";
-		}
+		try {
+			if (request.getSession(false) == null) {
+				loadTags(request);
+				return "index";
+			}
 
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
-			Map<Integer, LocalDateTime> history = user.getHistory();
-			Set<History> historySet = sortUserHistory(history);
-			List<VideoClip> historyEntries = extractVideosFromHistory(historySet);
-			request.setAttribute("videosToLoad", historyEntries);
+			User user = (User) request.getSession().getAttribute("user");
+			if (user != null) {
+				Map<Integer, LocalDateTime> history = user.getHistory();
+				Set<History> historySet = sortUserHistory(history);
+				List<VideoClip> historyEntries = extractVideosFromHistory(historySet);
+				request.setAttribute("videosToLoad", historyEntries);
+			}
+			loadTags(request);
+			request.setAttribute("title", "Last viewed");
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		loadTags(request);
-		request.setAttribute("title", "Last viewed");
-		return "home";
 	}
 
 	private List<VideoClip> extractVideosFromHistory(Set<History> historySet) {

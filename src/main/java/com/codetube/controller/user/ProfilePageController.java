@@ -31,31 +31,34 @@ public class ProfilePageController extends ControllerManager {
 
 	@RequestMapping(value = "/user/{user_id}", method = RequestMethod.GET)
 	public String loadUserVideos(Model model, @PathVariable("user_id") Integer userId, HttpServletRequest request) {
-
-		User viewedUser = userJDBCTemplate.get(userId);
-		List<VideoClip> viewedUserVideos = videoClipJDBCTemplate.getClips(userId);
-		List<VideoClip> viewedUserVideosOrdered = new ArrayList<VideoClip>();
-		for (int video = viewedUserVideos.size() - 1; video >= 0; video--) {
-			VideoClip videoClip = viewedUserVideos.get(video);
-			User user = userJDBCTemplate.get(videoClip.getUser().getId());
-			videoClip.setUser(user);
-			viewedUserVideosOrdered.add(videoClip);
-		}
-
-		request.setAttribute("userProfilePage", userId);
-
-		if (request.getSession(false) != null) {
-			User currentUser = (User) request.getSession().getAttribute("user");
-			boolean isSubscribed = subscriptionJDBCTemplate.checkIfSubscribed(userId, currentUser.getId());
-			if (isSubscribed) {
-				request.setAttribute("subscribe_button", "Unsubscribe");
-			} else {
-				request.setAttribute("subscribe_button", "Subscribe");
+		try {
+			User viewedUser = userJDBCTemplate.get(userId);
+			List<VideoClip> viewedUserVideos = videoClipJDBCTemplate.getClips(userId);
+			List<VideoClip> viewedUserVideosOrdered = new ArrayList<VideoClip>();
+			for (int video = viewedUserVideos.size() - 1; video >= 0; video--) {
+				VideoClip videoClip = viewedUserVideos.get(video);
+				User user = userJDBCTemplate.get(videoClip.getUser().getId());
+				videoClip.setUser(user);
+				viewedUserVideosOrdered.add(videoClip);
 			}
+
+			request.setAttribute("userProfilePage", userId);
+
+			if (request.getSession(false) != null) {
+				User currentUser = (User) request.getSession().getAttribute("user");
+				boolean isSubscribed = subscriptionJDBCTemplate.checkIfSubscribed(userId, currentUser.getId());
+				if (isSubscribed) {
+					request.setAttribute("subscribe_button", "Unsubscribe");
+				} else {
+					request.setAttribute("subscribe_button", "Subscribe");
+				}
+			}
+			request.setAttribute("title", viewedUser.getUserName() + "'s Channel");
+			request.setAttribute("videosToLoad", viewedUserVideosOrdered);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		request.setAttribute("title", viewedUser.getUserName() + "'s Channel");
-		request.setAttribute("videosToLoad", viewedUserVideosOrdered);
-		loadTags(request);
-		return "home";
 	}
 }

@@ -21,33 +21,37 @@ import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 @RequestMapping(value = "/search")
-public class SearchController extends ControllerManager{
+public class SearchController extends ControllerManager {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String searchQuery(HttpServletRequest request) {
-		String searchQuery = request.getParameter("searchQuery");
-		String jsonString = new SearchQueryDAO().search(searchQuery);
+		try {
+			String searchQuery = request.getParameter("searchQuery");
+			String jsonString = new SearchQueryDAO().search(searchQuery);
 
-		JSONObject json = new JSONObject(jsonString);
-		JSONObject hitsObj = json.getJSONObject("hits");
-		JSONArray hitsArr = hitsObj.getJSONArray("hits");
+			JSONObject json = new JSONObject(jsonString);
+			JSONObject hitsObj = json.getJSONObject("hits");
+			JSONArray hitsArr = hitsObj.getJSONArray("hits");
 
-		List<VideoClip> searchResults = new ArrayList<VideoClip>();
+			List<VideoClip> searchResults = new ArrayList<VideoClip>();
 
-		for (int index = 0; index < hitsArr.length(); index++) {
-			JSONObject jsonObj = hitsArr.getJSONObject(index);
-			JSONObject source = jsonObj.getJSONObject("_source");
-			int videoClipId = source.getInt("id");
-			VideoClip videoClip = videoClipJDBCTemplate.getClip(videoClipId);
-			User user = userJDBCTemplate.get(videoClip.getUser().getId());
-			videoClip.setUser(user);
-			searchResults.add(videoClip);
+			for (int index = 0; index < hitsArr.length(); index++) {
+				JSONObject jsonObj = hitsArr.getJSONObject(index);
+				JSONObject source = jsonObj.getJSONObject("_source");
+				int videoClipId = source.getInt("id");
+				VideoClip videoClip = videoClipJDBCTemplate.getClip(videoClipId);
+				User user = userJDBCTemplate.get(videoClip.getUser().getId());
+				videoClip.setUser(user);
+				searchResults.add(videoClip);
+			}
+
+			request.setAttribute("title", "Results for " + searchQuery);
+			request.setAttribute("videosToLoad", searchResults);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-
-		request.setAttribute("title", "Results for " + searchQuery);
-		request.setAttribute("videosToLoad", searchResults);
-		loadTags(request);
-		return "home";
 	}
 
 }

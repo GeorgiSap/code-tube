@@ -23,18 +23,22 @@ public class SubscriptionsController extends ControllerManager {
 
 	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
 	public String showSubscriptions(HttpServletRequest request) {
-		if (request.getSession(false) == null) {
-			loadTags(request);
-			return "index";
-		}
+		try {
+			if (request.getSession(false) == null) {
+				loadTags(request);
+				return "index";
+			}
 
-		User user = (User) request.getSession().getAttribute("user");
-		List<User> subscriptions = user.getSubscribtions();
-		List<VideoClip> subscriptionVideos = extractVideosFromSubscriptions(subscriptions);
-		loadTags(request);
-		request.setAttribute("videosToLoad", subscriptionVideos);
-		request.setAttribute("title", "Subscriptions");
-		return "subscriptions";
+			User user = (User) request.getSession().getAttribute("user");
+			List<User> subscriptions = user.getSubscribtions();
+			List<VideoClip> subscriptionVideos = extractVideosFromSubscriptions(subscriptions);
+			loadTags(request);
+			request.setAttribute("videosToLoad", subscriptionVideos);
+			request.setAttribute("title", "Subscriptions");
+			return "subscriptions";
+		} catch (Exception e) {
+			return "home";
+		}
 	}
 
 	private List<VideoClip> extractVideosFromSubscriptions(List<User> subscriptions) {

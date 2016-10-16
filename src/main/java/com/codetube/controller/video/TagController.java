@@ -24,20 +24,24 @@ import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 @SessionAttributes("tag")
-public class TagController extends ControllerManager{
-	
+public class TagController extends ControllerManager {
+
 	@RequestMapping(value = "/tag/{tag}", method = RequestMethod.GET)
 	public String loadVideosWithTag(Model model, @PathVariable("tag") String tag, HttpServletRequest request) {
-		Tag tagObj = tagJDBCTemplate.getTag(tag);
-		List<VideoClip> videosWithCurrentTag = videoClipJDBCTemplate.getClipsByTag(tagObj.getId());
-		for (VideoClip videoClip : videosWithCurrentTag) {
-			User user = userJDBCTemplate.get(videoClip.getUser().getId());
-			videoClip.setUser(user);
+		try {
+			Tag tagObj = tagJDBCTemplate.getTag(tag);
+			List<VideoClip> videosWithCurrentTag = videoClipJDBCTemplate.getClipsByTag(tagObj.getId());
+			for (VideoClip videoClip : videosWithCurrentTag) {
+				User user = userJDBCTemplate.get(videoClip.getUser().getId());
+				videoClip.setUser(user);
+			}
+			request.setAttribute("videosToLoad", videosWithCurrentTag);
+			request.setAttribute("title", tag);
+			loadTags(request);
+
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		request.setAttribute("videosToLoad", videosWithCurrentTag);
-		request.setAttribute("title", tag);
-		loadTags(request);
-		
-		return "home";
 	}
 }

@@ -44,43 +44,46 @@ public class VideoController extends ControllerManager {
 	@RequestMapping(value = "/player/{video_id}", method = RequestMethod.GET)
 	public String showVideo(Model model, @PathVariable("video_id") Integer videoId, HttpServletRequest request,
 			HttpServletResponse response) {
-
-		if (videoId == 0) {
-			List<Tag> allTags = tagJDBCTemplate.getTags();
-			request.setAttribute("allTags", allTags);
-			String history = null;
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				System.out.println("COOKIES != NULL");
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("history")) {
-						history = cookie.getValue();
+		try {
+			if (videoId == 0) {
+				List<Tag> allTags = tagJDBCTemplate.getTags();
+				request.setAttribute("allTags", allTags);
+				String history = null;
+				Cookie[] cookies = request.getCookies();
+				if (cookies != null) {
+					System.out.println("COOKIES != NULL");
+					for (Cookie cookie : cookies) {
+						if (cookie.getName().equals("history")) {
+							history = cookie.getValue();
+						}
 					}
 				}
-			}
 
-			List<Integer> entryIds = new ArrayList<Integer>();
-			List<VideoClip> historyEntries = new ArrayList<VideoClip>();
-			if (history != null) {
-				// Retrieve history from cookie
-				String[] entries = history.split(",");
-				for (int index = 0; index < entries.length; index++) {
-					entryIds.add(Integer.parseInt(entries[index]));
+				List<Integer> entryIds = new ArrayList<Integer>();
+				List<VideoClip> historyEntries = new ArrayList<VideoClip>();
+				if (history != null) {
+					// Retrieve history from cookie
+					String[] entries = history.split(",");
+					for (int index = 0; index < entries.length; index++) {
+						entryIds.add(Integer.parseInt(entries[index]));
+					}
+					for (int entry = entryIds.size() - 1; entry >= 0; entry--) {
+						historyEntries.add(videoClipJDBCTemplate.getClip(entryIds.get(entry)));
+					}
+					for (VideoClip videoClip : historyEntries) {
+						User publisher = userJDBCTemplate.get(videoClip.getUser().getId());
+						videoClip.setUser(publisher);
+					}
+				} else {
+					System.err.println("NULL");
 				}
-				for (int entry = entryIds.size() - 1; entry >= 0; entry--) {
-					historyEntries.add(videoClipJDBCTemplate.getClip(entryIds.get(entry)));
-				}
-				for (VideoClip videoClip : historyEntries) {
-					User publisher = userJDBCTemplate.get(videoClip.getUser().getId());
-					videoClip.setUser(publisher);
-				}
-			} else {
-				System.err.println("NULL");
-			}
 
-			loadTags(request);
-			request.setAttribute("title", "Last viewed");
-			request.setAttribute("videosToLoad", historyEntries);
+				loadTags(request);
+				request.setAttribute("title", "Last viewed");
+				request.setAttribute("videosToLoad", historyEntries);
+				return "home";
+			}
+		} catch (Exception e) {
 			return "home";
 		}
 
@@ -163,11 +166,9 @@ public class VideoController extends ControllerManager {
 			return "single";
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			return "index";
+			return "home";
 		}
 
 	}
 
-	
 }

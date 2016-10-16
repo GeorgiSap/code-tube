@@ -42,9 +42,7 @@ public class DataController extends ControllerManager{
 
 			if (list != null) {
 				response.getWriter().print(new Gson().toJson(list));
-			} else {
-				response.getWriter().print("[]");
-			}
+			} 
 
 		} catch (VideoClipException e) {
 			e.printStackTrace();

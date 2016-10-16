@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController extends UserController {
-	
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
-		loadNewestVideos(request);
-		loadTags(request);
-		return "home";
+		try {
+			loadNewestVideos(request);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
+		}
 	}
 }

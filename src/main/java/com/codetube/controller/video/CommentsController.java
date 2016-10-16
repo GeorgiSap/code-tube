@@ -71,19 +71,19 @@ public class CommentsController {
 	@RequestMapping(value = "/getComments/{video_id}", method = RequestMethod.GET)
 	protected void getComments(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		response.setCharacterEncoding("UTF-8");
+		try {
+			response.setContentType("text/json");
+			response.setCharacterEncoding("UTF-8");
 
-		Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
-		System.out.println("They called me " + comments);
-		for (Comment comment : comments) {
-			User user = userJDBCTemplate.get(comment.getUser().getId());
-			comment.getUser().setUserName(user.getUserName());
+			Set<Comment> comments = commentJDBCTemplate.getComments(videoId);
+			System.out.println("They called me " + comments);
+			for (Comment comment : comments) {
+				User user = userJDBCTemplate.get(comment.getUser().getId());
+				comment.getUser().setUserName(user.getUserName());
+			}
+			if (comments != null)
+				response.getWriter().print(new Gson().toJson(comments));
+		} catch (Exception e) {
 		}
-		if (comments != null)
-			response.getWriter().print(new Gson().toJson(comments));
-		else
-			response.getWriter().print("[]");
-
 	}
 }

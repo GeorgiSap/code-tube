@@ -24,10 +24,14 @@ public class LogoutController extends UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getSession().invalidate();
-		loadNewestVideos(request);
-		loadTags(request);
-		return "home";
+		try {
+			request.getSession().invalidate();
+			loadNewestVideos(request);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
+		}
 	}
 
 }

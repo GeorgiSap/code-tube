@@ -17,16 +17,19 @@ public class MostCommentedController extends ControllerManager {
 
 	@RequestMapping(value = "/commented", method = RequestMethod.GET)
 	public String showMostCommented(HttpServletRequest request) {
-
-		List<VideoClip> mostCommented = videoClipJDBCTemplate.getMostCommentedVideos(NUMBER_OF_VIDEOS);
-		for (VideoClip videoClip : mostCommented) {
-			User user = userJDBCTemplate.get(videoClip.getUser().getId());
-			videoClip.setUser(user);
+		try {
+			List<VideoClip> mostCommented = videoClipJDBCTemplate.getMostCommentedVideos(NUMBER_OF_VIDEOS);
+			for (VideoClip videoClip : mostCommented) {
+				User user = userJDBCTemplate.get(videoClip.getUser().getId());
+				videoClip.setUser(user);
+			}
+			request.setAttribute("title", "Most Commented");
+			request.setAttribute("videosToLoad", mostCommented);
+			loadTags(request);
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		request.setAttribute("title", "Most Commented");
-		request.setAttribute("videosToLoad", mostCommented);
-		loadTags(request);
-		return "home";
 	}
 
 }

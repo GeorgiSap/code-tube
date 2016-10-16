@@ -17,16 +17,19 @@ public class MostViewedController extends ControllerManager {
 
 	@RequestMapping(value = "/viewed", method = RequestMethod.GET)
 	public String showMostViewed(HttpServletRequest request) {
+		try {
+			List<VideoClip> mostViewed = videoClipJDBCTemplate.getMostViewedVideos(NUMBER_OF_VIDEOS);
+			for (VideoClip videoClip : mostViewed) {
+				User user = userJDBCTemplate.get(videoClip.getUser().getId());
+				videoClip.setUser(user);
+			}
+			request.setAttribute("title", "Most Viewed");
+			request.setAttribute("videosToLoad", mostViewed);
+			loadTags(request);
 
-		List<VideoClip> mostViewed = videoClipJDBCTemplate.getMostViewedVideos(NUMBER_OF_VIDEOS);
-		for (VideoClip videoClip : mostViewed) {
-			User user = userJDBCTemplate.get(videoClip.getUser().getId());
-			videoClip.setUser(user);
+			return "home";
+		} catch (Exception e) {
+			return "home";
 		}
-		request.setAttribute("title", "Most Viewed");
-		request.setAttribute("videosToLoad", mostViewed);
-		loadTags(request);
-
-		return "home";
 	}
 }

@@ -19,31 +19,33 @@ import com.codetube.model.user.subscription.Subscription;
 import com.codetube.model.user.subscription.SubscriptionDAO;
 import com.codetube.model.videoclip.VideoClip;
 
-public class UserController extends ControllerManager{
+public class UserController extends ControllerManager {
 	private static final int COUNT_OF_VIDEOS_IN_NEWEST = 12;
 	private static final int SESSION_LENGTH = 300 * 60 / 24;
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
 
-	
 	public void createSession(HttpServletRequest request, User user) {
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(SESSION_LENGTH);
-		session.setAttribute("user_id", user.getId());
-		session.setAttribute("userNameComment", user.getUserName());
-		addUserVideos(user);
+		try {
+			HttpSession session = request.getSession();
+			session.setMaxInactiveInterval(SESSION_LENGTH);
+			session.setAttribute("user_id", user.getId());
+			session.setAttribute("userNameComment", user.getUserName());
+			addUserVideos(user);
 
-		addUserHistory(user);
+			addUserHistory(user);
 
-		addUserSubscriptions(user);
+			addUserSubscriptions(user);
 
-		session.setAttribute("user", user);
-		
-		loadTags(request);
-		
-		loadNewestVideos(request);
-		
+			session.setAttribute("user", user);
+
+			loadTags(request);
+
+			loadNewestVideos(request);
+		} catch (Exception e) {
+
+		}
 	}
 
 	private void addUserSubscriptions(User user) {
@@ -76,7 +78,7 @@ public class UserController extends ControllerManager{
 		request.setAttribute("videosToLoad", newestVideos);
 		request.setAttribute("title", "Newest");
 	}
-	
+
 	protected void loadUserVideos(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {

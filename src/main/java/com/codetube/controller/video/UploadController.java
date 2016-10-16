@@ -31,17 +31,21 @@ import com.codetube.model.videoclip.VideoClipException;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 
 @Controller
-public class UploadController extends UserController{
+public class UploadController extends UserController {
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadPage(HttpServletRequest request) {
-		if (request.getSession(false) == null) {
+		try {
+			if (request.getSession(false) == null) {
+				return "home";
+			}
+
+			List<Tag> tags = (List<Tag>) tagJDBCTemplate.getTags();
+			request.setAttribute("tags", tags);
+			return "upload";
+		} catch (Exception e) {
 			return "home";
 		}
-
-		List<Tag> tags = (List<Tag>) tagJDBCTemplate.getTags();
-		request.setAttribute("tags", tags);
-		return "upload";
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -75,6 +79,7 @@ public class UploadController extends UserController{
 			user = userJDBCTemplate.get(userId);
 
 			if (user == null) {
+				request.setAttribute("messageLogging", "Fill the user");
 				return "home";
 			}
 
@@ -115,6 +120,7 @@ public class UploadController extends UserController{
 
 			FileCopyUtils.copy(multipartFile.getBytes(), new File(WebInitializer.LOCATION + name));
 		} catch (VideoClipException e) {
+			request.setAttribute("messageLogging", "Something went wrong");
 			return "home";
 		}
 		request.setAttribute("messageLogging", "Successfully uploaded video");
@@ -155,16 +161,19 @@ public class UploadController extends UserController{
 
 	private String validation(HttpServletRequest request, String performerOfVideo, List<String> tags) {
 		if (request.getSession(false) == null) {
+			request.setAttribute("messageLogging", "Log!");
 			return "home";
 		}
 
 		if ((performerOfVideo == null) || (performerOfVideo.trim().equals(""))
 				|| (performerOfVideo.matches(".*\\d+.*"))) {
+			request.setAttribute("messageLogging", "Fill the performer!");
 			return "home";
 		}
 
 		for (String tag : tags) {
 			if (tag == null || tag.trim().equals("")) {
+				request.setAttribute("messageLogging", "Fill tags!");
 				return "home";
 			}
 		}
