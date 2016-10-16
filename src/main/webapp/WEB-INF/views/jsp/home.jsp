@@ -19,7 +19,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -54,13 +56,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="main-grids">
 			<div class="recommended">
 
-
 				<c:if test="${empty videosToLoad}">
 					<h2>No Videos available in ${title}</h2>
 				</c:if>
 
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
-
 
 					<c:if test="${loop.first or loop.index % 4 == 0}">
 						<div class="recommended-grids">
@@ -74,19 +74,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</c:if>
 
 							<h3>${title}</h3>
-
 							<c:if test="${not empty userProfilePage}">
 						</div>
+
 						<c:if test="${not empty subscribe_button}">
 							<div class="heading-right">
 								<a href="../subscribe/${userProfilePage}"
 									class="play-icon popup-with-zoom-anim"><%=request.getAttribute("subscribe_button")%></a>
 							</div>
 						</c:if>
+
 						<div class="clearfix"></div>
 					</c:if>
 			</div>
 			</c:if>
+
 			<div class="col-md-3 resent-grid recommended-grid">
 				<div class="resent-grid-img recommended-grid-img">
 					<div id="videoDiv">
@@ -97,16 +99,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</video>
 						</a>
 					</div>
-
 				</div>
 				<div class="resent-grid-info recommended-grid-info video-info-grid">
 					<h5>
-						<a href="single.jsp" class="title">${element.performer}</a>
+						<a href='<c:url value="/player/${element.id}"/>' class="title">${element.performer}</a>
 					</h5>
 					<ul>
 						<li><p class="author author-info">
-						
-								<a href='<c:url value="/user/${element.user.id}"/>' class="author">${element.user.userName}</a>
+
+								<a href='<c:url value="/user/${element.user.id}"/>'
+									class="author">${element.user.userName}</a>
 							</p></li>
 						<li class="right-list">
 							<p class="views views-info">${element.viewCount}views</p>
@@ -119,12 +121,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		</c:if>
 		</c:forEach>
+
 		<div class="clearfix"></div>
 	</div>
 	</div>
 	</div>
 	<div class="clearfix"></div>
 	<script src='<c:url value="/js/bootstrap.min.js"/>'></script>
-
 </body>
 </html>

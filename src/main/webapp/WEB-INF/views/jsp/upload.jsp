@@ -19,11 +19,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
-	
-
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
 
 </script>
 <!-- bootstrap -->
@@ -44,38 +40,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //fonts -->
 </head>
 <body>
-
 	<%@ include file="./header.jsp"%>
-
 	<!-- upload -->
 	<div class="upload">
-		<form action='<c:url value="/upload"/>' method="post" enctype="multipart/form-data">
-
+		<form action='<c:url value="/upload"/>' method="post"
+			enctype="multipart/form-data">
 			<!-- container -->
 			<div class="container">
 				<div class="upload-grids">
 					<div class="upload-right">
 						<div class="upload-file">
-
 							<div class="services-icon">
 								<span class="glyphicon glyphicon-open" aria-hidden="true"></span>
 							</div>
-
 							<input type="file" id="file" name="file" size="50" />
-
 							<div class="submit-button">
-
 								<input type="submit" value="Upload File" />
-
 							</div>
-
 						</div>
-			
 						<div class="inputform">
 							<h5>Performer:</h5>
-							<input type="text" id="artist" name="artist" size="35" />
-							 
-							<select name=tag multiple>
+							<input type="text" id="artist" name="artist" size="35" /> <select
+								name=tag multiple>
 								<option value="${selected}" selected>${selected}</option>
 								<c:forEach items="${tags}" var="tag">
 									<c:if test="${tag != selected}">
@@ -87,12 +73,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 				</div>
 			</div>
-
 		</form>
 	</div>
-
 	<!-- //upload -->
-
 	<div class="clearfix"></div>
 	<div class="drop-menu">
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
@@ -108,6 +91,5 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 </body>
 </html>

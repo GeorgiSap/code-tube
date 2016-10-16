@@ -21,9 +21,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 
 	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -65,7 +67,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<c:set var="counter" value="1" />
 				<c:forEach items="${videosToLoad}" var="element" varStatus="loop">
 
-
 					<c:if test="${loop.first or loop.index % 4 == 0}">
 						<div class="recommended-grids">
 					</c:if>
@@ -88,9 +89,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			</c:if>
 
-
-
-
 			<c:if test="${element.user.userName != userName}">
 				<div class="clearfix"></div>
 				<div class="recommended-info">
@@ -99,7 +97,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<h3>${element.user.userName}</h3>
 					</div>
 					<div class="heading-right">
-						<a href="subscribe/${element.user.id}"
+						<a href='<c:url value="/subscribe/${element.user.id}"/>'
 							class="play-icon popup-with-zoom-anim">Unsubscribe</a>
 					</div>
 					<div class="clearfix"></div>
@@ -109,19 +107,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-3 resent-grid recommended-grid">
 				<div class="resent-grid-img recommended-grid-img">
 					<div id="videoDiv">
-						<a href="player/${element.id}"><video id="videoHome">
+						<a href='<c:url value="/player/${element.id}"/>'><video
+								id="videoHome">
 								<source src="videos/${element.path}" type="video/mp4">
 							</video></a>
 					</div>
-
 				</div>
 				<div class="resent-grid-info recommended-grid-info video-info-grid">
 					<h5>
-						<a href="single.jsp" class="title">${element.performer}</a>
+						<a href='<c:url value="/player/${element.id}"/>' class="title">${element.performer}</a>
 					</h5>
 					<ul>
 						<li><p class="author author-info">
-								<a href="user/${element.user.id}" class="author">${element.user.userName}</a>
+								<a href='<c:url value="/user/${element.user.id}"/>'
+									class="author">${element.user.userName}</a>
 							</p></li>
 						<li class="right-list">
 							<p class="views views-info">${element.viewCount}views</p>
@@ -135,23 +134,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		</c:if>
 
-
 		<c:set var="counter" value="${counter + 1}" />
 		<c:if test="${not loop.first and element.user.userName != userName}">
 			<c:set var="counter" value="1" />
 		</c:if>
 
-
 		<c:set var="userName" value="${element.user.userName}" />
-
 
 		</c:forEach>
 
 		<div class="clearfix"></div>
-
 	</div>
 	</div>
-
 	</div>
 	<div class="clearfix"></div>
 	<div class="drop-menu">
@@ -164,7 +158,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				href="#">Another link</a></li>
 		</ul>
 	</div>
-
 	<script src="js/bootstrap.min.js"></script>
 
 </body>

@@ -16,25 +16,7 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
-	
-	
-	
-	
-	
-	
-	
-	
-				
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-
-
-
-
-
-
 
 </script>
 <!-- bootstrap -->
@@ -82,7 +64,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							<div class="playlist">
 								<div class="playlistElement">
-									<a href="playlist/<%=list.getId()%>"><img alt="" src="images/p1.png"> </a>
+									<a href="playlist/<%=list.getId()%>"><img alt=""
+										src="images/p1.png"> </a>
 									<h2><%=list.getTitle()%></h2>
 								</div>
 							</div>

@@ -60,7 +60,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								div.appendChild(link);
 								div.appendChild(nameOfFile);
 								div.appendChild(performer);
-								div.style.position = "relative";
+								
+	div.style.position = "relative";
 								div.style.left = "1%";
 								div.style.display= "inline-block";
 								div.style.margin = "1%"
@@ -74,6 +75,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
 					});	
 		}
+
 </script>
 <!-- bootstrap -->
 <link href='<c:url value="/css/bootstrap.min.css"/>' rel='stylesheet'

@@ -16,19 +16,13 @@
 	<div class="drop-navigation drop-navigation">
 		<ul class="nav nav-sidebar">
 
-			<li class="active"><a
-				href='<c:url value="http://localhost:8080/codetube/home"/>'
+			<li class="active"><a href='<c:url value="/home"/>'
 				class="home-icon"><span class="glyphicon glyphicon-home"
 					aria-hidden="true"></span>Home</a></li>
-
-
-
 			<%
 				if (request.getSession(false) != null) {
 			%>
-
-			<li><a href="http://localhost:8080/codetube/videos"
-				class="user-icon"><span
+			<li><a href='<c:url value="/videos"/>' class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
 
@@ -36,53 +30,40 @@
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Playlists</a></li> -->
 
-			<li><a href="http://localhost:8080/codetube/subscriptions"
-				class="user-icon"><span
+			<li><a href='<c:url value="/subscriptions"/>' class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Subscriptions</a></li>
 
-			<li><a href="http://localhost:8080/codetube/history"
-				class="sub-icon"><span
+			<li><a href='<c:url value="/history"/>' class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-hourglass"
 					aria-hidden="true"></span>History</a></li>
 
 			<%
 				} else {
 			%>
-						<li><a href="http://localhost:8080/codetube/player/0"
-				class="sub-icon"><span
+			<li><a href='<c:url value="/player/0"/>' class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-hourglass"
 					aria-hidden="true"></span>History</a></li>
-			
+
 			<%
 				}
 			%>
-			
 
-
-			<li><a href="http://localhost:8080/codetube/viewed"
-				class="user-icon"><span
+			<li><a href='<c:url value="/viewed"/>' class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-expand"
 					aria-hidden="true"></span>Most Viewed</a></li>
 
-			<li><a href="http://localhost:8080/codetube/commented"
-				class="user-icon"><span
+			<li><a href='<c:url value="/commented"/>' class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-expand"
 					aria-hidden="true"></span>Most Commented</a></li>
 
-			<!-- <li><a class="sub-icon"><span
-					class="glyphicon glyphicon-home glyphicon-expand" aria-hidden="true"></span>Tags</a></li>
- -->
 			<li><a class="sub-icon"><span
 					class="glyphicon glyphicon-home glyphicon-chevron-down"
 					aria-hidden="true"></span>Tags</a></li>
 
-
 			<c:forEach items="${allTags}" var="element">
-				<li><a
-					href="http://localhost:8080/codetube/tag/${element.keyword}"
+				<li><a href='<c:url value="/tag/${element.keyword}"/>'
 					class="sub-icon"><span aria-hidden="true"></span>#${element.keyword}</a></li>
-				<%-- <li><a href="http://localhost:8080/codetube/tag/${element.keyword}">${element.keyword}</a></li> --%>
 			</c:forEach>
 
 			<!-- script-for-menu -->

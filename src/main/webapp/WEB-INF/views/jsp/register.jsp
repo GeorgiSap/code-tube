@@ -12,14 +12,13 @@
 		src='<c:url value="/js/modernizr.custom.min.js"/>'></script>
 	<link href='<c:url value="/css/popuo-box.css"/>' rel="stylesheet"
 		type="text/css" media="all" />
-	<script src='<c:url value="/js/jquery.magnific-popup.js"/>' type="text/javascript"></script>
+	<script src='<c:url value="/js/jquery.magnific-popup.js"/>'
+		type="text/javascript"></script>
 	<!--//pop-up-box -->
-
 	<div id="small-dialog3" class="mfp-hide">
 		<h3>Create Account</h3>
-
 		<div class="signup">
-			<form role="form" method="POST" action="./register">
+			<form role="form" method="POST" action='<c:url value="/register"/>'">
 				<input name="email" type="email" class="email" placeholder="Email"
 					maxlength="30" required="required"
 					pattern=".{<%=IUser.MIN_EMAIL_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"

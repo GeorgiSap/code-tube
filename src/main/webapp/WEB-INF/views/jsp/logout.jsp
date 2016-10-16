@@ -6,8 +6,9 @@
 <% User user =  (User)request.getSession().getAttribute("user");  %>
 
 <div class="signin">
-	<a href="./home" style="background: #ff7f27; font-weight: bold">Hi, <%= user.getUserName() %></a>
-	<a href="./logout">Logout</a>
+	<a href='<c:url value="/home"/>'
+		style="background: #ff7f27; font-weight: bold">Hi, <%= user.getUserName() %></a>
+	<a href='<c:url value="/logout"/>'>Logout</a>
 	<div id="small-dialog" class="mfp-hide">
 		<div class="clearfix"></div>
 	</div>
