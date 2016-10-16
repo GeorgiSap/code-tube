@@ -1,4 +1,4 @@
-package com.codetube.controller.user.subscription;
+package com.codetube.controller.user;
 
 import java.util.ArrayList;
 import java.util.List;

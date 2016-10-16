@@ -1,4 +1,4 @@
-package com.codetube.controller.search;
+package com.codetube.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.codetube.model.search.SearchQueryDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserDAO;
@@ -20,10 +21,7 @@ import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 @RequestMapping(value = "/search")
-public class SearchController {
-	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
-	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
+public class SearchController extends ControllerManager{
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String searchQuery(HttpServletRequest request) {
@@ -48,6 +46,7 @@ public class SearchController {
 
 		request.setAttribute("title", "Results for " + searchQuery);
 		request.setAttribute("videosToLoad", searchResults);
+		loadTags(request);
 		return "home";
 	}
 

@@ -1,4 +1,4 @@
-package com.codetube.controller;
+package com.codetube.controller.video;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

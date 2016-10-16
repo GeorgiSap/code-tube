@@ -1,4 +1,4 @@
-package com.codetube.controller;
+package com.codetube.controller.video;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codetube.WebInitializer;
+import com.codetube.controller.ControllerManager;
+import com.codetube.controller.user.UserController;
 import com.codetube.model.search.IndexVideoClipDAO;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
@@ -29,15 +31,7 @@ import com.codetube.model.videoclip.VideoClipException;
 import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 
 @Controller
-public class UploadController {
-	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-
-	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
-			.getBean("VideoClipJDBCTemplate");
-
-	public UserJDBCTemplate userJDBCTemplate = (UserJDBCTemplate) context.getBean("UserJDBCTemplate");
-
-	public TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
+public class UploadController extends UserController{
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadPage(HttpServletRequest request) {
@@ -65,7 +59,7 @@ public class UploadController {
 			User user;
 			Tag tagObject;
 
-			// incoming validation, IF NULL, evryting is ok!
+			// incoming validation, IF NULL, everything is ok!
 			String page = validation(request, performerOfVideo, tags);
 
 			if (page != null) {
@@ -137,7 +131,8 @@ public class UploadController {
 			}
 			request.setAttribute("videosToLoad", userVideosOrdered);
 		}
-
+		loadUserVideos(request);
+		loadTags(request);
 		return "home";
 	}
 

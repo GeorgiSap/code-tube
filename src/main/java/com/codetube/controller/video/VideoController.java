@@ -1,4 +1,4 @@
-package com.codetube.controller;
+package com.codetube.controller.video;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.codetube.controller.ControllerManager;
 import com.codetube.model.comment.CommentDAO;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
@@ -168,58 +169,5 @@ public class VideoController extends ControllerManager {
 
 	}
 
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	protected void getDataJSon(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/json");
-		response.setCharacterEncoding("UTF-8");
-		try {
-			List<VideoClip> list = videoClipJDBCTemplate.getClips();
-
-			for (VideoClip clip : list) {
-				User user = userJDBCTemplate.get(clip.getUser().getId());
-				clip.getUser().setFirstName(user.getFirstName());
-				Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
-
-				for (Tag tag : tags) {
-					clip.addTag(tag);
-				}
-			}
-
-			if (list != null) {
-				response.getWriter().print(new Gson().toJson(list));
-			} else {
-				response.getWriter().print("[]");
-			}
-
-		} catch (VideoClipException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@RequestMapping(value = "/data/{video_id}", method = RequestMethod.GET)
-	protected void getDataJSonToSingleVideo(@PathVariable("video_id") Integer videoId, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		response.setCharacterEncoding("UTF-8");
-		try {
-			VideoClip clip = videoClipJDBCTemplate.getClip(videoId);
-
-			Set<Tag> tags = videoClipJDBCTemplate.getVideoTags(clip);
-
-			for (Tag tag : tags) {
-				clip.addTag(tag);
-			}
-
-			if (clip != null)
-				response.getWriter().print(new Gson().toJson(clip));
-			else
-				response.getWriter().print("[]");
-
-		} catch (VideoClipException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 }

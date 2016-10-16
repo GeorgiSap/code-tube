@@ -1,5 +1,6 @@
 package com.codetube.controller.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +75,21 @@ public class UserController extends ControllerManager{
 		}
 		request.setAttribute("videosToLoad", newestVideos);
 		request.setAttribute("title", "Newest");
+	}
+	
+	protected void loadUserVideos(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			List<VideoClip> userVideos = user.getVideos();
+			List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
+			for (int video = userVideos.size() - 1; video >= 0; video--) {
+				userVideosOrdered.add(userVideos.get(video));
+			}
+			for (VideoClip videoClip : userVideosOrdered) {
+				videoClip.setUser(user);
+			}
+			request.setAttribute("videosToLoad", userVideosOrdered);
+		}
 	}
 
 	public void disableCache(HttpServletResponse response) {

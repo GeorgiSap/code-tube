@@ -150,11 +150,11 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	@Override
 	public List<VideoClip> getMostCommentedVideos(int numberOfVideos) {
 		String SQL = "select v.video_clip_id, count(v.video_clip_id) from video_clips v "
-				+ "join comments c on (v.video_clip_id = c.video_clip_id) " + "group by v.video_clip_id limit "
-				+ numberOfVideos;
-
+				+ "join comments c on (v.video_clip_id = c.video_clip_id) "
+				+ "group by v.video_clip_id order by count(v.video_clip_id) desc "
+				+ "limit " + numberOfVideos;
+		
 		List<Integer> commentedVideoIds = jdbcTemplateObject.query(SQL, (rs, rowNum) -> rs.getInt("v.video_clip_id"));
-
 		List<VideoClip> videoClips = new ArrayList<VideoClip>();
 		commentedVideoIds.forEach(videoId -> videoClips.add(this.getClip(videoId)));
 		return videoClips;

@@ -1,4 +1,4 @@
-package com.codetube.controller;
+package com.codetube.controller.video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.codetube.controller.ControllerManager;
 import com.codetube.model.tag.Tag;
 import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
@@ -23,11 +24,7 @@ import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 @SessionAttributes("tag")
-public class TagController {
-	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
-	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
-	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
+public class TagController extends ControllerManager{
 	
 	@RequestMapping(value = "/tag/{tag}", method = RequestMethod.GET)
 	public String loadVideosWithTag(Model model, @PathVariable("tag") String tag, HttpServletRequest request) {
@@ -39,8 +36,7 @@ public class TagController {
 		}
 		request.setAttribute("videosToLoad", videosWithCurrentTag);
 		request.setAttribute("title", tag);
-		List<Tag> allTags = tagJDBCTemplate.getTags();
-		request.setAttribute("allTags", allTags);
+		loadTags(request);
 		
 		return "home";
 	}

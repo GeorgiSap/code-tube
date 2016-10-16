@@ -1,4 +1,4 @@
-package com.codetube.controller.most;
+package com.codetube.controller;
 
 import java.util.List;
 
@@ -8,26 +8,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.codetube.controller.ControllerManager;
 import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
 
 @Controller
-public class MostViewedController extends ControllerManager {
+public class MostCommentedController extends ControllerManager {
 	private static final int NUMBER_OF_VIDEOS = 12;
 
-	@RequestMapping(value = "/viewed", method = RequestMethod.GET)
-	public String showMostViewed(HttpServletRequest request) {
+	@RequestMapping(value = "/commented", method = RequestMethod.GET)
+	public String showMostCommented(HttpServletRequest request) {
 
-		List<VideoClip> mostViewed = videoClipJDBCTemplate.getMostViewedVideos(NUMBER_OF_VIDEOS);
-		for (VideoClip videoClip : mostViewed) {
+		List<VideoClip> mostCommented = videoClipJDBCTemplate.getMostCommentedVideos(NUMBER_OF_VIDEOS);
+		for (VideoClip videoClip : mostCommented) {
 			User user = userJDBCTemplate.get(videoClip.getUser().getId());
 			videoClip.setUser(user);
 		}
-		request.setAttribute("title", "Most Viewed");
-		request.setAttribute("videosToLoad", mostViewed);
+		request.setAttribute("title", "Most Commented");
+		request.setAttribute("videosToLoad", mostCommented);
 		loadTags(request);
-
 		return "home";
 	}
+
 }

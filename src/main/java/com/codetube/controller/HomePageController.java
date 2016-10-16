@@ -14,7 +14,7 @@ import com.codetube.model.tag.TagDAO;
 
 @Controller
 @RequestMapping(value="/index")
-public class HomePageConntroller extends UserController{
+public class HomePageController extends UserController{
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	TagDAO tagJDBCTemplate = (TagDAO) context.getBean("TagJDBCTemplate");
 	

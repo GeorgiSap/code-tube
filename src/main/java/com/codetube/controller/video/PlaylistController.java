@@ -1,4 +1,4 @@
-package com.codetube.controller;
+package com.codetube.controller.video;
 
 import javax.servlet.http.HttpServletRequest;
 
