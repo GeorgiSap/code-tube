@@ -2,7 +2,6 @@ package com.codetube.model.videoclip;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -151,7 +149,8 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 	public List<VideoClip> getMostCommentedVideos(int numberOfVideos) {
 		String SQL = "select v.video_clip_id, count(v.video_clip_id) from video_clips v "
 				+ "join comments c on (v.video_clip_id = c.video_clip_id) "
-				+ "group by v.video_clip_id order by count(v.video_clip_id) desc "
+				+ "group by v.video_clip_id "
+				+ "order by count(v.video_clip_id) desc "
 				+ "limit " + numberOfVideos;
 		
 		List<Integer> commentedVideoIds = jdbcTemplateObject.query(SQL, (rs, rowNum) -> rs.getInt("v.video_clip_id"));

@@ -22,7 +22,7 @@
 			<%
 				if (request.getSession(false) != null) {
 			%>
-			<li><a href='<c:url value="/videos"/>' class="user-icon"><span
+			<li ><a href='<c:url value="/videos"/>' class="user-icon"><span
 					class="glyphicon glyphicon-home glyphicon-blackboard"
 					aria-hidden="true"></span>My Videos</a></li>
 

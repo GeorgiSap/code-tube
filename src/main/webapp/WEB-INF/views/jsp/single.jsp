@@ -192,7 +192,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<h3><%=clip.getName()%></h3>
 					</div>
 					<div class="video-grid">
-						<video width="800" height="480" controls>
+						<video width="700" height="480" controls>
 							<source src="../videos/<%=clip.getPath()%>" type="video/mp4">
 						</video>
 					</div>

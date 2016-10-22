@@ -14,17 +14,14 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<!--<property name="url" value="jdbc:mysql://192.168.8.22:3306/hr" /> -->
-		<!--<property name="username" value="ittstudent" /> -->
-		<!--<property name="password" value="ittstudent-123" /> -->
 		<property name="url" value="jdbc:mysql://localhost/codetube" />
 		<property name="username" value="root" />
-		<property name="password" value="parolata" />
+		<property name="password" value="password" />
 	</bean>
 	
 	<!-- Initialization for path component used in elastic cloud requests -->
 	<bean id="pathComponent" class="java.lang.String">
-  	<constructor-arg value="videosmladen"/>
+  	<constructor-arg value="videos"/>
 	</bean>
 	
 	<!-- Definition for UserJDBCTemplate bean -->

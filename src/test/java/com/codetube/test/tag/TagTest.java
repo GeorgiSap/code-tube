@@ -19,12 +19,15 @@ public class TagTest {
 			System.out.println("Deleting all Tags...");
 			tagJDBCTemplate.deleteAllTags();
 			System.out.println("Inserting new Tags");
-			tagId = (int) tagJDBCTemplate.addTag(new Tag(0, "javascript"));
-			tagId = (int) tagJDBCTemplate.addTag(new Tag(0, "java"));
-			tagId = (int) tagJDBCTemplate.addTag(new Tag(0, "C++"));
-			tagId = (int) tagJDBCTemplate.addTag(new Tag(0, "C"));	
-			tagId = (int) tagJDBCTemplate.addTag(new Tag(0, "C#"));
-			tagId = (int) tagJDBCTemplate.deleteTag(tagId);
+			tagJDBCTemplate.addTag(new Tag(0, "Java"));
+			tagJDBCTemplate.addTag(new Tag(0, "Basics"));
+			tagJDBCTemplate.addTag(new Tag(0, "OOP"));
+			tagJDBCTemplate.addTag(new Tag(0, "Collections"));
+			tagJDBCTemplate.addTag(new Tag(0, "Threads"));
+			tagJDBCTemplate.addTag(new Tag(0, "MySQL"));	
+			tagJDBCTemplate.addTag(new Tag(0, "Web"));
+			tagId = tagJDBCTemplate.addTag(new Tag(0, "C#"));
+			tagJDBCTemplate.deleteTag(tagId);
 			System.out.println("Deleted C# Tag!");
 			
 			
