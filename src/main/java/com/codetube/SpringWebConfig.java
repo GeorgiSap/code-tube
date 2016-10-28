@@ -61,7 +61,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost/codetube");
 		dataSource.setUsername("root");
-		dataSource.setPassword("parolata");
+		dataSource.setPassword("password");
 
 		return dataSource;
 	}

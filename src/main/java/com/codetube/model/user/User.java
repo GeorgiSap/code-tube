@@ -1,9 +1,10 @@
 package com.codetube.model.user;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +24,9 @@ public class User implements IUser {
 	private String userName;
 	private String email;
 	private String password;
-	private List<VideoClip> videos = new ArrayList<VideoClip>();
-	private List<User> subscriptions = new ArrayList<User>();
-	private HashMap<Integer, LocalDateTime> history = new HashMap<Integer, LocalDateTime>();
+	private LinkedList<VideoClip> videos = new LinkedList<VideoClip>();
+	private Map<User, List<VideoClip>> subscriptions = new HashMap<User, List<VideoClip>>();
+	private Set<VideoClip> history = new LinkedHashSet<VideoClip>();
 	private Set<UserTag> tags = new TreeSet<UserTag>();
 
 	public User() {
@@ -34,37 +35,32 @@ public class User implements IUser {
 	public User(int id, String firstName, String lastName, String userName, String email, String password)
 			throws UserException {
 		this.id = id;
-		 if (firstName != null && firstName.trim().length() >= MIN_NAME_LENGTH
-		 && firstName.length() <= MAX_FIELD_LENGTH) {
-		this.firstName = firstName;
-		 } else {
-		 throw new UserException("First name not valid");
-		 }
-		 if (lastName != null && lastName.trim().length() >=MIN_NAME_LENGTH &&
-		 lastName.length() <= MAX_FIELD_LENGTH) {
-		this.lastName = lastName;
-		 } else {
-		 throw new UserException("Last name not valid");
-		 }
-		 if (userName != null && userName.trim().length() >= MIN_NAME_LENGTH
-		 && userName.length() <= MAX_FIELD_LENGTH) {
-		this.userName = userName;
-		 } else {
-		 throw new UserException("User name not valid");
-		 }
-		 if (email != null && email.trim().length() >= MIN_EMAIL_LENGTH &&
-		 email.length() <= MAX_FIELD_LENGTH) {
-		this.email = email;
-		 } else {
-		 throw new UserException("Email not valid");
-		 }
-		// TODO fix
-		// if (password != null && password.length() >= MIN_PASSWORD_LENGTH &&
-		// password.length() <= MAX_FIELD_LENGTH) {
-		this.password = password;
-		// } else {
-		// throw new UserException("Password not valid");
-		// }
+		if (firstName != null && firstName.trim().length() >= MIN_NAME_LENGTH
+				&& firstName.length() <= MAX_FIELD_LENGTH) {
+			this.firstName = firstName;
+		} else {
+			throw new UserException("First name not valid");
+		}
+		if (lastName != null && lastName.trim().length() >= MIN_NAME_LENGTH && lastName.length() <= MAX_FIELD_LENGTH) {
+			this.lastName = lastName;
+		} else {
+			throw new UserException("Last name not valid");
+		}
+		if (userName != null && userName.trim().length() >= MIN_NAME_LENGTH && userName.length() <= MAX_FIELD_LENGTH) {
+			this.userName = userName;
+		} else {
+			throw new UserException("User name not valid");
+		}
+		if (email != null && email.trim().length() >= MIN_EMAIL_LENGTH && email.length() <= MAX_FIELD_LENGTH) {
+			this.email = email;
+		} else {
+			throw new UserException("Email not valid");
+		}
+		if (password != null) {
+			this.password = password;
+		} else {
+			throw new UserException("Password not valid");
+		}
 	}
 
 	@Override
@@ -121,19 +117,26 @@ public class User implements IUser {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void addToVideos(VideoClip videoClip) {
-		videos.add(videoClip);
+		videos.addLast(videoClip);
 	}
 	
-	public void addToHistory(int videoClipId, LocalDateTime lastViewed) {
-		history.put(videoClipId, lastViewed);
+	public void addNewVideo(VideoClip videoClip) {
+		videos.addFirst(videoClip);
 	}
-	
-	public void addToSubscriptions(User user) {
-		subscriptions.add(user);
+
+	public void addToHistory(VideoClip videoClip) {
+		if (history.contains(videoClip)) {
+			history.remove(videoClip);
+		}
+		history.add(videoClip);
 	}
-	
+
+	public void addToSubscriptions(User user, List<VideoClip> videoClips) {
+		subscriptions.put(user, videoClips);
+	}
+
 	public void removeFromSubscriptions(User user) {
 		subscriptions.remove(user);
 	}
@@ -141,13 +144,15 @@ public class User implements IUser {
 	public List<VideoClip> getVideos() {
 		return Collections.unmodifiableList(videos);
 	}
-	
-	public Map<Integer, LocalDateTime> getHistory() {
-		return Collections.unmodifiableMap(history);
+
+	public List<VideoClip> getHistory() {
+		List<VideoClip> historyAsList = new ArrayList<VideoClip>(history);
+		Collections.reverse(historyAsList);
+		return historyAsList;
 	}
 
-	public List<User> getSubscribtions() {
-		return Collections.unmodifiableList(subscriptions);
+	public Map<User, List<VideoClip>> getSubscribtions() {
+		return subscriptions;
 	}
 
 	@Override
@@ -174,10 +179,5 @@ public class User implements IUser {
 			return false;
 		return true;
 	}
-
-	
-
-	
-	
 
 }

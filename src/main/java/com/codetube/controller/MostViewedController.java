@@ -26,7 +26,6 @@ public class MostViewedController extends ControllerManager {
 			request.setAttribute("title", "Most Viewed");
 			request.setAttribute("videosToLoad", mostViewed);
 			loadTags(request);
-
 			return "home";
 		} catch (Exception e) {
 			return "home";

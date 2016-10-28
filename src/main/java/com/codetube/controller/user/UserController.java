@@ -1,7 +1,11 @@
 package com.codetube.controller.user;
 
+import static com.codetube.controller.user.SubscribeController.VIDEOS_SHOWN_PER_CHANNEL;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +15,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.codetube.controller.ControllerManager;
-import com.codetube.model.tag.Tag;
 import com.codetube.model.user.User;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
@@ -44,21 +47,29 @@ public class UserController extends ControllerManager {
 
 			loadNewestVideos(request);
 		} catch (Exception e) {
-
+			
 		}
 	}
 
 	private void addUserSubscriptions(User user) {
 		List<Subscription> subscriptions = subscriptionJDBCTemplate.listSubscriptions(user.getId());
 		for (Subscription subscription : subscriptions) {
-			user.addToSubscriptions(userJDBCTemplate.get(subscription.getUserId()));
+			User subscriptionUser = userJDBCTemplate.get(subscription.getUserId());
+			List<VideoClip> subscriptionVideoClips = videoClipJDBCTemplate.getClips(subscription.getUserId(), VIDEOS_SHOWN_PER_CHANNEL);
+			for (VideoClip videoClip : subscriptionVideoClips) {
+				 videoClip.setUser(subscriptionUser);
+			}
+			user.addToSubscriptions(subscriptionUser, subscriptionVideoClips);
 		}
 	}
 
 	private void addUserHistory(User user) {
-		List<History> history = historyJDBCTemplate.getHistory(user.getId());
-		for (History entry : history) {
-			user.addToHistory(entry.getVideoClipId(), entry.getLastViewed());
+		List<History> historyList = historyJDBCTemplate.getHistory(user.getId());
+		Set<History> sortedHistory = new TreeSet<History>();
+		sortedHistory.addAll(historyList);
+		List<VideoClip> historyEntries = extractVideosFromHistory(sortedHistory);
+		for (VideoClip videoClip : historyEntries) {
+			user.addToHistory(videoClip);
 		}
 	}
 
@@ -83,14 +94,10 @@ public class UserController extends ControllerManager {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user != null) {
 			List<VideoClip> userVideos = user.getVideos();
-			List<VideoClip> userVideosOrdered = new ArrayList<VideoClip>();
-			for (int video = userVideos.size() - 1; video >= 0; video--) {
-				userVideosOrdered.add(userVideos.get(video));
-			}
-			for (VideoClip videoClip : userVideosOrdered) {
+			for (VideoClip videoClip : userVideos) {
 				videoClip.setUser(user);
 			}
-			request.setAttribute("videosToLoad", userVideosOrdered);
+			request.setAttribute("videosToLoad", userVideos);
 		}
 	}
 
@@ -98,5 +105,16 @@ public class UserController extends ControllerManager {
 		response.setHeader("Pragma", "No-cache");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Cache-Control", "no-cache");
+	}
+	
+	private List<VideoClip> extractVideosFromHistory(Set<History> historySet) {
+		List<VideoClip> historyEntries = new ArrayList<VideoClip>();
+		for (History entry : historySet) {
+			VideoClip videoClip = videoClipJDBCTemplate.getClip(entry.getVideoClipId());
+			historyEntries.add(videoClip);
+			User publisher = userJDBCTemplate.get(videoClip.getUser().getId());
+			videoClip.setUser(publisher);
+		}
+		return historyEntries;
 	}
 }

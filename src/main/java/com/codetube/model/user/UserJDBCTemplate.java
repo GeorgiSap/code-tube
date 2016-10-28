@@ -1,5 +1,7 @@
 package com.codetube.model.user;
 
+import static com.codetube.model.user.IUser.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Repository;
 public class UserJDBCTemplate implements UserDAO {
 
 	private JdbcTemplate jdbcTemplateObject;
-	
+
 	@Override
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
@@ -49,7 +51,13 @@ public class UserJDBCTemplate implements UserDAO {
 
 	@Override
 	public User login(String email, String password) throws UserException {
-		// TODO Validate email and password
+		if (email == null || email.trim().length() < MIN_EMAIL_LENGTH && email.length() > MAX_FIELD_LENGTH) {
+			throw new UserException("Email not valid");
+		}
+		if (password == null || password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_FIELD_LENGTH) {
+			throw new UserException("Password not valid");
+		}
+
 		String SQL = "select * from users where email = ? AND password = md5(?)";
 		User user = jdbcTemplateObject.queryForObject(SQL, new Object[] { email, password }, new UserMapper());
 		if (user != null) {

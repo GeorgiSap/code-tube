@@ -9,30 +9,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codetube.controller.ControllerManager;
 import com.codetube.model.comment.Comment;
 import com.codetube.model.comment.CommentDAO;
 import com.codetube.model.user.User;
-import com.codetube.model.user.UserJDBCTemplate;
 import com.codetube.model.videoclip.VideoClip;
-import com.codetube.model.videoclip.VideoClipJDBCTemplate;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Controller
-public class CommentsController {
-	private ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	public VideoClipJDBCTemplate videoClipJDBCTemplate = (VideoClipJDBCTemplate) context
-			.getBean("VideoClipJDBCTemplate");
+public class CommentsController extends ControllerManager{
 	public CommentDAO commentJDBCTemplate = (CommentDAO) context.getBean("CommentJDBCTemplate");
-	public UserJDBCTemplate userJDBCTemplate = (UserJDBCTemplate) context.getBean("UserJDBCTemplate");
 
 	@RequestMapping(value = "/comment", method = RequestMethod.PUT)
 	protected void putCommentIn(HttpServletRequest request, HttpServletResponse response) {

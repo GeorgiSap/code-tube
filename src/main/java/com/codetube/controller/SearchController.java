@@ -28,13 +28,11 @@ public class SearchController extends ControllerManager {
 		try {
 			String searchQuery = request.getParameter("searchQuery");
 			String jsonString = new SearchQueryDAO().search(searchQuery);
-
 			JSONObject json = new JSONObject(jsonString);
 			JSONObject hitsObj = json.getJSONObject("hits");
 			JSONArray hitsArr = hitsObj.getJSONArray("hits");
 
 			List<VideoClip> searchResults = new ArrayList<VideoClip>();
-
 			for (int index = 0; index < hitsArr.length(); index++) {
 				JSONObject jsonObj = hitsArr.getJSONObject(index);
 				JSONObject source = jsonObj.getJSONObject("_source");

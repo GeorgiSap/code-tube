@@ -25,19 +25,22 @@ import com.codetube.model.user.User;
 @Component
 @Repository
 public class VideoClipJDBCTemplate implements VideoClipDAO {
-
 	public DataSource dataSource;
-
 	public JdbcTemplate jdbcTemplateObject;
+	
+	public VideoClipJDBCTemplate() {
+	}
 
+	public VideoClipJDBCTemplate(JdbcTemplate jdbcTemplateObject, DataSource dataSource) {
+		this.jdbcTemplateObject = jdbcTemplateObject;
+		this.dataSource = dataSource;
+	}
+	
 	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-	}
-
-	public VideoClipJDBCTemplate() {
 	}
 
 	public VideoClipJDBCTemplate(DataSource dataSource) {
@@ -83,7 +86,15 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 
 	@Override
 	public List<VideoClip> getClips(int userId) {
-		String SQL = "select * from video_clips where user_id = ?";
+		String SQL = "select * from video_clips where user_id = ? order by video_clip_id desc";
+		System.out.println(jdbcTemplateObject);
+		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new Object[] { userId }, new VideoClipMapper());
+		return videoClips;
+	}
+	
+	@Override
+	public List<VideoClip> getClips(int userId, int countOfVideos) {
+		String SQL = "select * from video_clips where user_id = ? order by video_clip_id desc limit " + countOfVideos;
 		System.out.println(jdbcTemplateObject);
 		List<VideoClip> videoClips = jdbcTemplateObject.query(SQL, new Object[] { userId }, new VideoClipMapper());
 		return videoClips;
@@ -158,11 +169,4 @@ public class VideoClipJDBCTemplate implements VideoClipDAO {
 		commentedVideoIds.forEach(videoId -> videoClips.add(this.getClip(videoId)));
 		return videoClips;
 	}
-
-	public VideoClipJDBCTemplate(JdbcTemplate jdbcTemplateObject, DataSource dataSource) {
-		super();
-		this.jdbcTemplateObject = jdbcTemplateObject;
-		this.dataSource = dataSource;
-	}
-
 }

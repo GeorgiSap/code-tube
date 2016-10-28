@@ -145,7 +145,7 @@ public class UploadController extends UserController {
 	private void addVideoClipToSession(HttpServletRequest request, VideoClip videoClip) {
 		User currentUser = (User) request.getSession().getAttribute("user");
 		if (currentUser != null) {
-			currentUser.addToVideos(videoClip);
+			currentUser.addNewVideo(videoClip);
 		}
 	}
 

@@ -1,12 +1,9 @@
 package com.codetube.controller.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,32 +13,27 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.codetube.controller.ControllerManager;
 import com.codetube.model.user.User;
-import com.codetube.model.user.UserDAO;
 import com.codetube.model.user.subscription.SubscriptionDAO;
 import com.codetube.model.videoclip.VideoClip;
-import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 @SessionAttributes("user")
 public class ProfilePageController extends ControllerManager {
-	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	VideoClipDAO videoClipJDBCTemplate = (VideoClipDAO) context.getBean("VideoClipJDBCTemplate");
-	UserDAO userJDBCTemplate = (UserDAO) context.getBean("UserJDBCTemplate");
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
 
 	@RequestMapping(value = "/user/{user_id}", method = RequestMethod.GET)
 	public String loadUserVideos(Model model, @PathVariable("user_id") Integer userId, HttpServletRequest request) {
 		try {
+			if (request.getSession(false) != null) {
+				if (request.getSession().getAttribute("user_id") == userId) {
+					return "redirect:/videos";
+				}
+			}
 			User viewedUser = userJDBCTemplate.get(userId);
 			List<VideoClip> viewedUserVideos = videoClipJDBCTemplate.getClips(userId);
-			List<VideoClip> viewedUserVideosOrdered = new ArrayList<VideoClip>();
-			for (int video = viewedUserVideos.size() - 1; video >= 0; video--) {
-				VideoClip videoClip = viewedUserVideos.get(video);
-				User user = userJDBCTemplate.get(videoClip.getUser().getId());
-				videoClip.setUser(user);
-				viewedUserVideosOrdered.add(videoClip);
+			for (VideoClip videoClip : viewedUserVideos) {
+				videoClip.setUser(viewedUser);
 			}
-
 			request.setAttribute("userProfilePage", userId);
 
 			if (request.getSession(false) != null) {
@@ -54,7 +46,7 @@ public class ProfilePageController extends ControllerManager {
 				}
 			}
 			request.setAttribute("title", viewedUser.getUserName() + "'s Channel");
-			request.setAttribute("videosToLoad", viewedUserVideosOrdered);
+			request.setAttribute("videosToLoad", viewedUserVideos);
 			loadTags(request);
 			return "home";
 		} catch (Exception e) {

@@ -1,22 +1,20 @@
 package com.codetube.controller.user;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codetube.controller.ControllerManager;
-import com.codetube.model.tag.Tag;
-import com.codetube.model.tag.TagDAO;
 import com.codetube.model.user.User;
 import com.codetube.model.videoclip.VideoClip;
-import com.codetube.model.videoclip.VideoClipDAO;
 
 @Controller
 public class SubscriptionsController extends ControllerManager {
@@ -26,11 +24,11 @@ public class SubscriptionsController extends ControllerManager {
 		try {
 			if (request.getSession(false) == null) {
 				loadTags(request);
-				return "index";
+				return "home";
 			}
 
 			User user = (User) request.getSession().getAttribute("user");
-			List<User> subscriptions = user.getSubscribtions();
+			Map<User, List<VideoClip>> subscriptions = user.getSubscribtions();
 			List<VideoClip> subscriptionVideos = extractVideosFromSubscriptions(subscriptions);
 			loadTags(request);
 			request.setAttribute("videosToLoad", subscriptionVideos);
@@ -41,14 +39,10 @@ public class SubscriptionsController extends ControllerManager {
 		}
 	}
 
-	private List<VideoClip> extractVideosFromSubscriptions(List<User> subscriptions) {
+	private List<VideoClip> extractVideosFromSubscriptions(Map<User, List<VideoClip>> subscriptions) {
 		List<VideoClip> subscriptionVideos = new ArrayList<VideoClip>();
-		for (User subscription : subscriptions) {
-			List<VideoClip> currentChannelVideos = videoClipJDBCTemplate.getClips(subscription.getId());
-			for (int video = currentChannelVideos.size() - 1; video >= 0; video--) {
-				subscriptionVideos.add(currentChannelVideos.get(video));
-				currentChannelVideos.get(video).setUser(subscription);
-			}
+		for (Entry<User, List<VideoClip>> subscription : subscriptions.entrySet()) {
+			subscriptionVideos.addAll(subscription.getValue());
 		}
 		return subscriptionVideos;
 	}

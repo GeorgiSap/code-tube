@@ -33,4 +33,6 @@ public interface VideoClipDAO {
 
 	List<VideoClip> getNewestVideos(int countOfVideos);
 
+	List<VideoClip> getClips(int userId, int countOfVideos);
+
 }

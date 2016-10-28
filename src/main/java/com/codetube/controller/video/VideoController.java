@@ -103,9 +103,10 @@ public class VideoController extends ControllerManager {
 			if (request.getSession(false) != null) {
 				User user = (User) request.getSession().getAttribute("user");
 				historyJDBCTemplate.addToHistory(clip.getId(), user.getId(), lastViewed);
-				user.addToHistory(clip.getId(), lastViewed);
+				User publisher = userJDBCTemplate.get(clip.getUser().getId());
+				clip.setUser(publisher);
+				user.addToHistory(clip);
 			} else {
-
 				// Find history cookie
 				String history = null;
 				Cookie[] cookies = request.getCookies();

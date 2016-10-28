@@ -29,14 +29,8 @@ public class History implements Comparable<History>{
 
 	@Override
 	public int compareTo(History entry) {
-		if (this.videoClipId == entry.getVideoClipId()) {
-			entry.setLastViewed(this.lastViewed);
-			return 0;
-		}
-		return entry.getLastViewed().compareTo(this.lastViewed);
+		return this.lastViewed.compareTo(entry.getLastViewed());
 	}
-	
-	
 }
 
 
