@@ -20,31 +20,28 @@
 		<div class="signup">
 			<form role="form" method="POST" action='<c:url value="/register"/>'">
 				<input name="email" type="email" class="email" placeholder="Email"
-					maxlength="30" required="required"
-					pattern=".{<%=IUser.MIN_EMAIL_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
-										<%-- title="<%=IUser.MIN_EMAIL_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters" /> --%>
-										title="Enter a valid email" />
+					maxlength="<%=IUser.MAX_FIELD_LENGTH%>" required="required"
+					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+					title="Enter a valid email" />
 				<input name="password" type="password" placeholder="Password"
-					maxlength="30" required="required"
-					pattern=".{<%=IUser.MIN_PASSWORD_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
-					title="<%=IUser.MIN_PASSWORD_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters"
-					autocomplete="off" /> <input name="user_name" type="text"
-					class="email" placeholder="Username" maxlength="30"
-					required="required"
+					maxlength="<%=IUser.MAX_PASSWORD_LENGTH%>" required="required"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{<%=IUser.MIN_PASSWORD_LENGTH%>,<%=IUser.MAX_PASSWORD_LENGTH%>}"
+					title="<%=IUser.MIN_PASSWORD_LENGTH%> to <%=IUser.MAX_PASSWORD_LENGTH%> character string with at least one digit, one upper case letter, one lower case letter and one special symbol [@#$%]"
+					autocomplete="off" /> 
+				<input name="user_name" type="text"
+					class="email" placeholder="Username"
+					maxlength="<%=IUser.MAX_FIELD_LENGTH%>" required="required"
 					pattern=".{<%=IUser.MIN_NAME_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
 					title="<%=IUser.MIN_NAME_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters" />
 				<input name="first_name" type="text" class="email"
-					placeholder="First name" maxlength="30" required="required"
+					placeholder="First name" maxlength="<%=IUser.MAX_FIELD_LENGTH%>"
+					required="required"
 					pattern=".{<%=IUser.MIN_NAME_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
 					title="<%=IUser.MIN_NAME_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters" />
 				<input name="last_name" type="text" class="email"
-					placeholder="Last name" maxlength="30" required="required"
+					placeholder="Last name" maxlength="<%=IUser.MAX_FIELD_LENGTH%>"
+					required="required"
 					pattern=".{<%=IUser.MIN_NAME_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
 					title="<%=IUser.MIN_NAME_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters" />
 				<input type="submit" value="Sign Up" />
 			</form>

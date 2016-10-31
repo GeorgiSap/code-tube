@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.codetube.model.playlist.Playlist;
 import com.codetube.model.playlist.PlaylistDAO;
 import com.codetube.model.playlist.PlaylistException;
+import com.codetube.model.user.IUser;
 import com.codetube.model.user.User;
 import com.codetube.model.user.UserException;
 
@@ -26,6 +27,19 @@ public class RegisterController extends UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String register(HttpServletRequest request, HttpServletResponse response) {
+		if ((!emailValidator.validate(request.getParameter("email")))
+				|| request.getParameter("email").trim().length() > IUser.MAX_FIELD_LENGTH
+				|| request.getParameter("email").trim().length() < IUser.MIN_EMAIL_LENGTH) {
+			request.setAttribute("messageLogging", "Email not valid");
+			return "home";
+		}
+
+		if (!passwordValidator.validate(request.getParameter("password"))) {
+			request.setAttribute("messageLogging",
+					"Your password do not match the requirements: 6 to 20 characters string with at least one digit, one upper case letter, one lower case letter and one special symbol (\"@#$%\")");
+			return "home";
+		}
+
 		if (userJDBCTemplate.emailExists(request.getParameter("email"))) {
 			request.setAttribute("messageLogging", "The email already exists!");
 			return "home";

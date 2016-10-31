@@ -13,17 +13,16 @@
 		<div class="signup">
 
 			<form action='<c:url value="/login"/>' method="POST">
-				<input name="email" type="email" class="email"
-					placeholder="Enter email" required="required"
-					pattern=".{<%=IUser.MIN_EMAIL_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
-					title="<%=IUser.MIN_EMAIL_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters" />
+				<input name="email" type="email" class="email" placeholder="Email"
+					maxlength="<%=IUser.MAX_FIELD_LENGTH%>" required="required"
+					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+					title="Enter a valid email" />
 				<input name="password" type="password" placeholder="Password"
-					required="required"
-					pattern=".{<%=IUser.MIN_PASSWORD_LENGTH%>,<%=IUser.MAX_FIELD_LENGTH%>}"
-					required
-					title="<%=IUser.MIN_PASSWORD_LENGTH%> to <%=IUser.MAX_FIELD_LENGTH%> characters"
-					autocomplete="off" /> <input type="submit" value="LOGIN" />
+					maxlength="<%=IUser.MAX_PASSWORD_LENGTH%>" required="required"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{<%=IUser.MIN_PASSWORD_LENGTH%>,<%=IUser.MAX_PASSWORD_LENGTH%>}"
+					title="<%=IUser.MIN_PASSWORD_LENGTH%> to <%=IUser.MAX_PASSWORD_LENGTH%> character string with at least one digit, one upper case letter, one lower case letter and one special symbol [@#$%]"
+					autocomplete="off" /> 
+				<input type="submit" value="LOGIN" />
 			</form>
 
 			<div class="button-bottom">

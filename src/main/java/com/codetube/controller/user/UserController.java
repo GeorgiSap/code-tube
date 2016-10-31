@@ -15,6 +15,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.codetube.controller.ControllerManager;
+import com.codetube.model.user.EmailValidator;
+import com.codetube.model.user.PasswordValidator;
 import com.codetube.model.user.User;
 import com.codetube.model.user.history.History;
 import com.codetube.model.user.history.HistoryDAO;
@@ -28,7 +30,9 @@ public class UserController extends ControllerManager {
 	ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	HistoryDAO historyJDBCTemplate = (HistoryDAO) context.getBean("HistoryJDBCTemplate");
 	SubscriptionDAO subscriptionJDBCTemplate = (SubscriptionDAO) context.getBean("SubscriptionJDBCTemplate");
-
+	EmailValidator emailValidator = new EmailValidator();
+	PasswordValidator passwordValidator = new PasswordValidator();
+	
 	public void createSession(HttpServletRequest request, User user) {
 		try {
 			HttpSession session = request.getSession();
